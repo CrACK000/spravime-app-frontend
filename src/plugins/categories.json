@@ -1,0 +1,1535 @@
+{
+  "sections": [
+    {
+      "id": 1,
+      "title": "Auto-moto, automobilový priemysel"
+    },
+    {
+      "id": 2,
+      "title": "Bezpečnosť, ochrana"
+    },
+    {
+      "id": 3,
+      "title": "Cestovný ruch, hotely, gastronómia"
+    },
+    {
+      "id": 4,
+      "title": "Chemický priemysel"
+    },
+    {
+      "id": 5,
+      "title": "Doprava a špedícia"
+    },
+    {
+      "id": 6,
+      "title": "Drevospracujúci priemysel, korok"
+    },
+    {
+      "id": 7,
+      "title": "Drogéria a kozmetika"
+    },
+    {
+      "id": 8,
+      "title": "Ekológia, odpady"
+    },
+    {
+      "id": 9,
+      "title": "Elektronika, elektrotechnika"
+    },
+    {
+      "id": 10,
+      "title": "Energetika"
+    },
+    {
+      "id": 11,
+      "title": "Financie, poisťovníctvo, účtovníctvo"
+    },
+    {
+      "id": 12,
+      "title": "IT, počítače"
+    },
+    {
+      "id": 13,
+      "title": "Kancelárske potreby"
+    },
+    {
+      "id": 14,
+      "title": "Móda, odevy, textil"
+    },
+    {
+      "id": 15,
+      "title": "Nábytok a bývanie"
+    },
+    {
+      "id": 16,
+      "title": "Obchod"
+    },
+    {
+      "id": 17,
+      "title": "Ostatné"
+    },
+    {
+      "id": 18,
+      "title": "Papier, balenie, darčekové potreby"
+    },
+    {
+      "id": 19,
+      "title": "Plasty, kaučuk"
+    },
+    {
+      "id": 20,
+      "title": "Poľnohospodárstvo, potravinárstvo"
+    },
+    {
+      "id": 21,
+      "title": "Poradenstvo, právo, marketing"
+    },
+    {
+      "id": 22,
+      "title": "Prekladateľstvo a tlmočníctvo"
+    },
+    {
+      "id": 23,
+      "title": "Reality"
+    },
+    {
+      "id": 24,
+      "title": "Reklama, propagácia, PR"
+    },
+    {
+      "id": 25,
+      "title": "Servis"
+    },
+    {
+      "id": 26,
+      "title": "Sklo a keramika"
+    },
+    {
+      "id": 27,
+      "title": "Služby"
+    },
+    {
+      "id": 28,
+      "title": "Spotrebná a biela elektronika"
+    },
+    {
+      "id": 29,
+      "title": "Stavebníctvo, materiál"
+    },
+    {
+      "id": 30,
+      "title": "Strojárenstvo, stroje, priemysel"
+    },
+    {
+      "id": 31,
+      "title": "Školenia, personalistika, brigády"
+    },
+    {
+      "id": 32,
+      "title": "Šport, umenie, kultúra, zábava"
+    },
+    {
+      "id": 33,
+      "title": "Telekomunikácie"
+    },
+    {
+      "id": 34,
+      "title": "Tlačiarenský priemysel, médiá"
+    },
+    {
+      "id": 35,
+      "title": "Výroba"
+    },
+    {
+      "id": 36,
+      "title": "Zdravotníctvo, farmácia, krása"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "section_id": 1,
+      "title": "Autodoplnky, príslušenstvo"
+    },
+    {
+      "id": 2,
+      "section_id": 1,
+      "title": "Autoservisy"
+    },
+    {
+      "id": 3,
+      "section_id": 1,
+      "title": "Autobazáre, predaj ojazdených automobilov"
+    },
+    {
+      "id": 4,
+      "section_id": 1,
+      "title": "Prívesy, návesy, nadstavby"
+    },
+    {
+      "id": 5,
+      "section_id": 1,
+      "title": "Autopožičovne"
+    },
+    {
+      "id": 6,
+      "section_id": 1,
+      "title": "Pohonné hmoty, palivá, mazivá"
+    },
+    {
+      "id": 7,
+      "section_id": 1,
+      "title": "Pneuservisy"
+    },
+    {
+      "id": 8,
+      "section_id": 1,
+      "title": "Čistenie a údržba komunikácií"
+    },
+    {
+      "id": 9,
+      "section_id": 1,
+      "title": "Autoškoly"
+    },
+    {
+      "id": 10,
+      "section_id": 1,
+      "title": "Technické a emisné kontroly"
+    },
+    {
+      "id": 11,
+      "section_id": 2,
+      "title": "Zabezpečovacie zariadenia"
+    },
+    {
+      "id": 12,
+      "section_id": 2,
+      "title": "Bezpečnostné projekty, poradenstvo"
+    },
+    {
+      "id": 13,
+      "section_id": 2,
+      "title": "Bezpečnostné služby"
+    },
+    {
+      "id": 14,
+      "section_id": 2,
+      "title": "Požiarna technika"
+    },
+    {
+      "id": 15,
+      "section_id": 2,
+      "title": "Prístupové, dochádzkové, ID systémy"
+    },
+    {
+      "id": 16,
+      "section_id": 2,
+      "title": "Kurzy BOZP a PO"
+    },
+    {
+      "id": 17,
+      "section_id": 2,
+      "title": "Parkovacie, závorové systémy"
+    },
+    {
+      "id": 18,
+      "section_id": 2,
+      "title": "Trezory"
+    },
+    {
+      "id": 19,
+      "section_id": 3,
+      "title": "Hotely, penzióny, apartmány"
+    },
+    {
+      "id": 20,
+      "section_id": 3,
+      "title": "Gastrotechnika"
+    },
+    {
+      "id": 21,
+      "section_id": 3,
+      "title": "Reštaurácie, stravovanie"
+    },
+    {
+      "id": 22,
+      "section_id": 3,
+      "title": "Cestovné kancelárie a agentúry"
+    },
+    {
+      "id": 23,
+      "section_id": 3,
+      "title": "Rekreačné zariadenia"
+    },
+    {
+      "id": 24,
+      "section_id": 3,
+      "title": "Automaty - nápoje, potraviny, cigarety"
+    },
+    {
+      "id": 25,
+      "section_id": 3,
+      "title": "Chaty, kempy"
+    },
+    {
+      "id": 26,
+      "section_id": 3,
+      "title": "Stravovacie spoločnosti"
+    },
+    {
+      "id": 27,
+      "section_id": 3,
+      "title": "Obce a mestá SR"
+    },
+    {
+      "id": 28,
+      "section_id": 3,
+      "title": "Ranče, agroturistika"
+    },
+    {
+      "id": 29,
+      "section_id": 4,
+      "title": "Chemické látky"
+    },
+    {
+      "id": 30,
+      "section_id": 4,
+      "title": "Suroviny"
+    },
+    {
+      "id": 31,
+      "section_id": 4,
+      "title": "Čistiaca chémia - priemysel"
+    },
+    {
+      "id": 32,
+      "section_id": 4,
+      "title": "Farby, lakyOleje a mazivá - priemyselné"
+    },
+    {
+      "id": 33,
+      "section_id": 4,
+      "title": "Laboratórna technika, prístroje"
+    },
+    {
+      "id": 34,
+      "section_id": 4,
+      "title": "Stavebná chémia"
+    },
+    {
+      "id": 35,
+      "section_id": 4,
+      "title": "Lepidlá a tmely - priemyselné"
+    },
+    {
+      "id": 36,
+      "section_id": 5,
+      "title": "Nákladná doprava"
+    },
+    {
+      "id": 37,
+      "section_id": 5,
+      "title": "Medzinárodná doprava"
+    },
+    {
+      "id": 38,
+      "section_id": 5,
+      "title": "Osobná doprava"
+    },
+    {
+      "id": 39,
+      "section_id": 5,
+      "title": "Logistika"
+    },
+    {
+      "id": 40,
+      "section_id": 5,
+      "title": "Sťahovanie"
+    },
+    {
+      "id": 41,
+      "section_id": 5,
+      "title": "Odťahová služba"
+    },
+    {
+      "id": 42,
+      "section_id": 5,
+      "title": "Colná deklarácia"
+    },
+    {
+      "id": 43,
+      "section_id": 6,
+      "title": "Drevovýroba, stolárstva"
+    },
+    {
+      "id": 44,
+      "section_id": 6,
+      "title": "Rezivo, guľatina"
+    },
+    {
+      "id": 45,
+      "section_id": 6,
+      "title": "Drevospracovanie, píly"
+    },
+    {
+      "id": 46,
+      "section_id": 6,
+      "title": "Palivové, krbové drevo"
+    },
+    {
+      "id": 47,
+      "section_id": 6,
+      "title": "Lesníctvo, spracovanie dreva"
+    },
+    {
+      "id": 48,
+      "section_id": 6,
+      "title": "Palety"
+    },
+    {
+      "id": 49,
+      "section_id": 6,
+      "title": "Drevoobrábacie stroje a zariadenia"
+    },
+    {
+      "id": 50,
+      "section_id": 6,
+      "title": "Lesná technika, ND"
+    },
+    {
+      "id": 51,
+      "section_id": 7,
+      "title": "Drogéria, čistiace prostriedky"
+    },
+    {
+      "id": 52,
+      "section_id": 7,
+      "title": "Kozmetika"
+    },
+    {
+      "id": 53,
+      "section_id": 7,
+      "title": "Parfumérie"
+    },
+    {
+      "id": 54,
+      "section_id": 8,
+      "title": "Odpady - zber, výkup, likvidácia"
+    },
+    {
+      "id": 55,
+      "section_id": 8,
+      "title": "Odpadové hospodárstvo"
+    },
+    {
+      "id": 56,
+      "section_id": 8,
+      "title": "Ekologické služby"
+    },
+    {
+      "id": 57,
+      "section_id": 8,
+      "title": "Ekologické poradenstvo"
+    },
+    {
+      "id": 58,
+      "section_id": 8,
+      "title": "Kanalizácia - predaj, inštalácia, servis"
+    },
+    {
+      "id": 59,
+      "section_id": 8,
+      "title": "Asanačné služby"
+    },
+    {
+      "id": 60,
+      "section_id": 9,
+      "title": "Elektroinštalačný materiál, práce"
+    },
+    {
+      "id": 61,
+      "section_id": 9,
+      "title": "Elektrotechnické zariadenia"
+    },
+    {
+      "id": 62,
+      "section_id": 9,
+      "title": "Elektronické zariadenia"
+    },
+    {
+      "id": 63,
+      "section_id": 9,
+      "title": "Meracia a regulačná technika"
+    },
+    {
+      "id": 64,
+      "section_id": 9,
+      "title": "Svetelná a zvuková technika"
+    },
+    {
+      "id": 65,
+      "section_id": 9,
+      "title": "Káble, vodiče"
+    },
+    {
+      "id": 66,
+      "section_id": 9,
+      "title": "Elektromotory, kompresory"
+    },
+    {
+      "id": 67,
+      "section_id": 9,
+      "title": "Elektronické súčiastky"
+    },
+    {
+      "id": 68,
+      "section_id": 10,
+      "title": "Elektromontáže, elektroinštalácia"
+    },
+    {
+      "id": 69,
+      "section_id": 10,
+      "title": "Voda, plyn, kúrenie - predaj, výroba, servis"
+    },
+    {
+      "id": 70,
+      "section_id": 10,
+      "title": "Solárne systémy, alternatívna energetika"
+    },
+    {
+      "id": 71,
+      "section_id": 10,
+      "title": "Energetika, plyn, teplo"
+    },
+    {
+      "id": 72,
+      "section_id": 10,
+      "title": "Energetické stroje a zariadenia"
+    },
+    {
+      "id": 73,
+      "section_id": 10,
+      "title": "Poradenstvo v energetike"
+    },
+    {
+      "id": 74,
+      "section_id": 10,
+      "title": "Akumulátory, zdroje"
+    },
+    {
+      "id": 75,
+      "section_id": 10,
+      "title": "Elektrina, voda, plyn - výroba, rozvod"
+    },
+    {
+      "id": 76,
+      "section_id": 10,
+      "title": "Plyny - technické a špeciálne"
+    },
+    {
+      "id": 77,
+      "section_id": 11,
+      "title": "Účtovníctvo, účtovné poradenstvo"
+    },
+    {
+      "id": 78,
+      "section_id": 11,
+      "title": "Finančné a investičné poradenstvo"
+    },
+    {
+      "id": 79,
+      "section_id": 11,
+      "title": "Banky, sporiteľne, poisťovníctvo"
+    },
+    {
+      "id": 80,
+      "section_id": 11,
+      "title": "Daňové poradenstvo"
+    },
+    {
+      "id": 81,
+      "section_id": 11,
+      "title": "Pohľadávky, factoring a fortfaiting"
+    },
+    {
+      "id": 82,
+      "section_id": 11,
+      "title": "Investičné, leasingové spoločnosti"
+    },
+    {
+      "id": 83,
+      "section_id": 11,
+      "title": "Exekútori, exekútorské úrady"
+    },
+    {
+      "id": 84,
+      "section_id": 12,
+      "title": "Počítače a príslušenstvo"
+    },
+    {
+      "id": 85,
+      "section_id": 12,
+      "title": "Počítačové a IT poradenstvo"
+    },
+    {
+      "id": 86,
+      "section_id": 12,
+      "title": "Webdesign, SEO"
+    },
+    {
+      "id": 87,
+      "section_id": 12,
+      "title": "Software"
+    },
+    {
+      "id": 88,
+      "section_id": 12,
+      "title": "Programovanie a dokumentácia"
+    },
+    {
+      "id": 89,
+      "section_id": 12,
+      "title": "Vizualizácie, modelovanie, CAD, CAM"
+    },
+    {
+      "id": 90,
+      "section_id": 12,
+      "title": "Foto a videotechnika"
+    },
+    {
+      "id": 91,
+      "section_id": 13,
+      "title": "Kancelárske a školské potreby"
+    },
+    {
+      "id": 92,
+      "section_id": 13,
+      "title": "Potreby a zariadenia pre obchod"
+    },
+    {
+      "id": 93,
+      "section_id": 13,
+      "title": "Kancelársky nábytok"
+    },
+    {
+      "id": 94,
+      "section_id": 13,
+      "title": "Regály"
+    },
+    {
+      "id": 95,
+      "section_id": 13,
+      "title": "Kovový nábytok"
+    },
+    {
+      "id": 96,
+      "section_id": 13,
+      "title": "Reštauračný a hotelový nábytok"
+    },
+    {
+      "id": 97,
+      "section_id": 13,
+      "title": "Laboratórne vybavenie a potreby"
+    },
+    {
+      "id": 98,
+      "section_id": 13,
+      "title": "Úžitkový a priemyselný nábytok"
+    },
+    {
+      "id": 99,
+      "section_id": 14,
+      "title": "Móda, textil, obuv"
+    },
+    {
+      "id": 100,
+      "section_id": 14,
+      "title": "Krajčírske služby"
+    },
+    {
+      "id": 101,
+      "section_id": 14,
+      "title": "Pracovné ochranné odevy a pomôcky"
+    },
+    {
+      "id": 102,
+      "section_id": 14,
+      "title": "Textil - metrový"
+    },
+    {
+      "id": 103,
+      "section_id": 14,
+      "title": "Galantéria, bižutéria, šperky"
+    },
+    {
+      "id": 104,
+      "section_id": 14,
+      "title": "Strojové vyšívanie, čalúnnictvá"
+    },
+    {
+      "id": 105,
+      "section_id": 14,
+      "title": "Secondhand - Odevy"
+    },
+    {
+      "id": 106,
+      "section_id": 14,
+      "title": "Technické a priemyselné textílie"
+    },
+    {
+      "id": 107,
+      "section_id": 14,
+      "title": "Koža a kožušiny"
+    },
+    {
+      "id": 108,
+      "section_id": 14,
+      "title": "Modelingové agentúry"
+    },
+    {
+      "id": 109,
+      "section_id": 15,
+      "title": "Nábytok"
+    },
+    {
+      "id": 110,
+      "section_id": 15,
+      "title": "Okná, dvere, žalúzie"
+    },
+    {
+      "id": 111,
+      "section_id": 15,
+      "title": "Nábytok, doplnky"
+    },
+    {
+      "id": 112,
+      "section_id": 15,
+      "title": "Bytové a interiérové doplnky"
+    },
+    {
+      "id": 113,
+      "section_id": 15,
+      "title": "Kuchynský nábytok"
+    },
+    {
+      "id": 114,
+      "section_id": 15,
+      "title": "Interiérový design"
+    },
+    {
+      "id": 115,
+      "section_id": 15,
+      "title": "Obklady, dlažby, krby, kachle, grily"
+    },
+    {
+      "id": 116,
+      "section_id": 15,
+      "title": "Sedací nábytok"
+    },
+    {
+      "id": 117,
+      "section_id": 15,
+      "title": "Koberce, podlahoviny"
+    },
+    {
+      "id": 118,
+      "section_id": 15,
+      "title": "Sanitárne vybavenie"
+    },
+    {
+      "id": 119,
+      "section_id": 15,
+      "title": "Výťahy - predaj, montáž"
+    },
+    {
+      "id": 120,
+      "section_id": 16,
+      "title": "Veľkoobchody"
+    },
+    {
+      "id": 121,
+      "section_id": 16,
+      "title": "Maloobchod"
+    },
+    {
+      "id": 122,
+      "section_id": 16,
+      "title": "Hutný materiál"
+    },
+    {
+      "id": 123,
+      "section_id": 16,
+      "title": "Priemyselné potreby, polotovary, suroviny"
+    },
+    {
+      "id": 124,
+      "section_id": 16,
+      "title": "Nástroje a náradie, rezacia technika"
+    },
+    {
+      "id": 125,
+      "section_id": 16,
+      "title": "Železiarstva, spojovací materiál"
+    },
+    {
+      "id": 126,
+      "section_id": 16,
+      "title": "Potrubia, rúry"
+    },
+    {
+      "id": 127,
+      "section_id": 16,
+      "title": "Požičovne"
+    },
+    {
+      "id": 128,
+      "section_id": 17,
+      "title": "Ostatné"
+    },
+    {
+      "id": 129,
+      "section_id": 17,
+      "title": "Služby ostatné"
+    },
+    {
+      "id": 130,
+      "section_id": 17,
+      "title": "Strojárenstvo ostatné"
+    },
+    {
+      "id": 131,
+      "section_id": 17,
+      "title": "Stavebný priemysel ostatné"
+    },
+    {
+      "id": 132,
+      "section_id": 17,
+      "title": "Priemysel ostatné"
+    },
+    {
+      "id": 133,
+      "section_id": 17,
+      "title": "Remeslá ostatné"
+    },
+    {
+      "id": 134,
+      "section_id": 17,
+      "title": "Priemysel plastov ostatné"
+    },
+    {
+      "id": 135,
+      "section_id": 18,
+      "title": "Obalové a baliace materiály"
+    },
+    {
+      "id": 136,
+      "section_id": 18,
+      "title": "Darčekové predmety, suveníry"
+    },
+    {
+      "id": 137,
+      "section_id": 18,
+      "title": "Papierenský tovar"
+    },
+    {
+      "id": 138,
+      "section_id": 18,
+      "title": "Kartonáž, lepenka"
+    },
+    {
+      "id": 139,
+      "section_id": 18,
+      "title": "Balenie a etiketovanie"
+    },
+    {
+      "id": 140,
+      "section_id": 18,
+      "title": "Papierenské výrobky kancelárske"
+    },
+    {
+      "id": 141,
+      "section_id": 18,
+      "title": "Baliace stroje"
+    },
+    {
+      "id": 142,
+      "section_id": 18,
+      "title": "Papierenské stroje a príslušenstvo"
+    },
+    {
+      "id": 143,
+      "section_id": 18,
+      "title": "Umelecké potreby"
+    },
+    {
+      "id": 144,
+      "section_id": 19,
+      "title": "Plasty, výroba, plastové výrobky"
+    },
+    {
+      "id": 145,
+      "section_id": 19,
+      "title": "Plasty - fólie"
+    },
+    {
+      "id": 146,
+      "section_id": 19,
+      "title": "Obalová a baliaca technika"
+    },
+    {
+      "id": 147,
+      "section_id": 19,
+      "title": "Plasty - stroje a zariadenia"
+    },
+    {
+      "id": 148,
+      "section_id": 19,
+      "title": "Guma - technická"
+    },
+    {
+      "id": 149,
+      "section_id": 19,
+      "title": "Gumárenské stroje a zariadenia"
+    },
+    {
+      "id": 150,
+      "section_id": 20,
+      "title": "Potravinárstvo"
+    },
+    {
+      "id": 151,
+      "section_id": 20,
+      "title": "Záhradkárstvo a pestovateľstvo"
+    },
+    {
+      "id": 152,
+      "section_id": 20,
+      "title": "Poľnohospodárske služby"
+    },
+    {
+      "id": 153,
+      "section_id": 20,
+      "title": "Rastlinná výroba"
+    },
+    {
+      "id": 154,
+      "section_id": 20,
+      "title": "Potravinárske stroje a zariadenia"
+    },
+    {
+      "id": 155,
+      "section_id": 20,
+      "title": "Kŕmne zmesi, osivá, semená, sadenice"
+    },
+    {
+      "id": 156,
+      "section_id": 20,
+      "title": "Živočíšna výroba, chov, služby"
+    },
+    {
+      "id": 157,
+      "section_id": 20,
+      "title": "Chovateľstvo, domáce zvieratá"
+    },
+    {
+      "id": 158,
+      "section_id": 20,
+      "title": "Živočíšna výroba - potreby, zariadenia"
+    },
+    {
+      "id": 159,
+      "section_id": 21,
+      "title": "Podnikateľské poradenstvo"
+    },
+    {
+      "id": 160,
+      "section_id": 21,
+      "title": "Manažment a riadenie - poradenstvo"
+    },
+    {
+      "id": 161,
+      "section_id": 21,
+      "title": "Administratívne služby"
+    },
+    {
+      "id": 162,
+      "section_id": 21,
+      "title": "Právne poradenstvo"
+    },
+    {
+      "id": 163,
+      "section_id": 21,
+      "title": "Advokátske kancelárie"
+    },
+    {
+      "id": 164,
+      "section_id": 21,
+      "title": "Právo - informácie, zákonySúdne znalectvo, znalci"
+    },
+    {
+      "id": 165,
+      "section_id": 21,
+      "title": "Notárske služby"
+    },
+    {
+      "id": 166,
+      "section_id": 22,
+      "title": "Prekladateľské a tlmočnícke služby"
+    },
+    {
+      "id": 167,
+      "section_id": 22,
+      "title": "Kurzy"
+    },
+    {
+      "id": 168,
+      "section_id": 23,
+      "title": "Reality, realitné kancelárie"
+    },
+    {
+      "id": 169,
+      "section_id": 23,
+      "title": "Prenájom priestorov, ponuky realít"
+    },
+    {
+      "id": 170,
+      "section_id": 23,
+      "title": "Inžinierska činnosť"
+    },
+    {
+      "id": 171,
+      "section_id": 23,
+      "title": "Izolačné a zatepľovacie práce"
+    },
+    {
+      "id": 172,
+      "section_id": 23,
+      "title": "Developerské spoločnosti"
+    },
+    {
+      "id": 173,
+      "section_id": 23,
+      "title": "Správa a údržba nehnuteľností"
+    },
+    {
+      "id": 174,
+      "section_id": 24,
+      "title": "Reklama full servis"
+    },
+    {
+      "id": 175,
+      "section_id": 24,
+      "title": "Dodávatelia pre reklamu"
+    },
+    {
+      "id": 176,
+      "section_id": 24,
+      "title": "Reklamné predmety a sieťotlač"
+    },
+    {
+      "id": 177,
+      "section_id": 24,
+      "title": "Reklamné nápisy, tabule"
+    },
+    {
+      "id": 178,
+      "section_id": 24,
+      "title": "Štúdiá DTP, kreatívne"
+    },
+    {
+      "id": 179,
+      "section_id": 24,
+      "title": "Internetová reklama"
+    },
+    {
+      "id": 180,
+      "section_id": 24,
+      "title": "Marketingové poradenstvo"
+    },
+    {
+      "id": 181,
+      "section_id": 24,
+      "title": "Svetelná a neónová reklama"
+    },
+    {
+      "id": 182,
+      "section_id": 24,
+      "title": "Pečiatky, oznámenia, vizitky"
+    },
+    {
+      "id": 183,
+      "section_id": 24,
+      "title": "PR agentúry"
+    },
+    {
+      "id": 184,
+      "section_id": 24,
+      "title": "Označovacia a etiketovacia technika"
+    },
+    {
+      "id": 185,
+      "section_id": 25,
+      "title": "Servis ostatné"
+    },
+    {
+      "id": 186,
+      "section_id": 25,
+      "title": "Rekonštrukčné práce"
+    },
+    {
+      "id": 187,
+      "section_id": 25,
+      "title": "Kalibrácia meradiel"
+    },
+    {
+      "id": 188,
+      "section_id": 25,
+      "title": "Poradenstvo v stavebníctve"
+    },
+    {
+      "id": 189,
+      "section_id": 25,
+      "title": "Reštaurovanie"
+    },
+    {
+      "id": 190,
+      "section_id": 25,
+      "title": "Kľúčová služba"
+    },
+    {
+      "id": 191,
+      "section_id": 26,
+      "title": "Porcelán, keramika"
+    },
+    {
+      "id": 192,
+      "section_id": 26,
+      "title": "Sklo, výroba, spracovanie"
+    },
+    {
+      "id": 193,
+      "section_id": 26,
+      "title": "Sklenené obaly, poháre, flaše, dózy"
+    },
+    {
+      "id": 194,
+      "section_id": 26,
+      "title": "Kamenárstva"
+    },
+    {
+      "id": 195,
+      "section_id": 26,
+      "title": "Sklenárstva, rámovanie"
+    },
+    {
+      "id": 196,
+      "section_id": 26,
+      "title": "Zasklievanie lodžií a balkónov"
+    },
+    {
+      "id": 197,
+      "section_id": 26,
+      "title": "Sklárske a sklenárske stroje a zariadenia"
+    },
+    {
+      "id": 198,
+      "section_id": 27,
+      "title": "Služby - iné"
+    },
+    {
+      "id": 199,
+      "section_id": 27,
+      "title": "Služby a remeslá"
+    },
+    {
+      "id": 200,
+      "section_id": 27,
+      "title": "Murárske práce, maľovanie, stierkovanie, tapetovanie"
+    },
+    {
+      "id": 201,
+      "section_id": 27,
+      "title": "Upratovanie a čistenie"
+    },
+    {
+      "id": 202,
+      "section_id": 27,
+      "title": "Zemné práce, výškové a potápačské práce"
+    },
+    {
+      "id": 203,
+      "section_id": 27,
+      "title": "Projektovanie - priemyselné"
+    },
+    {
+      "id": 204,
+      "section_id": 27,
+      "title": "Revízne služby"
+    },
+    {
+      "id": 205,
+      "section_id": 27,
+      "title": "Fotoslužby a fotoateliéry"
+    },
+    {
+      "id": 206,
+      "section_id": 27,
+      "title": "Donáškové služby, catering"
+    },
+    {
+      "id": 207,
+      "section_id": 27,
+      "title": "Deratizácia, dezinfekcia, dezinsekcia"
+    },
+    {
+      "id": 208,
+      "section_id": 27,
+      "title": "Havarijné a poruchové služby"
+    },
+    {
+      "id": 209,
+      "section_id": 27,
+      "title": "Baliarne"
+    },
+    {
+      "id": 210,
+      "section_id": 28,
+      "title": "Klimatizácia, vzduchotechnika"
+    },
+    {
+      "id": 211,
+      "section_id": 28,
+      "title": "Biela technika, domáce spotrebiče"
+    },
+    {
+      "id": 212,
+      "section_id": 28,
+      "title": "Kancelárska technika, spotrebný materiál"
+    },
+    {
+      "id": 213,
+      "section_id": 28,
+      "title": "Audio, video, TV"
+    },
+    {
+      "id": 214,
+      "section_id": 28,
+      "title": "Lampy, svietidlá"
+    },
+    {
+      "id": 215,
+      "section_id": 28,
+      "title": "Čierna technika"
+    },
+    {
+      "id": 216,
+      "section_id": 28,
+      "title": "Foto, optika"
+    },
+    {
+      "id": 217,
+      "section_id": 29,
+      "title": "Stavebné firmy"
+    },
+    {
+      "id": 218,
+      "section_id": 29,
+      "title": "Stavebný materiál, stavebniny"
+    },
+    {
+      "id": 219,
+      "section_id": 29,
+      "title": "Dvere, okná, brány, ploty"
+    },
+    {
+      "id": 220,
+      "section_id": 29,
+      "title": "Stropy, krovy a strešné krytiny"
+    },
+    {
+      "id": 221,
+      "section_id": 29,
+      "title": "Murovacie materiály, stierky, omietky"
+    },
+    {
+      "id": 222,
+      "section_id": 29,
+      "title": "Parkety, podlahy, schody, zábradlia"
+    },
+    {
+      "id": 223,
+      "section_id": 29,
+      "title": "Montované haly, domy"
+    },
+    {
+      "id": 224,
+      "section_id": 29,
+      "title": "Betón, betónové stavebné prvky"
+    },
+    {
+      "id": 225,
+      "section_id": 29,
+      "title": "Stavebná technika"
+    },
+    {
+      "id": 226,
+      "section_id": 29,
+      "title": "Manipulačná a skladovacia technika, kontajnery"
+    },
+    {
+      "id": 227,
+      "section_id": 29,
+      "title": "Bazény, sauny"
+    },
+    {
+      "id": 228,
+      "section_id": 30,
+      "title": "Stroje a zariadenia"
+    },
+    {
+      "id": 229,
+      "section_id": 30,
+      "title": "Služby pre priemysel"
+    },
+    {
+      "id": 230,
+      "section_id": 30,
+      "title": "Priemyselná technika, zariadenia, diely"
+    },
+    {
+      "id": 231,
+      "section_id": 30,
+      "title": "Dodávatelia materiálu pre strojárenstvo"
+    },
+    {
+      "id": 232,
+      "section_id": 30,
+      "title": "Jednoúčelové stroje a zariadenia"
+    },
+    {
+      "id": 233,
+      "section_id": 30,
+      "title": "Hydraulické systémy"
+    },
+    {
+      "id": 234,
+      "section_id": 30,
+      "title": "Dopravníky"
+    },
+    {
+      "id": 235,
+      "section_id": 30,
+      "title": "Robotizované pracoviská"
+    },
+    {
+      "id": 236,
+      "section_id": 31,
+      "title": "Kurzy, školenia, tréningy"
+    },
+    {
+      "id": 237,
+      "section_id": 31,
+      "title": "Práca, zamestnanie, personalistika"
+    },
+    {
+      "id": 238,
+      "section_id": 31,
+      "title": "Sprostredkovateľské agentúry"
+    },
+    {
+      "id": 239,
+      "section_id": 31,
+      "title": "Školy"
+    },
+    {
+      "id": 240,
+      "section_id": 31,
+      "title": "Učebné pomôcky a študijné materiály"
+    },
+    {
+      "id": 241,
+      "section_id": 31,
+      "title": "Centrá voľného času"
+    },
+    {
+      "id": 242,
+      "section_id": 32,
+      "title": "Športové potreby a služby"
+    },
+    {
+      "id": 243,
+      "section_id": 32,
+      "title": "Výtvarné umenie, maľba, grafika"
+    },
+    {
+      "id": 244,
+      "section_id": 32,
+      "title": "Hobby potreby"
+    },
+    {
+      "id": 245,
+      "section_id": 32,
+      "title": "Kultúra, divadlo, umenie, médiá"
+    },
+    {
+      "id": 246,
+      "section_id": 32,
+      "title": "Hudba, knihy, literatúra"
+    },
+    {
+      "id": 247,
+      "section_id": 32,
+      "title": "Kúpaliská, aquaparky"
+    },
+    {
+      "id": 248,
+      "section_id": 32,
+      "title": "Nákupné centrá, obchodné domy"
+    },
+    {
+      "id": 249,
+      "section_id": 32,
+      "title": "Kasína a herne"
+    },
+    {
+      "id": 250,
+      "section_id": 33,
+      "title": "Telekomunikačná technika"
+    },
+    {
+      "id": 251,
+      "section_id": 33,
+      "title": "Mobilné telefóny"
+    },
+    {
+      "id": 252,
+      "section_id": 33,
+      "title": "Satelitná technika, antény"
+    },
+    {
+      "id": 253,
+      "section_id": 33,
+      "title": "Navigačné zariadenia GPS"
+    },
+    {
+      "id": 254,
+      "section_id": 34,
+      "title": "Tlačiarne"
+    },
+    {
+      "id": 255,
+      "section_id": 34,
+      "title": "Grafici, grafické štúdiá"
+    },
+    {
+      "id": 256,
+      "section_id": 34,
+      "title": "Iné tlačiarenské služby"
+    },
+    {
+      "id": 257,
+      "section_id": 34,
+      "title": "Ofsetová tlač"
+    },
+    {
+      "id": 258,
+      "section_id": 34,
+      "title": "Veľkoformátová digitálna tlač"
+    },
+    {
+      "id": 259,
+      "section_id": 34,
+      "title": "Tlač distribúcia"
+    },
+    {
+      "id": 260,
+      "section_id": 34,
+      "title": "Kníhviazačstvá, kopírovacie služby"
+    },
+    {
+      "id": 261,
+      "section_id": 34,
+      "title": "Polygrafické stroje a zariadenia"
+    },
+    {
+      "id": 262,
+      "section_id": 34,
+      "title": "Vydavateľstvá"
+    },
+    {
+      "id": 263,
+      "section_id": 34,
+      "title": "Médiá"
+    },
+    {
+      "id": 264,
+      "section_id": 35,
+      "title": "Výroba ostatné"
+    },
+    {
+      "id": 265,
+      "section_id": 35,
+      "title": "Kovové konštrukcie"
+    },
+    {
+      "id": 266,
+      "section_id": 35,
+      "title": "Zámočnícke práce"
+    },
+    {
+      "id": 267,
+      "section_id": 35,
+      "title": "Zváracia technika, zváračské práce"
+    },
+    {
+      "id": 268,
+      "section_id": 35,
+      "title": "Povrchová úprava materiálov"
+    },
+    {
+      "id": 269,
+      "section_id": 35,
+      "title": "Odliatky, výkovky, kováčske práce"
+    },
+    {
+      "id": 270,
+      "section_id": 36,
+      "title": "Zdravotnícka technika, zariadenia, pomôcky a materiál"
+    },
+    {
+      "id": 271,
+      "section_id": 36,
+      "title": "Liečivá. vitamíny"
+    },
+    {
+      "id": 272,
+      "section_id": 36,
+      "title": "Zdravotnícke služby"
+    },
+    {
+      "id": 273,
+      "section_id": 36,
+      "title": "Kaderníctva, manikúra, pedikúra, kozmetické salóny"
+    },
+    {
+      "id": 274,
+      "section_id": 36,
+      "title": "Ambulancie, lekári"
+    },
+    {
+      "id": 275,
+      "section_id": 36,
+      "title": "Sauny, soláriá"
+    },
+    {
+      "id": 276,
+      "section_id": 36,
+      "title": "Lekárne"
+    },
+    {
+      "id": 277,
+      "section_id": 36,
+      "title": "Tetovacie a piercing štúdiá"
+    }
+  ]
+}

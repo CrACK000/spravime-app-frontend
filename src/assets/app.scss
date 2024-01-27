@@ -1,0 +1,454 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+@import "variables";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  @apply
+  h-full w-full
+}
+
+body {
+  font-family: $font-page;
+  @apply
+  text-gray-900/90
+  dark:text-blue-100/50
+  bg-white
+  dark:bg-neutral-900
+  h-full w-full
+}
+
+#app {
+  @apply
+  bg-gradient-to-b from-blue-500/10 to-blue-800/5 dark:from-blue-500/10 dark:to-blue-900/10
+  flex flex-col w-full;
+  min-height: 100vh;
+}
+
+.review .review_buttons {
+  @apply lg:opacity-0 transition duration-100
+}
+.review:hover .review_buttons {
+  @apply opacity-100
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.panel {
+  @apply
+  bg-gray-800/50
+  shadow-md shadow-black/10
+  rounded-none md:rounded-lg
+  overflow-hidden;
+}
+
+.link {
+  @apply text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition duration-100
+}
+
+.input {
+  @apply
+  bg-gray-100 dark:bg-gray-800
+  rounded
+  border-0
+  ring-1 ring-gray-200 hover:ring-2 focus:ring-2 focus:ring-blue-600
+  dark:ring-1 dark:ring-gray-700/50 dark:hover:ring-2 dark:hover:ring-blue-400/20 dark:focus:ring-2 dark:focus:ring-blue-600
+  transition duration-200
+  text-gray-500 hover:text-gray-600 focus:text-gray-900
+  dark:text-gray-400 dark:hover:text-gray-300 dark:focus:text-gray-200
+}
+
+.input-field {
+  @apply
+  absolute top-full start-0 w-56
+  bg-white dark:bg-gray-900
+  rounded
+  mt-[3px]
+  p-3.5
+  text-sm
+  shadow-lg
+  transition duration-200
+  text-gray-800 dark:text-gray-400
+}
+
+.input-danger {
+  @apply
+  bg-gray-100 dark:bg-gray-800
+  rounded
+  border-0
+  ring-1 ring-red-600 hover:ring-2 focus:ring-2 focus:ring-red-600
+  dark:ring-1 dark:ring-red-400/20 dark:hover:ring-2 dark:hover:ring-red-400/20 dark:focus:ring-2 dark:focus:ring-red-600/60
+  transition duration-200
+  text-gray-500 hover:text-gray-600 focus:text-gray-900
+  dark:text-gray-400 dark:hover:text-gray-300 dark:focus:text-gray-200
+}
+
+.overlay-chat {
+  @apply
+  relative
+}
+.overlay-chat:after {
+  @apply
+  absolute bottom-0 w-full h-12
+  content-['']
+  bg-gradient-to-t from-white dark:from-gray-950/30 via-transparent
+  z-40
+}
+
+.tab-active {
+  @apply
+  relative
+  text-blue-600 dark:text-blue-500
+  bg-white/60 dark:bg-gray-800/40
+  font-semibold
+}
+.tab-active:after {
+  content: '';
+  @apply
+  absolute right-full top-[50%] translate-y-[-50%]
+  bg-blue-600
+  rounded
+  w-1 h-[75%]
+  me-1
+}
+
+.form-button {
+  @apply
+  text-white
+  bg-blue-700 hover:bg-blue-800
+  focus:ring-4 focus:ring-blue-300
+  font-medium
+  rounded-lg
+  text-sm
+  px-5 py-2.5
+  dark:bg-blue-600 dark:hover:bg-blue-700
+  focus:outline-none
+  dark:focus:ring-blue-800
+  cursor-pointer
+
+  disabled:text-white
+  disabled:bg-blue-400
+  disabled:dark:bg-blue-500
+  disabled:cursor-not-allowed
+}
+.form-button-sm {
+  @apply
+  px-3 py-2
+  text-xs
+  text-white
+  bg-blue-700 hover:bg-blue-800
+  focus:ring-4 focus:ring-blue-300
+  font-medium
+  rounded-lg
+  dark:bg-blue-600 dark:hover:bg-blue-700
+  focus:outline-none
+  dark:focus:ring-blue-800
+  cursor-pointer
+
+  disabled:text-white
+  disabled:bg-blue-400
+  disabled:dark:bg-blue-500
+  disabled:cursor-not-allowed
+}
+
+.form-success-button {
+  @apply
+  text-white
+  bg-emerald-700 hover:bg-emerald-800
+  focus:ring-4 focus:ring-emerald-300
+  font-medium
+  rounded-lg
+  text-sm
+  px-5 py-2.5
+  dark:bg-emerald-600 dark:hover:bg-emerald-700
+  focus:outline-none
+  dark:focus:ring-emerald-800
+  cursor-pointer
+
+  disabled:text-white
+  disabled:bg-emerald-400
+  disabled:dark:bg-emerald-500
+  disabled:cursor-not-allowed
+}
+
+.form-success-button-sm {
+  @apply
+  px-3 py-2
+  text-xs
+  text-white
+  bg-emerald-700 hover:bg-emerald-800
+  focus:ring-4 focus:ring-emerald-300
+  font-medium
+  rounded-lg
+  dark:bg-emerald-600 dark:hover:bg-emerald-700
+  focus:outline-none
+  dark:focus:ring-emerald-800
+  cursor-pointer
+
+  disabled:text-white
+  disabled:bg-emerald-400
+  disabled:dark:bg-emerald-500
+  disabled:cursor-not-allowed
+}
+
+.form-danger-button-sm {
+  @apply
+  focus:outline-none
+  text-white
+  bg-red-700 hover:bg-red-800
+  focus:ring-4 focus:ring-red-300
+  font-medium
+  rounded-lg
+  px-3 py-2
+  text-xs
+  dark:bg-red-600
+  dark:hover:bg-red-700
+  dark:focus:ring-red-900
+  cursor-pointer
+
+  disabled:text-white
+  disabled:bg-red-400
+  disabled:dark:bg-red-500
+  disabled:cursor-not-allowed
+}
+.form-secondary-button-sm {
+  @apply
+  px-3 py-2
+  text-xs font-medium text-gray-900
+  focus:outline-none
+  bg-white
+  rounded-lg
+  border border-gray-200
+  hover:bg-gray-100
+  hover:text-blue-700
+  focus:z-10
+  focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700
+  dark:bg-gray-800
+  dark:text-gray-400
+  dark:border-gray-600
+  dark:hover:text-white
+  dark:hover:bg-gray-700
+  cursor-pointer
+
+  disabled:text-white
+  disabled:dark:bg-gray-700
+  disabled:cursor-not-allowed
+}
+.form-danger-button {
+  @apply
+  focus:outline-none
+  text-white
+  bg-red-700 hover:bg-red-800
+  focus:ring-4 focus:ring-red-300
+  font-medium
+  rounded-lg
+  text-sm
+  px-5 py-2.5
+  dark:bg-red-600
+  dark:hover:bg-red-700
+  dark:focus:ring-red-900
+  cursor-pointer
+
+  disabled:text-white
+  disabled:bg-red-400
+  disabled:dark:bg-red-500
+  disabled:cursor-not-allowed
+}
+.form-secondary-button {
+  @apply
+  py-2.5 px-5
+  text-sm font-medium text-gray-900
+  focus:outline-none
+  bg-white
+  rounded-lg
+  border border-gray-200
+  hover:bg-gray-100
+  hover:text-blue-700
+  focus:z-10
+  focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700
+  dark:bg-gray-800
+  dark:text-gray-400
+  dark:border-gray-600
+  dark:hover:text-white
+  dark:hover:bg-gray-700
+  cursor-pointer
+
+  disabled:text-white
+  disabled:dark:bg-gray-700
+  disabled:cursor-not-allowed
+}
+
+.gg-badge {
+  @apply
+  bg-white dark:bg-blue-200/20
+  leading-none
+  inline-flex justify-center items-center
+  w-5 h-5
+  text-xs
+  rounded-full
+  shadow-md
+}
+
+.menu-icon {
+  @apply
+  w-6 h-6
+  flex justify-center items-center
+}
+
+.rework-element {
+  position: relative;
+}
+
+.rework-element:after {
+  content: 'comming soon';
+  @apply
+  absolute top-0 bottom-0 right-0 left-0
+  bg-white/50 dark:bg-black/5 backdrop-blur-sm
+  rounded-md md:rounded-lg
+  flex justify-center items-center
+  font-medium
+}
+
+.p-toast {
+  opacity: 1;
+}
+.p-toast .p-toast-message {
+  margin: 0 0 1rem 0;
+  box-shadow: none;
+  border-radius: 6px;
+}
+.p-toast .p-toast-message .p-toast-message-content {
+  padding: 1rem;
+  border-width: 0 0 0 0;
+}
+.p-toast .p-toast-message .p-toast-message-content .p-toast-message-text {
+  margin: 0 0 0 1rem;
+}
+.p-toast .p-toast-message .p-toast-message-content .p-toast-message-icon {
+  font-size: 2rem;
+}
+.p-toast .p-toast-message .p-toast-message-content .p-toast-message-icon.p-icon {
+  width: 2rem;
+  height: 2rem;
+}
+.p-toast .p-toast-message .p-toast-message-content .p-toast-summary {
+  font-weight: 700;
+}
+.p-toast .p-toast-message .p-toast-message-content .p-toast-detail {
+  margin: 0.5rem 0 0 0;
+}
+.p-toast .p-toast-message .p-toast-icon-close {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: transparent;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.p-toast .p-toast-message .p-toast-icon-close:hover {
+  background: rgba(255, 255, 255, 0.10);
+}
+.p-toast .p-toast-message .p-toast-icon-close:focus-visible {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem rgba(52, 211, 153, 0.2);
+}
+.p-toast .p-toast-message.p-toast-message-info {
+  background: rgba(59, 130, 246, 0.2);
+  border: solid #3b82f6;
+  border-width: 0 0 0 6px;
+  color: #93c5fd;
+}
+.p-toast .p-toast-message.p-toast-message-info .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-info .p-toast-icon-close {
+  color: #93c5fd;
+}
+.p-toast .p-toast-message.p-toast-message-success {
+  background: rgba(16, 185, 129, 0.2);
+  border: solid #10b981;
+  border-width: 0 0 0 6px;
+  color: #6ee7b7;
+}
+.p-toast .p-toast-message.p-toast-message-success .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-success .p-toast-icon-close {
+  color: #6ee7b7;
+}
+.p-toast .p-toast-message.p-toast-message-warn {
+  background: rgba(234, 179, 8, 0.2);
+  border: solid #eab308;
+  border-width: 0 0 0 6px;
+  color: #fde047;
+}
+.p-toast .p-toast-message.p-toast-message-warn .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-warn .p-toast-icon-close {
+  color: #fde047;
+}
+.p-toast .p-toast-message.p-toast-message-error {
+  background: rgba(239, 68, 68, 0.2);
+  border: solid #ef4444;
+  border-width: 0 0 0 6px;
+  color: #fca5a5;
+}
+.p-toast .p-toast-message.p-toast-message-error .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-error .p-toast-icon-close {
+  color: #fca5a5;
+}
+
+.p-dialog {
+  @apply
+  bg-white dark:bg-gray-800
+  shadow-2xl shadow-black/30
+  rounded-md md:rounded-lg
+}
+.p-dialog-header {
+  @apply
+  p-4
+  border-b border-gray-200 dark:border-gray-700/40
+}
+.p-dialog-content {
+  @apply
+  flex flex-col
+  divide-y divide-gray-200 dark:divide-gray-700/40
+}
+.p-dialog-content-form {
+  @extend .p-dialog-content;
+}
+.p-dialog-mask {
+  @apply
+  bg-black/20 dark:bg-gray-950/20
+  backdrop-blur-sm
+}
+
+.p-tooltip .p-tooltip-text {
+  @apply
+  bg-gray-300 dark:bg-gray-600 backdrop-blur
+  rounded
+  py-1.5 px-2
+  text-sm text-gray-700 dark:text-gray-300
+}
+.p-tooltip.p-tooltip-right .p-tooltip-arrow {
+  border-right-color: #424b57;
+}
+.p-tooltip.p-tooltip-left .p-tooltip-arrow {
+  border-left-color: #424b57;
+}
+.p-tooltip.p-tooltip-top .p-tooltip-arrow {
+  border-top-color: #424b57;
+}
+.p-tooltip.p-tooltip-bottom .p-tooltip-arrow {
+  border-bottom-color: #424b57;
+}
+
+.loading-bar {
+  @apply
+  rounded-full bg-gray-300 dark:bg-gray-700 max-w-full
+}
