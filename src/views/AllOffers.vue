@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-8/12 mx-auto">
+  <div class="w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-9/12 mx-auto">
     <div class="flex flex-col lg:flex-row gap-10">
       <div class="lg:w-4/12">
         <form @submit.prevent="submitFilter">

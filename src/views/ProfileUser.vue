@@ -1,10 +1,10 @@
 <template>
-  <div class="w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-8/12 mx-auto">
+  <div class="w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-9/12 mx-auto">
     <div class="flex flex-col lg:flex-row overflow-hidden bg-white/75 dark:bg-gray-800/50 shadow-md shadow-blue-700/5 dark:shadow-black/10 md:rounded-lg">
       <div class="w-full lg:w-3/12 bg-gray-100 dark:bg-black/5 pb-4 lg:p-4" :class="{ 'pt-4': account.verify }">
 
         <!-- Sidebar -->
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-2 gap-4 mt-6">
           <div class="text-center text-xs text-blue-500 font-medium col-span-2" v-if="account.verify">
             <i class="fa-regular fa-circle-check fa-lg me-0.5"></i> Profil je overený
           </div>
@@ -13,47 +13,146 @@
             <img v-else :src="account.avatar" :alt="account.username" class="w-52 rounded-3xl mx-auto shadow-xl" :class="{ 'border-4 border-transparent shadow-blue-600/40': account.verify }">
           </div>
           <div class="col-span-2 text-center">
-            <ul class="flex flex-col divide-y divide-gray-200 dark:divide-gray-700/40 md:hidden text-start">
-              <li class="py-2 px-3">
-                <div v-if="loading" class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 w-52 my-1.5 animate-pulse"></div>
-                <div v-else>
-                  <div class="w-32 inline-block text-lg font-medium text-gray-700 dark:text-gray-400">
+
+            <!-- mobile screen informácie -->
+            <div v-if="loading" class="md:hidden">
+              <ul class="flex flex-col divide-y divide-gray-200 dark:divide-gray-700/40">
+                <li class="py-2 px-3 w-full flex items-center">
+                  <div class="w-52">
+                    <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-24 my-1.5"></div>
+                  </div>
+                  <div class="w-full">
+                    <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-24 my-1.5"></div>
+                  </div>
+                </li>
+                <li class="py-2 px-3 w-full flex items-center">
+                  <div class="w-52">
+                    <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-20 my-1.5"></div>
+                  </div>
+                  <div class="w-full">
+                    <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-44 my-1.5"></div>
+                  </div>
+                </li>
+                <li class="py-2 px-3 w-full flex items-center">
+                  <div class="w-52">
+                    <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-28 my-1.5"></div>
+                  </div>
+                  <div class="w-full">
+                    <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-20 my-1.5"></div>
+                  </div>
+                </li>
+                <li class="py-2 px-3 w-full flex items-center">
+                  <div class="w-52">
+                    <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-24 my-1.5"></div>
+                  </div>
+                  <div class="w-full">
+                    <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-24 my-1.5"></div>
+                  </div>
+                </li>
+                <li class="py-2 px-3 w-full flex items-center">
+                  <div class="w-52">
+                    <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-20 my-1.5"></div>
+                  </div>
+                  <div class="w-full">
+                    <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-32 my-1.5"></div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div v-else class="md:hidden text-start">
+              <ul class="flex flex-col divide-y divide-gray-200 dark:divide-gray-700/40">
+                <li class="py-2 px-5 w-full flex items-center">
+                  <div class="w-52">
                     {{ state.accountTypeDisplay[account.type] }}
-                  </div>{{ account.name ?? account.username }}
-                </div>
-              </li>
-              <li class="py-2 px-3 truncate">
-                <div v-if="loading" class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 w-44 my-1.5 animate-pulse"></div>
-                <div v-else>
-                  <div class="w-32 inline-block">E-mail</div>
-                  <a :href="'mailto:' + account.email" class="link">{{ account.email }}</a>
-                </div>
-              </li>
-              <li v-if="account.mobile" class="py-2 px-3 truncate">
-                <div class="w-32 inline-block">Tel. číslo</div>
-                <a :href="'tel:' + account.mobile" class="link">{{ account.mobile }}</a>
-              </li>
-              <li v-if="account.socialPages" class="py-2 px-3">
-                <div class="w-32 inline-block">Sociálne siete</div>
-                <div class="inline-flex gap-3">
-                  <a v-for="social in account.socialPages" :href="social.name" target="_blank" class="link">
-                    <i class="fa-xl" :class="state.social_icons[social.type]"></i>
-                  </a>
-                </div>
-              </li>
-              <li v-if="loading" class="py-2 px-3">
-                <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 w-24 my-1.5 animate-pulse"></div>
-              </li>
-            </ul>
+                  </div>
+                  <div class="w-full text-lg font-medium text-gray-700 dark:text-gray-400">
+                    {{ account.name?.length ? account.name : account.username }}
+                  </div>
+                </li>
+                <li v-if="account.address" class="py-2 px-5 w-full flex items-center">
+                  <div class="w-52">Adresa</div>
+                  <div class="w-full">
+                    {{ account.address }}
+                  </div>
+                </li>
+                <li class="py-2 px-5 w-full flex items-center">
+                  <div class="w-52">
+                    E-mail
+                  </div>
+                  <div class="w-full">
+                    <a :href="'mailto:' + account.email" class="link">{{ account.email }}</a>
+                  </div>
+                </li>
+                <li v-if="account.mobile" class="py-2 px-5 w-full flex items-center">
+                  <div class="w-52">Tel. číslo</div>
+                  <div class="w-full">
+                    <a :href="'tel:' + account.mobile" class="link tracking-wider">{{ account.mobile }}</a>
+                  </div>
+                </li>
+                <li v-if="account.facebook?.length || account.instagram?.length || account.tiktok?.length || account.linkedin?.length" class="py-2 px-5 w-full flex items-center">
+                  <div class="w-52">Sociálne siete</div>
+                  <div class="w-full flex gap-5">
+                    <a v-tooltip.top="'Facebook'" :href="account.facebook" target="_blank" class="link" v-if="account.facebook?.length">
+                      <i class="fa-xl fa-brands fa-square-facebook"></i>
+                    </a>
+                    <a v-tooltip.top="'Instagram'" :href="account.instagram" target="_blank" class="link" v-if="account.instagram?.length">
+                      <i class="fa-xl fa-brands fa-instagram"></i>
+                    </a>
+                    <a v-tooltip.top="'TikTok'" :href="account.tiktok" target="_blank" class="link" v-if="account.tiktok?.length">
+                      <i class="fa-xl fa-brands fa-tiktok"></i>
+                    </a>
+                    <a v-tooltip.top="'TikTok'" :href="account.linkedin" target="_blank" class="link" v-if="account.linkedin?.length">
+                      <i class="fa-xl fa-brands fa-linkedin"></i>
+                    </a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Meno a slogan -->
             <div v-if="loading" role="status" class="max-w-sm animate-pulse pt-1">
               <div class="h-3.5 lg:block hidden rounded-full bg-gray-300 dark:bg-gray-700 w-44 mb-4 mx-auto"></div>
               <div class="h-2 rounded-full bg-gray-300 dark:bg-gray-700 w-60 mx-auto"></div>
             </div>
             <div v-else>
-              <h1 class="text-lg font-medium lg:block hidden mt-5">{{ account.name ?? account.username }}</h1>
+              <h1 class="text-lg font-medium lg:block hidden mt-5">{{ account.name?.length ? account.name : account.username }}</h1>
               <div class="text-xs opacity-75 px-4 py-6 md:py-4 md:px-0" v-if="account.slogan" v-text="account.slogan"></div>
             </div>
+
           </div>
+
+          <!-- Rating -->
+
+          <div class="col-span-2 bg-gray-50 dark:bg-gray-800/50 rounded-lg divide-y divide-gray-200 dark:divide-gray-700/40 mx-4 lg:mx-0" v-if="reviews.length">
+            <div class="flex justify-between items-center p-3">
+              <div class="text-sm w-full">Priemer hodnotenia</div>
+              <div class="text-xl w-20 text-blue-600 font-bold text-center flex items-center gap-1">
+                <div>{{ account.average_rating }}</div>
+                <svg class="w-4 h-4 mb-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="flex justify-between items-center p-3">
+              <div class="text-sm w-full">Recenzie od užívateľov</div>
+              <div class="text-xl w-20 font-bold text-center">
+                {{ account.count_reviews }}
+              </div>
+            </div>
+            <div class="flex justify-between items-center p-3">
+              <div class="text-sm w-full">Odporúčajú</div>
+              <div class="text-xl w-20 font-bold text-center text-emerald-500">
+                {{ reviews.filter(review => review.recommendation).length }}
+              </div>
+            </div>
+            <div class="flex justify-between items-center p-3">
+              <div class="text-sm w-full">Neodporúčajú</div>
+              <div class="text-xl w-20 font-bold text-center text-red-400">
+                {{ reviews.filter(review => !review.recommendation).length }}
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -94,42 +193,97 @@
         </div>
 
         <!-- Informácie -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4" :class="{'mb-14': account.description}">
-          <div class="lg:block hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-10">
+          <div v-if="loading" class="md:block hidden">
             <ul class="flex flex-col divide-y divide-gray-200 dark:divide-gray-700/40">
-              <li class="py-2 px-3">
-                <div v-if="loading" class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 w-52 my-1.5 animate-pulse"></div>
-                <div v-else>
-                  <div class="w-32 inline-block text-lg font-medium text-gray-700 dark:text-gray-400">
-                    {{ state.accountTypeDisplay[account.type] }}
-                  </div>{{ account.name ?? account.username }}
+              <li class="py-2 px-3 w-full flex items-center">
+                <div class="w-52">
+                  <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-24 my-1.5"></div>
+                </div>
+                <div class="w-full">
+                  <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-24 my-1.5"></div>
                 </div>
               </li>
-              <li v-if="account.address" class="py-2 px-3 truncate">
-                <div class="w-32 inline-block">Adresa</div>
-                <span>{{ account.address }}</span>
+              <li class="py-2 px-3 w-full flex items-center">
+                <div class="w-52">
+                  <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-20 my-1.5"></div>
+                </div>
+                <div class="w-full">
+                  <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-44 my-1.5"></div>
+                </div>
               </li>
-              <li class="py-2 px-3 truncate">
-                <div v-if="loading" class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 w-44 my-1.5 animate-pulse"></div>
-                <div v-else>
-                  <div class="w-32 inline-block">E-mail</div>
+              <li class="py-2 px-3 w-full flex items-center">
+                <div class="w-52">
+                  <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-28 my-1.5"></div>
+                </div>
+                <div class="w-full">
+                  <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-20 my-1.5"></div>
+                </div>
+              </li>
+              <li class="py-2 px-3 w-full flex items-center">
+                <div class="w-52">
+                  <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-24 my-1.5"></div>
+                </div>
+                <div class="w-full">
+                  <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-24 my-1.5"></div>
+                </div>
+              </li>
+              <li class="py-2 px-3 w-full flex items-center">
+                <div class="w-52">
+                  <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-20 my-1.5"></div>
+                </div>
+                <div class="w-full">
+                  <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 max-w-full w-32 my-1.5"></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div v-else class="md:block hidden">
+            <ul class="flex flex-col divide-y divide-gray-200 dark:divide-gray-700/40">
+              <li class="py-2 px-3 w-full flex items-center">
+                <div class="w-52">
+                  {{ state.accountTypeDisplay[account.type] }}
+                </div>
+                <div class="w-full text-lg font-medium text-gray-700 dark:text-gray-400">
+                  {{ account.name?.length ? account.name : account.username }}
+                </div>
+              </li>
+              <li v-if="account.address" class="py-2 px-3 w-full flex items-center">
+                <div class="w-52">Adresa</div>
+                <div class="w-full">
+                  {{ account.address }}
+                </div>
+              </li>
+              <li class="py-2 px-3 w-full flex items-center">
+                <div class="w-52">
+                  E-mail
+                </div>
+                <div class="w-full">
                   <a :href="'mailto:' + account.email" class="link">{{ account.email }}</a>
                 </div>
               </li>
-              <li v-if="account.mobile" class="py-2 px-3 truncate">
-                <div class="w-32 inline-block">Tel. číslo</div>
-                <a :href="'tel:' + account.mobile" class="link tracking-wider">{{ account.mobile }}</a>
-              </li>
-              <li v-if="account.socialPages" class="py-2 px-3">
-                <div class="w-32 inline-block">Sociálne siete</div>
-                <div class="inline-flex gap-3">
-                  <a v-for="social in account.socialPages" :href="social.name" target="_blank" class="link">
-                    <i class="fa-xl" :class="state.social_icons[social.type]"></i>
-                  </a>
+              <li v-if="account.mobile" class="py-2 px-3 w-full flex items-center">
+                <div class="w-52">Tel. číslo</div>
+                <div class="w-full">
+                  <a :href="'tel:' + account.mobile" class="link tracking-wider">{{ account.mobile }}</a>
                 </div>
               </li>
-              <li v-if="loading" class="py-2 px-3">
-                <div class="h-3 rounded-full bg-gray-300 dark:bg-gray-700 w-24 my-1.5 animate-pulse"></div>
+              <li v-if="account.facebook?.length || account.instagram?.length || account.tiktok?.length || account.linkedin?.length" class="py-2 px-3 w-full flex items-center">
+                <div class="w-52">Sociálne siete</div>
+                <div class="w-full flex gap-5">
+                  <a v-tooltip.top="'Facebook'" :href="account.facebook" target="_blank" class="link" v-if="account.facebook?.length">
+                    <i class="fa-xl fa-brands fa-square-facebook"></i>
+                  </a>
+                  <a v-tooltip.top="'Instagram'" :href="account.instagram" target="_blank" class="link" v-if="account.instagram?.length">
+                    <i class="fa-xl fa-brands fa-instagram"></i>
+                  </a>
+                  <a v-tooltip.top="'TikTok'" :href="account.tiktok" target="_blank" class="link" v-if="account.tiktok?.length">
+                    <i class="fa-xl fa-brands fa-tiktok"></i>
+                  </a>
+                  <a v-tooltip.top="'TikTok'" :href="account.linkedin" target="_blank" class="link" v-if="account.linkedin?.length">
+                    <i class="fa-xl fa-brands fa-linkedin"></i>
+                  </a>
+                </div>
               </li>
             </ul>
           </div>
@@ -185,7 +339,7 @@
                 <img :src="review.author_avatar" class="w-10 h-10 xs:w-14 xs:h-14 rounded-full shadow-lg" :alt="review.author_name ?? review.author_username">
                 <div class="flex flex-col md:flex-row justify-between items-start">
                   <div>
-                    <router-link :to="{ name: 'profile', params: { id: review.author_id } }" class="font-medium hover:text-gray-900 dark:hover:text-gray-300 transition">{{ review.author_name ?? review.author_username }}</router-link>
+                    <router-link :to="{ name: 'profile', params: { id: review.author_id } }" class="font-medium hover:text-gray-900 dark:hover:text-gray-300 transition">{{ review.author_name?.length ? review.author_name : review.author_username }}</router-link>
                     <div class="flex flex-col md:flex-row gap-1 md:gap-5 md:items-center text-xs mt-0.5">
                       <div>{{ timeSince(review.created_at) }}</div>
                       <div>
@@ -218,7 +372,7 @@
               <div class="p-5 text-sm" v-html="nl2br(review.description)"></div>
 
               <!-- Modálne okno Upraviť recenziu -->
-              <edit-review :show-modal="showModalEditReview" :key="review.id" :review-id="review.id" v-if="user.id === review.author_id"/>
+              <edit-review :show-modal="showModalEditReview" :key="review.id" :review-data="{ reviewId: review.id, reviewStar: review.rating, reviewRecommendation: review.recommendation, reviewDescription: review.description }" v-if="user.id === review.author_id"/>
 
               <!-- Modálne okno Nahlásiť recenziu -->
               <report-review :show-modal="showModalReportReview" :key="review.id" :review-id="review.id" v-if="user.id === Number(route.params.id) && !(user.id === review.author_id)"/>
@@ -309,6 +463,7 @@ const state = reactive({
   social_icons: {
     'instagram': 'fa-brands fa-instagram',
     'facebook': 'fa-brands fa-square-facebook',
+    'tiktok': 'fa-brands fa-tiktok',
   },
 })
 

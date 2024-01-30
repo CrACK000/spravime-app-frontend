@@ -17,12 +17,12 @@ export type User = {
     section_title?: string,
     category_title?: string,
     last_message?: Message,
-    socialPages?: [
-        {
-            type: 'instagram' | 'facebook',
-            name: string,
-        }
-    ]
+    count_reviews?: number,
+    average_rating?: string,
+    facebook?: string,
+    instagram?: string,
+    tiktok?: string,
+    linkedin?: string,
 }
 
 export type Message = {

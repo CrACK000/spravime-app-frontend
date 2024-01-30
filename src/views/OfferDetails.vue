@@ -1,21 +1,21 @@
 <template>
-  <div class="w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-8/12 mx-auto">
+  <div class="w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-9/12 mx-auto" v-if="offer">
     <div class="flex flex-col lg:flex-row gap-6 lg:gap-10">
       <div class="lg:w-8/12 flex flex-col gap-6">
 
         <panel divide="y" v-if="!loading">
           <div class="p-4 flex items-center justify-between gap-3">
-            <div v-if="offer" v-text="offer.title"></div>
+            <div v-text="offer.title"></div>
           </div>
           <div class="p-4">
             <div class="flex flex-col-reverse md:flex-row gap-4">
               <div class="md:w-8/12">
-                <div v-if="offer" class="p-4" v-text="offer.description"></div>
+                <div class="p-4" v-html="nl2br(offer.description)"></div>
               </div>
               <div class="md:w-4/12 flex gap-3 flex-row md:flex-col">
                 <div class="w-full bg-black/5 shadow p-3 rounded">
                   <div class="opacity-75 text-sm mb-2">Status</div>
-                  <div v-if="offer">
+                  <div>
                     <div v-if="offer.status" class="text-blue-500 flex items-center gap-3 font-medium">
                       <div class="bg-blue-500 shadow-md shadow-blue-600/100 w-1.5 h-1.5 rounded-full inline-block"></div>
                       Otvorené
@@ -28,7 +28,7 @@
                 </div>
                 <div class="w-full bg-black/5 shadow p-3 rounded">
                   <div class="opacity-75 text-sm mb-2">Miesto práce</div>
-                  <div v-if="offer" v-text="offer.address"></div>
+                  <div v-text="offer.address"></div>
                 </div>
               </div>
             </div>
@@ -123,30 +123,36 @@
                 <div v-if="author">
                   <router-link :to="{ name: 'profile' , params: { id: author.id }}" class="link" :class="{ 'font-semibold': author.verify }">
                     <i v-if="author.verify" class="fa-regular fa-circle-check fa-sm me-0.5"></i>
-                    {{ author?.name ?? author?.username }}
+                    {{ author.name?.length ? author.name : author.username }}
                   </router-link>
                 </div>
               </li>
               <li class="flex items-center justify-between px-2 py-2.5 pt-3">
                 <span>Sekcia</span>
-                <div v-if="offer" v-text="offer.section_title" class="text-end"></div>
+                <div v-text="offer.section_title" class="text-end"></div>
               </li>
               <li class="flex items-center justify-between px-2 py-2.5 pt-3">
                 <span>Kategória</span>
-                <div v-if="offer" v-text="offer.category_title" class="text-end"></div>
+                <div v-text="offer.category_title" class="text-end"></div>
               </li>
               <li class="flex items-center justify-between px-2 py-2.5 pt-3">
-                <span>Vytvorené dňa</span>
-                <div v-if="offer" v-text="formatIsoDate(offer.created_at)" class="text-end"></div>
+                <span>Vytvorené</span>
+                <div v-text="timeSince(offer.created_at)" class="text-end"></div>
               </li>
               <li class="flex items-center justify-between px-2 py-2.5 pt-3">
-                <span>Začiatok prác</span>
-                <div v-if="offer" v-text="formatIsoDate(offer.start_at)" class="text-end"></div>
+                <div>{{ offer.status ? 'Aktualne do' : 'Uzavreté dňa' }}</div>
+                <div v-text="formatIsoDate(offer.closed_at)" class="text-end"></div>
               </li>
-              <li class="flex items-center justify-between px-2 py-2.5 pt-3">
-                <div v-if="offer">{{ offer.status ? 'Trvá do' : 'Uzavreté dňa' }}</div>
-                <div v-if="offer" v-text="formatIsoDate(offer.end_at)" class="text-end"></div>
-              </li>
+              <template v-if="offer.time_range">
+                <li class="flex items-center justify-between px-2 py-2.5 pt-3">
+                  <span>Začiatok prác</span>
+                  <div v-text="formatIsoDate(offer.start_at)" class="text-end"></div>
+                </li>
+                <li class="flex items-center justify-between px-2 py-2.5 pt-3">
+                  <div>Koniec prác</div>
+                  <div v-text="formatIsoDate(offer.end_at)" class="text-end"></div>
+                </li>
+              </template>
             </ul>
           </div>
         </panel>
@@ -191,7 +197,7 @@
         </panel>
 
         <div v-if="!loadingMsg">
-          <form method="post" v-if="offer && offer.status && auth.loggedIn.value && !checkAuthor" @submit.prevent="sendMsg">
+          <form method="post" v-if="offer.status && loggedIn && !checkAuthor" @submit.prevent="sendMsg">
             <panel divide="y" v-if="checkMsg">
               <div class="p-4">
                 Odpovedať
@@ -245,17 +251,18 @@ import Cookies from 'js-cookie';
 import Panel from "@/components/Panel.vue";
 import PanelFormActions from "@/components/PanelFormActions.vue";
 import { settings } from "@/plugins/config";
-import { formatIsoDate } from "@/plugins/functions";
+import { formatIsoDate, nl2br, timeSince } from "@/plugins/functions";
 import type { Offer } from "@/types/offers";
-import type { User } from "@/types/users";
+import type {Auth, User} from "@/types/users";
 
-const auth = inject<any>('auth');
+const auth = inject<Auth>('auth');
+const loggedIn = ref(auth?.loggedIn as boolean);
 
 useMeta({ title: 'Požiadavka'});
 
 const route = useRoute()
-const offer = ref<Offer | null>(null)
-const author = ref<User | null>(null)
+const offer = ref<Offer>({} as Offer)
+const author = ref<User>({} as User)
 
 const loading = ref(false)
 const loadingMsg = ref(false)
@@ -278,7 +285,7 @@ const loadOffer = async () => {
 
     offer.value = response.data
 
-    const authorResponse = await axios.get(`${settings.backend}/api/user/link/${offer.value?.author}`, { withCredentials: true })
+    const authorResponse = await axios.get(`${settings.backend}/api/user/link/${offer.value.author}`, { withCredentials: true })
 
     author.value = authorResponse.data
 

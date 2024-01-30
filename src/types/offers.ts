@@ -9,11 +9,13 @@ export type Offer = {
     approved: boolean,
     created_at: string,
     updated_at: string,
+    time_range: boolean,
     start_at: string,
     end_at: string,
     closed_at: string,
-    section_title: string,
-    category_title: string,
+    views?: string,
+    section_title?: string,
+    category_title?: string,
 }
 
 export type Sections = {

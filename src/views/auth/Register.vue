@@ -1,63 +1,65 @@
 <template>
-  <div class="w-full md:w-11/12 lg:w-6/12 xl:w-5/12 2xl:w-3/12 mx-auto">
+  <div class="w-full md:w-11/12 lg:w-6/12 xl:w-5/12 2xl:w-5/12 mx-auto">
     <form method="post" @keyup="registerValid" @submit.prevent="register">
       <panel divide="y">
         <div class="p-4">Nový účet</div>
-        <div class="p-8 md:p-14">
+        <panel-form width="full">
 
-          <ul v-if="fieldErrors.length" class="text-red-500 -mt-8">
-            <li v-for="error in fieldErrors" class="flex items-center mb-3">
-              <div class="flex items-start gap-2">
-                <div class="pt-0.5">
-                  <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13V8m0 8h0m9-4a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                  </svg>
+          <div class="flex flex-col gap-6 max-w-md">
+            <div>
+              <label class="mb-1 block" for="username">Používateľské meno</label>
+              <input type="text" :class="[ getError('username') ? 'input-danger' : 'input', 'w-full']" id="username" v-model="registerData.username">
+              <div class="text-red-500 text-sm mt-2" v-if="getError('username')" v-text="getError('username')"></div>
+            </div>
+            <div>
+              <label class="mb-1 block" for="email">Prihlasovací email</label>
+              <input type="email" :class="[ getError('email') ? 'input-danger' : 'input', 'w-full']" id="email" v-model="registerData.email">
+              <div class="text-red-500 text-sm mt-2" v-if="getError('email')" v-text="getError('email')"></div>
+            </div>
+            <div>
+              <label class="mb-1 block" for="password">Heslo</label>
+              <div class="relative">
+                <input type="password" :class="[ getError('field') ? 'input-danger' : 'input', 'w-full']" id="password" v-model="registerData.password" @focus="dataPassword.fieldInput = true" @blur="dataPassword.fieldInput = false">
+                <div class="absolute inset-y-0 end-0 flex items-center pe-3.5">
+                  <button type="button" v-tooltip.top="dataPassword.showNewPassText" @click="showNewPass">
+                    <svg v-if="!dataPassword.showNewPass" class="w-5 h-5 text-gray-600 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14">
+                      <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        <path d="M10 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                        <path d="M10 13c4.97 0 9-2.686 9-6s-4.03-6-9-6-9 2.686-9 6 4.03 6 9 6Z"/>
+                      </g>
+                    </svg>
+                    <svg v-else class="w-5 h-5 text-gray-600 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1.933 10.909A4.357 4.357 0 0 1 1 9c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 19 9c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M2 17 18 1m-5 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                    </svg>
+                  </button>
                 </div>
-                {{ error.message }}
-              </div>
-            </li>
-          </ul>
-
-          <div class="flex flex-col gap-y-6">
-            <input type="text" v-model="registerData.username" :class="[ getError('username') ? 'input-danger' : 'input', 'w-full']" placeholder="Používateľské meno">
-            <input type="email" v-model="registerData.email" :class="[ getError('email') ? 'input-danger' : 'input', 'w-full']" placeholder="Prihlasovací email">
-            <div class="relative">
-              <input type="password" :class="[ getError('field') ? 'input-danger' : 'input', 'w-full']" id="newPass" v-model="registerData.password" @focus="dataPassword.fieldInput = true" @blur="dataPassword.fieldInput = false" placeholder="Heslo">
-              <div class="absolute inset-y-0 end-0 flex items-center pe-3.5">
-                <button type="button" v-tooltip.top="dataPassword.showNewPassText" @click="showNewPass">
-                  <svg v-if="!dataPassword.showNewPass" class="w-5 h-5 text-gray-600 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14">
-                    <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                      <path d="M10 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                      <path d="M10 13c4.97 0 9-2.686 9-6s-4.03-6-9-6-9 2.686-9 6 4.03 6 9 6Z"/>
-                    </g>
-                  </svg>
-                  <svg v-else class="w-5 h-5 text-gray-600 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1.933 10.909A4.357 4.357 0 0 1 1 9c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 19 9c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M2 17 18 1m-5 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                  </svg>
-                </button>
-              </div>
-              <div class="input-field" v-show="dataPassword.fieldInput">
-                <div class="py-2.5">
-                  <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                    <div class="h-2.5 rounded-full" :class="[dataPassword.newPassSuccess ? 'bg-emerald-500' : 'bg-amber-600']" :style="{ 'width': dataPassword.fieldProgress }"></div>
+                <div class="input-field" v-show="dataPassword.fieldInput">
+                  <div class="py-2.5">
+                    <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                      <div class="h-2.5 rounded-full" :class="[dataPassword.newPassSuccess ? 'bg-emerald-500' : 'bg-amber-600']" :style="{ 'width': dataPassword.fieldProgress }"></div>
+                    </div>
                   </div>
+                  <div class="mb-1.5">
+                    <span v-if="getError('field')" class="text-amber-600 font-bold">Slabé heslo</span>
+                    <span v-else-if="!dataPassword.newPassSuccess" v-text="dataPassword.fieldText"></span>
+                    <span v-else class="text-emerald-500 font-bold flex items-center justify-center mt-1">Heslo je silné <i class="fa-regular fa-thumbs-up ms-2 fa-lg"></i></span>
+                  </div>
+                  <ul class="text-xs">
+                    <template v-for="err in errors">
+                      <li v-if="err.where === 'field'" v-html="err.message"></li>
+                    </template>
+                  </ul>
                 </div>
-                <div class="mb-1.5">
-                  <span v-if="getError('field')" class="text-amber-600 font-bold">Slabé heslo</span>
-                  <span v-else-if="!dataPassword.newPassSuccess" v-text="dataPassword.fieldText"></span>
-                  <span v-else class="text-emerald-500 font-bold flex items-center justify-center mt-1">Heslo je silné <i class="fa-regular fa-thumbs-up ms-2 fa-lg"></i></span>
-                </div>
-                <ul class="text-xs">
-                  <template v-for="err in errors">
-                    <li v-if="err.where === 'field'" v-html="err.message"></li>
-                  </template>
-                </ul>
               </div>
             </div>
-            <input type="password" v-model="registerData.rePassword" :class="[ getError('password') ? 'input-danger' : 'input', 'w-full']" placeholder="Zopakujte heslo">
+            <div>
+              <label class="mb-1 block" for="password">Zopakujte heslo</label>
+              <input type="password" :class="[ getError('password') ? 'input-danger' : 'input', 'w-full']" id="password" v-model="registerData.rePassword">
+              <div class="text-red-500 text-sm mt-2" v-if="getError('password')" v-text="getError('password')"></div>
+            </div>
           </div>
 
-        </div>
+        </panel-form>
         <panel-form-actions>
           <template #left>
             <router-link :to="{ name: 'login' }" class="text-gray-500 hover:text-blue-500 font-medium transition">
@@ -86,6 +88,7 @@ import PanelFormActions from "@/components/PanelFormActions.vue";
 import { settings } from "@/plugins/config";
 import type {Auth} from "@/types/users";
 import {useToast} from "primevue/usetoast";
+import PanelForm from "@/components/PanelForm.vue";
 
 useMeta({ title: 'Vytvoriť účet' })
 
@@ -94,7 +97,6 @@ const loggedIn = ref(auth?.loggedIn as boolean)
 
 const toast = useToast()
 
-const fieldErrors = computed(() => errors.value.filter((error: any) => error.where !== 'field'));
 const errors = ref<any>([])
 const changed = ref<boolean>(false)
 const loading = ref<boolean>(false)
@@ -128,6 +130,8 @@ const register = () => {
         registerData.value = { username: '', email: '', password: '', rePassword: ''}
         router.push({ name: 'login' })
       } else {
+        registerData.value.password = ''
+        registerData.value.rePassword = ''
         errors.value.push({ where: res.data.where, message: res.data.message })
       }
       console.log(res)
@@ -181,7 +185,11 @@ const validEmail = (email: string) => {
 const validUsername = (username: string) =>  {
   if (username.length >= 3){
     if (username.length < 60) {
-      return true
+      if (username.includes(' ')) {
+        errors.value.push({ where: 'username', message: 'Používateľské meno nemôže obsahovať medzeru.' })
+      } else {
+        return true;
+      }
     } else {
       errors.value.push({ where: 'username', message: 'Používateľské meno môže obsahovať maximálne 60 znakov.' })
     }

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-8/12 mx-auto">
+  <div class="w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-9/12 mx-auto">
     <div class="flex flex-col lg:flex-row gap-10">
       <div class="lg:w-4/12">
 
@@ -67,18 +67,23 @@
                 <div class="col-span-2 sm:col-span-1">
                   <img :src="user.avatar" class="rounded-full w-full shadow-xl mx-auto" alt="CrACK">
                 </div>
-                <div class="col-span-6 sm:col-span-5">
+                <div :class="[user.count_reviews ? 'col-span-6 sm:col-span-5' : 'col-span-8 sm:col-span-7']">
                   <div class="font-medium mb-0.5 sm:mb-1" v-text="user.name ?? user.username"></div>
                   <div class="text-xs opacity-75 line-clamp-2" v-text="user.slogan"></div>
                 </div>
-                <div class="col-span-2">
+                <div class="col-span-2" v-if="user.count_reviews">
                   <div class="text-sm font-semibold text-center mb-1 hidden sm:block">Hodnotenie</div>
                   <div class="text-xl font-bold text-center">
-                    <div class="text-blue-500">23 %</div>
+                    <div class="text-blue-500 flex items-center gap-1 justify-center">
+                      {{ user.average_rating }}
+                      <svg class="w-5 h-5 mb-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z"/>
+                      </svg>
+                    </div>
                   </div>
                 </div>
                 <div class="col-span-2 ms-auto hidden sm:block">
-                  <button class="form-secondary-button-sm">
+                  <button type="button" class="form-secondary-button-sm">
                     Zobraziť viac
                   </button>
                 </div>

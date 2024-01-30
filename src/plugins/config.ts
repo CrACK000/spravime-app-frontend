@@ -1,3 +1,3 @@
 export const settings = {
-    backend: 'https://spravime-app.up.railway.app'
+    backend: 'http://localhost:4000' //https://spravime-app.up.railway.app
 }

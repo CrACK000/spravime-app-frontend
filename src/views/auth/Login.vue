@@ -39,7 +39,7 @@
 <script setup lang="ts">
 import {useMeta} from "vue-meta"
 import axios from 'axios'
-import {inject, onMounted, ref} from "vue"
+import {inject, ref} from "vue"
 import router from "@/router"
 import { settings } from "@/plugins/config"
 import Panel from "@/components/Panel.vue"
