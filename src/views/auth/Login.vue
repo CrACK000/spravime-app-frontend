@@ -3,7 +3,7 @@
   <div class="w-full md:w-11/12 lg:w-6/12 xl:w-5/12 2xl:w-3/12 mx-auto">
     <form method="post" @submit.prevent="login" @change="changed = true">
       <panel divide="y">
-        <div class="p-4">Prihlásiť sa</div>
+        <div class="py-4 px-6 font-medium uppercase">Prihlásiť sa</div>
         <div class="p-8 md:p-14">
 
           <ul v-if="errors.length" class="text-red-500 -mt-8">
@@ -85,10 +85,6 @@ const login = () => {
     .finally(() => {
       loading.value = false
     })
-}
-
-if (loggedIn.value){
-  router.push({ name: 'index' })
 }
 
 </script>

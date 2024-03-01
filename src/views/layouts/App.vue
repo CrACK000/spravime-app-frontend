@@ -3,7 +3,11 @@
     <template v-slot:title="{ content }">{{ content }} - spravi.me</template>
   </metainfo>
   <Navbar />
-  <RouterView class="mb-20" />
+  <RouterView class="mb-20" v-slot="{ Component, route }">
+    <transition :name="String(route.meta.transition)">
+      <component :is="Component"/>
+    </transition>
+  </RouterView>
   <Toast position="bottom-right" group="br" />
   <Footer/>
 </template>

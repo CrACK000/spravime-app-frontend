@@ -1,8 +1,8 @@
 import { createApp } from 'vue'
 import { createMetaManager } from "vue-meta";
 import auth from '@/auth'
-import App from './views/layouts/App.vue'
-import router from './router'
+import App from '@/views/layouts/App.vue'
+import router from '@/router'
 import PrimeVue from 'primevue/config'
 
 import ToastService from 'primevue/toastservice';

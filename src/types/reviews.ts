@@ -10,4 +10,5 @@ export type Reviews = {
     author_username: string,
     author_name: string,
     author_avatar: string
+    author_verify: boolean
 }

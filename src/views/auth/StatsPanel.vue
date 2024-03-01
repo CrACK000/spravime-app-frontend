@@ -1,74 +1,77 @@
 <template>
-  <panel-grid grid="4" class="rework-element">
+  <div class="grid grid-cols-2 gap-0.5 md:gap-10 -mx-4 md:-mx-0">
 
-    <panel class="col-span-4 xxs:col-span-2 sm:col-span-1 p-2 md:p-4">
-      <div class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">230</div>
-      <div class="text-xs opacity-75">Zobrazenia profilu</div>
-    </panel>
-
-    <panel class="col-span-4 xxs:col-span-2 sm:col-span-1 p-2 md:p-4">
-      <div class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">14</div>
-      <div class="text-xs opacity-75">Pozícia</div>
-    </panel>
-
-    <panel class="col-span-4 xxs:col-span-2 sm:col-span-1 p-2 md:p-4">
-      <div class="flex justify-between">
-        <div class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">4</div>
-        <div class="flex flex-col -space-y-2.5">
-          <i v-for="i in 4" class="fa-solid fa-angle-up" :key="i"></i>
-        </div>
+    <panel class="col-span-1 xxs:col-span-2 sm:col-span-1 p-2 md:p-4 flex justify-between relative">
+      <div id="pie-chart"></div>
+      <div class="absolute bottom-4 right-4">
+        <div class="leading-none text-5xl font-bold text-gray-900 dark:text-white pb-2 text-end">230</div>
+        <div class="font-normal text-gray-500 dark:text-gray-400 text-end">Zobrazenia profilu</div>
       </div>
-      <div class="text-xs opacity-75">Rank</div>
     </panel>
 
-    <panel class="col-span-4 xxs:col-span-2 sm:col-span-1 p-2 md:p-4">
-      <div class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">4.5</div>
-      <div class="text-xs opacity-75">Hodnotenie profilu</div>
+    <panel class="col-span-1 xxs:col-span-2 sm:col-span-1 p-2 md:p-4 flex justify-between items-end relative h-[200px]">
+      <div id="bar-chart" class="w-[180px] h-[200px]"></div>
+      <div class="absolute bottom-4 right-4">
+        <div class="leading-none text-5xl font-bold text-gray-900 dark:text-white pb-2 text-end">{{ user.average_rating }}</div>
+        <div class="font-normal text-gray-500 dark:text-gray-400 text-end">Hodnotenie profilu</div>
+      </div>
     </panel>
 
-    <panel class="col-span-4 w-full">
-      <div>
-        <div class="flex justify-between p-6 pb-0">
+    <panel class="col-span-2">
+      <div class="grid grid-cols-12 items-end">
+        <div class="col-span-12 md:col-span-5 p-6">
           <div>
-            <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">1 233</h5>
-            <p class="text-base font-normal text-gray-500 dark:text-gray-400">Návštevnosť profilu za posledný mesiac</p>
-          </div>
-          <div class="flex px-2.5">
-            <Menu as="div" class="relative inline-block">
-              <MenuButton class="text-gray-500 dark:text-gray-400 hover:bg-gray-300/60 dark:hover:bg-gray-700 focus:outline-none rounded-lg text-sm p-2.5 leading-none transition duration-100">
-                <i class="fa-solid fa-calendar-days"></i>
-              </MenuButton>
-              <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-                <MenuItems class="absolute right-0 z-10 mt-2 origin-top-right rounded-md shadow w-44 bg-gray-700 overflow-hidden">
-                  <MenuItem>
-                    <button class="block px-4 py-3 text-gray-200 hover:bg-gray-600 hover:text-white w-full">posledný mesiac</button>
-                  </MenuItem>
-                  <MenuItem>
-                    <button class="block px-4 py-3 text-gray-200 hover:bg-gray-600 hover:text-white w-full">posledných 7 dní</button>
-                  </MenuItem>
-                </MenuItems>
-              </transition>
-            </Menu>
+            <h5 class="leading-none text-5xl font-bold text-gray-900 dark:text-white pb-3">1 233</h5>
+            <p class="text-sm opacity-75">posledných 15 dní</p>
+            <p class="font-normal text-gray-500 dark:text-gray-400">Návštevnosť profilu</p>
           </div>
         </div>
-        <div id="area-chart"></div>
+        <div class="col-span-12 md:col-span-7">
+          <div id="area-chart"></div>
+        </div>
       </div>
     </panel>
 
-  </panel-grid>
+  </div>
 </template>
 
 <script setup lang="ts">
 import Panel from "@/components/Panel.vue";
-import PanelGrid from "@/components/PanelGrid.vue";
-import {onMounted} from "vue";
+import {inject, onMounted, ref} from "vue";
 import ApexCharts from 'apexcharts'
-import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
 import {useMeta} from "vue-meta";
+import type {Auth, User} from "@/types/users";
 
 useMeta({ title: 'Štatistika' })
+
+const auth = inject<Auth>('auth');
+const user = ref(auth?.user as User)
+const loggedIn = ref(auth?.loggedIn as boolean)
+
+function generateRandomNumbers(min: number, max: number, count: number) {
+  let numbers = [];
+  for (let i=0; i<count; i++) {
+    numbers.push(Math.floor(Math.random() * (max - min + 1)) + min);
+  }
+  return numbers;
+}
+function generateLastDays(count: number) {
+  let days = [];
+  for (let i=1; i<=count; i++) {
+    let date = new Date();
+    date.setDate(date.getDate() - i);
+    let formattedDate = `${('0' + date.getDate()).slice(-2)} ${getMonthName(date.getMonth())}`;
+    days.push(formattedDate);
+  }
+  return days;
+}
+function getMonthName(index: any) {
+  const months = ["Jan", "Feb", "Mar", "Apr", "Máj", "Jún", "Júl", "Aug", "Sep", "Okt", "Nov", "Dec"];
+  return months[index];
+}
+
 onMounted(() => {
-  const options = {
+  const charOptions = {
     chart: {
       height: '100%',
       maxWidth: '100%',
@@ -104,22 +107,23 @@ onMounted(() => {
     },
     grid: {
       show: false,
-      strokeDashArray: 4,
+      strokeDashArray: 2,
       padding: {
-        left: 2,
-        right: 2,
-        top: 0
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0
       },
     },
     series: [
       {
         name: 'Zobrazenia',
-        data: [6500, 6418, 6456, 6526, 6356, 6456],
+        data: generateRandomNumbers(10, 2000, 15),
         color: '#1A56DB',
       },
     ],
     xaxis: {
-      categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
+      categories: generateLastDays(15),
       labels: {
         show: false,
       },
@@ -134,12 +138,130 @@ onMounted(() => {
       show: false,
     },
   };
+  const pieOptions = {
+    series: [44, 55],
+    labels: ['Prihlásený', 'Neprihlásený'],
+    colors: ["#1C64F2", "#334155"],
+    chart: {
+      type: 'donut',
+    },
+    stroke: {
+      colors: ["transparent"],
+      lineCap: "",
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    responsive: [{
+      options: {
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }]
+  };
+  const barOptions = {
+    colors: ["#1A56DB"],
+    series: [
+      {
+        name: "Počet",
+        color: "#1A56DB",
+        data: [
+          { x: "1 ★", y: 4 },
+          { x: "2 ★", y: 5 },
+          { x: "3 ★", y: 1 },
+          { x: "4 ★", y: 5 },
+          { x: "5 ★", y: 10 }
+        ],
+      },
+    ],
+    chart: {
+      type: "bar",
+      height: "180px",
+      width: '200px',
+      fontFamily: "Inter, sans-serif",
+      toolbar: {
+        show: false,
+      },
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: "70%",
+        borderRadiusApplication: "end",
+        borderRadius: 8,
+      },
+    },
+    tooltip: {
+      shared: true,
+      intersect: false,
+      style: {
+        fontFamily: "Inter, sans-serif",
+      },
+    },
+    states: {
+      hover: {
+        filter: {
+          type: "darken",
+          value: 1,
+        },
+      },
+    },
+    stroke: {
+      show: true,
+      width: 0,
+      colors: ["transparent"],
+    },
+    grid: {
+      show: false,
+      strokeDashArray: 2,
+      padding: {
+        left: 0,
+        right: 0,
+        top: 0
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    legend: {
+      show: false,
+    },
+    xaxis: {
+      floating: false,
+      labels: {
+        show: true,
+        style: {
+          fontFamily: "Inter, sans-serif",
+          cssClass: 'text-sm font-normal fill-gray-500 dark:fill-gray-400'
+        }
+      },
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
+      },
+    },
+    yaxis: {
+      show: false,
+    },
+    fill: {
+      opacity: 1,
+    },
+  }
 
   const chartArea = document.getElementById('area-chart');
+  const pieArea = document.getElementById('pie-chart');
+  const barArea = document.getElementById('bar-chart');
 
   if(chartArea) {
-    const chart = new ApexCharts(chartArea, options);
+    const chart = new ApexCharts(chartArea, charOptions);
+    const pie = new ApexCharts(pieArea, pieOptions);
+    const bar = new ApexCharts(barArea, barOptions);
     chart.render();
+    pie.render();
+    bar.render();
   }
 })
 </script>

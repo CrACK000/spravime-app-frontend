@@ -1,8 +1,8 @@
 <template>
   <div class="w-full md:w-11/12 lg:w-6/12 xl:w-5/12 2xl:w-5/12 mx-auto">
-    <form method="post" @keyup="registerValid" @submit.prevent="register">
+    <form method="post" @keyup="registerValid" @change="registerValid" @submit.prevent="register">
       <panel divide="y">
-        <div class="p-4">Nový účet</div>
+        <div class="py-4 px-6 font-medium uppercase">Nový účet</div>
         <panel-form width="full">
 
           <div class="flex flex-col gap-6 max-w-md">
@@ -57,6 +57,10 @@
               <input type="password" :class="[ getError('password') ? 'input-danger' : 'input', 'w-full']" id="password" v-model="registerData.rePassword">
               <div class="text-red-500 text-sm mt-2" v-if="getError('password')" v-text="getError('password')"></div>
             </div>
+            <div class="flex gap-3 items-center">
+              <input type="checkbox" id="rules" v-model="registerData.rules" class="input-checkbox"/>
+              <label for="rules" :class="[ getError('rules') ? 'text-red-500' : '' ]">Súhlasím s podmienkami registrácie.</label>
+            </div>
           </div>
 
         </panel-form>
@@ -81,19 +85,15 @@
 <script setup lang="ts">
 import { useMeta } from "vue-meta";
 import axios from 'axios';
-import {computed, inject, ref} from "vue";
+import {ref} from "vue";
 import router from "@/router";
 import Panel from "@/components/Panel.vue";
 import PanelFormActions from "@/components/PanelFormActions.vue";
 import { settings } from "@/plugins/config";
-import type {Auth} from "@/types/users";
 import {useToast} from "primevue/usetoast";
 import PanelForm from "@/components/PanelForm.vue";
 
 useMeta({ title: 'Vytvoriť účet' })
-
-const auth = inject<Auth>('auth');
-const loggedIn = ref(auth?.loggedIn as boolean)
 
 const toast = useToast()
 
@@ -105,6 +105,7 @@ const registerData = ref<any>({
   email: '' as string,
   password: '' as string,
   rePassword: '' as string,
+  rules: false as boolean,
 })
 const dataPassword = ref<any>({
   showNewPass: false,
@@ -155,6 +156,10 @@ const getError = (search: any) => {
   const emailError = errors.value.find((error: any) => error.where === search);
   return emailError ? emailError.message : '';
 }
+const validRules = () => {
+  errors.value = errors.value.filter((error: any) => error.where !== 'rules')
+  if (registerData.value.rules === false) errors.value.push({ where: 'rules', message: 'Musíte označiť že súhlasíte s podmienkami registrácie.' })
+}
 const registerValid = () => {
 
   errors.value = []
@@ -163,6 +168,7 @@ const registerValid = () => {
   if (registerData.value.email) validEmail(registerData.value.email)
   if (registerData.value.password) validPassword()
   if (registerData.value.rePassword) validRePassword()
+  if (registerData.value.rules === false) validRules()
 
   if (!errors.value.length) {
     if (registerData.value.password && registerData.value.rePassword){
@@ -238,10 +244,6 @@ const validRePassword = () => {
   if (registerData.value.rePassword !== registerData.value.password) {
     errors.value.push({ where: 'password', message: 'Heslá sa nezhodujú.' })
   }
-}
-
-if (loggedIn.value){
-  router.push({ name: 'index' })
 }
 
 </script>

@@ -1,14 +1,14 @@
 <template>
   <div class="w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-9/12 mx-auto">
-    <div class="flex flex-col lg:flex-row gap-10">
-      <div class="lg:w-4/12">
+    <div class="grid grid-cols-12 gap-12">
+      <div class="col-span-12 lg:col-span-4 flex flex-col gap-8">
 
         <form @submit.prevent="submitFilter">
           <panel divide="y">
-            <div class="p-4">
+            <div class="px-6 py-4 font-medium uppercase">
               Filter
             </div>
-            <div class="p-4 flex flex-col gap-4">
+            <div class="p-6 flex flex-col gap-6">
               <div class="relative">
                 <input type="search" class="input w-full ps-9" v-model="form.search" placeholder="Meno, názov firmy alebo kľúčové slová">
                 <div class="absolute top-1/2 -translate-y-1/2 px-2.5">
@@ -57,80 +57,88 @@
         </form>
 
       </div>
-      <div class="lg:w-8/12">
-        <panel divide="y" class="overflow-hidden">
-          <div class="p-4">Výsledky vyhľadávania</div>
+      <div class="col-span-12 lg:col-span-8">
 
-          <template v-if="!loading" v-for="user in filteredWorkers">
-            <router-link :to="{ name: 'profile', params: { id: user.id } }">
-              <div class="p-4 grid grid-cols-10 gap-3.5 items-center text-sm sm:text-base bg-white/75 dark:bg-gray-800/50 dark:hover:bg-gray-800 hover:bg-gray-100 transition duration-100">
-                <div class="col-span-2 sm:col-span-1">
-                  <img :src="user.avatar" class="rounded-full w-full shadow-xl mx-auto" alt="CrACK">
-                </div>
-                <div :class="[user.count_reviews ? 'col-span-6 sm:col-span-5' : 'col-span-8 sm:col-span-7']">
-                  <div class="font-medium mb-0.5 sm:mb-1" v-text="user.name ?? user.username"></div>
-                  <div class="text-xs opacity-75 line-clamp-2" v-text="user.slogan"></div>
-                </div>
-                <div class="col-span-2" v-if="user.count_reviews">
-                  <div class="text-sm font-semibold text-center mb-1 hidden sm:block">Hodnotenie</div>
-                  <div class="text-xl font-bold text-center">
-                    <div class="text-blue-500 flex items-center gap-1 justify-center">
-                      {{ user.average_rating }}
-                      <svg class="w-5 h-5 mb-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z"/>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-span-2 ms-auto hidden sm:block">
-                  <button type="button" class="form-secondary-button-sm">
-                    Zobraziť viac
-                  </button>
-                </div>
-              </div>
-            </router-link>
-          </template>
+        <div class="bg-gradient-to-bl from-blue-200/10 to-blue-200/40 dark:to-blue-500/20 dark:from-blue-500/5 text-blue-600 dark:text-blue-400 md:rounded-2xl p-6 mb-6">
+          <div class="font-medium mb-1">
+            Potrebujete oživiť svoju kúpeľňu?
+          </div>
+          <div class="text-sm">
+            Zverte svoje očakávania nám! Sme tu, aby sme vám pomohli nájsť ideálneho partnera pre váš projekt.
+            Nech už chcete podať požiadavku alebo vyhľadať skúsenú firmu, ktorá sa špecializuje na vaše potreby, sme tu
+            pre vás.
+          </div>
+        </div>
+
+        <panel divide="y" class="overflow-hidden">
+          <div class="p-4 font-medium uppercase">Výsledky vyhľadávania</div>
 
           <!-- Loading Panel Workers -->
-          <div v-for="key in 6" v-else :key="key">
-            <div class="p-4 flex gap-3.5 items-center bg-white/75 dark:bg-gray-800/50">
-              <div class="animate-pulse">
-                <svg class="w-14 h-14 text-gray-200 dark:text-gray-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"/>
-                </svg>
+          <skeleton-workers v-if="loading" />
+
+          <router-link v-else-if="filteredWorkers.length" v-for="user in filteredWorkers" :to="{ name: 'profile', params: { id: user.id } }">
+            <div class="panel-item p-4 grid grid-cols-10 gap-3.5 items-center text-sm sm:text-lg">
+              <div class="col-span-2 sm:col-span-1">
+                <img :src="user.avatar" class="rounded-full w-full shadow-xl mx-auto" :alt="user.name ?? user.username">
               </div>
-              <div class="animate-pulse">
-                <div class="loading-bar h-3 w-80 mb-3"></div>
-                <div class="loading-bar h-2 w-48"></div>
+              <div :class="[user.count_reviews ? 'col-span-6 sm:col-span-5' : 'col-span-8 sm:col-span-7']">
+                <nickname :nickname="user.name ?? user.username" :verify="user.verify" class="mb-0.5 sm:mb-1 font-medium" />
+                <div class="text-xs opacity-75 line-clamp-2" v-text="user.slogan"></div>
               </div>
-              <div class="ms-auto animate-pulse">
-                <div class="loading-bar h-2.5 w-20 mb-3 mx-auto"></div>
-                <div class="loading-bar h-3.5 w-10 mx-auto"></div>
+              <div class="col-span-2" v-if="user.count_reviews">
+                <div class="text-sm font-semibold text-center mb-1 hidden sm:block">Hodnotenie</div>
+                <div class="text-xl font-bold text-center">
+                  <average-rating :rating="Number(user.average_rating)"/>
+                </div>
               </div>
-              <div class="ms-auto animate-pulse">
-                <div class="loading-bar h-4 w-20"></div>
+              <div class="col-span-2 ms-auto hidden sm:block">
+                <button type="button" class="form-secondary-button-sm">
+                  Zobraziť viac
+                </button>
+              </div>
+            </div>
+          </router-link>
+
+          <div v-else class="py-8 px-4 flex gap-4 justify-center items-start bg-white/75 dark:bg-gray-800/50">
+            <svg class="w-6 h-6 mt-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+            </svg>
+            <div class="text-xl font-light">
+              Žiadne výsledky.
+              <div class="text-sm opacity-75" v-if="filteredWorkers">
+                Skúste upraviť parametre filtrovania.
+              </div>
+              <div class="text-sm opacity-75" v-else>
+                Zatiaľ neboli vytvorené žiadne firemné účty.
               </div>
             </div>
           </div>
 
         </panel>
+
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
+import {inject, onMounted, ref} from "vue";
 import { useMeta } from "vue-meta";
 import {settings} from '@/plugins/config'
 import Panel from "@/components/Panel.vue";
 import skZipcodes from "@/plugins/zipcodes/sk.json";
 import type {Sections, Zipcodes} from "@/types/offers";
-import type {User} from "@/types/users";
+import type {Auth, User} from "@/types/users";
 import categoriesData from "@/plugins/categories.json";
 import axios from "axios";
+import SkeletonWorkers from "@/components/skeleton/SkeletonWorkers.vue";
+import Nickname from "@/components/Nickname.vue";
+import AverageRating from "@/components/AverageRating.vue";
 
 useMeta({ title: 'Vyhľadať si firmu alebo spoľahlivého majstra' })
+
+const auth = inject<Auth>('auth');
+const loggedIn = ref(auth?.loggedIn as boolean)
 
 const form = ref<any>({
   search: '',

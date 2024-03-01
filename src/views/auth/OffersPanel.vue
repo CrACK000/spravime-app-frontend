@@ -26,54 +26,97 @@
       </div>
     </div>
 
-    <!-- Všetky -->
-    <template v-if="$route.name === 'offers-all' || $route.name === 'my-offers'">
-      <template v-for="offer in offers" :key="offer.id">
-        <div v-if="offer.approved" class="grid grid-cols-12 gap-3 items-center p-4 bg-white/75 dark:bg-gray-800/50 dark:hover:bg-gray-800 hover:bg-gray-100 transition duration-100">
-          <div class="col-span-8" v-text="offer.title"></div>
-          <div class="col-span-2 flex justify-center items-center gap-x-4">
-            <div class="text-center flex flex-col justify-center items-center">
-              <span class="text-xs">Zobrazenia</span>
-              <div class="text-xl font-bold">{{ offer.views }}</div>
+    <template v-if="!loading">
+      <!-- Všetky -->
+      <template v-if="$route.name === 'offers-all' || $route.name === 'my-offers'">
+        <template v-if="offers.filter(el => el.approved).length" v-for="offer in offers" :key="offer.id">
+          <div v-if="offer.approved" class="flex flex-wrap gap-5 items-center p-4 bg-white/75 dark:bg-gray-800/50 dark:hover:bg-gray-800 hover:bg-gray-100 transition">
+            <div>
+              <div v-text="offer.title"></div>
+              <div class="text-sm font-light opacity-75 mt-1">
+                Aktívne ešte {{ timeUntil(offer.closed_at) }}
+              </div>
+            </div>
+            <div class="ms-auto flex justify-center items-center gap-x-4">
+              <div class="text-center flex flex-col justify-center items-center">
+                <span class="text-xs mb-1">Zobrazenia</span>
+                <div class="text-xl font-medium">{{ offer.views }}</div>
+              </div>
+            </div>
+            <div class="flex justify-end items-center gap-3">
+              <button class="form-secondary-button-sm" type="button" @click="openEditModal(offer.id)">
+                Upraviť
+              </button>
+              <button type="button" class="form-danger-button-sm" @click="removeOffer(offer.id)">
+                Odstrániť
+              </button>
             </div>
           </div>
-          <div class="col-span-2 flex justify-end items-center gap-3">
-            <button class="form-secondary-button-sm" type="button" @click="openEditModal(offer.id)">
-              Upraviť
-            </button>
+        </template>
+        <div v-else class="flex justify-center items-center py-8 px-4 bg-white/75 dark:bg-gray-800/50 text-xl">
+          Zatiaľ ste nenapísali žiadnu požiadavku. <router-link :to="{ name: 'offerAdd' }" class="link ms-1.5">Vytvoriť požiadavku</router-link>
+        </div>
+      </template>
+
+      <!-- Čakajúce na schválenie -->
+      <template v-if="$route.name === 'offers-waiting'">
+        <template v-if="offers.filter(el => !el.approved).length" v-for="offer in offers" :key="offer.id">
+          <div v-if="!offer.approved" class="flex flex-wrap gap-5 items-center p-4 bg-white/75 dark:bg-gray-800/50 dark:hover:bg-gray-800 hover:bg-gray-100 transition">
+            <div>
+              <div v-text="offer.title"></div>
+              <div class="text-sm font-light opacity-75 mt-1">
+                Aktívne ešte {{ timeUntil(offer.closed_at) }}
+              </div>
+            </div>
+            <div class="ms-auto flex justify-center items-center gap-x-4">
+              <div class="text-center flex flex-col justify-center items-center">
+                <span class="text-xs mb-1">Zobrazenia</span>
+                <div class="text-xl font-medium">{{ offer.views }}</div>
+              </div>
+            </div>
+            <div class="flex justify-end items-center gap-3">
+              <button class="form-secondary-button-sm" type="button" @click="openEditModal(offer.id)">
+                Upraviť
+              </button>
+              <button type="button" class="form-danger-button-sm" @click="removeOffer(offer.id)">
+                Odstrániť
+              </button>
+            </div>
           </div>
+        </template>
+        <div v-else class="flex justify-center items-center py-8 px-4 bg-white/75 dark:bg-gray-800/50 text-xl">
+          Žiadna vaša požiadavka nieje v procese schvaľovania.
         </div>
       </template>
     </template>
 
-    <!-- Čakajúce na schválenie -->
-    <template v-if="$route.name === 'offers-waiting'">
-      <template v-for="offer in offers" :key="offer.id">
-        <div v-if="!offer.approved" class="grid grid-cols-12 gap-3 items-center p-4 bg-white/75 dark:bg-gray-800/50 dark:hover:bg-gray-800 hover:bg-gray-100 transition duration-100">
-          <div class="col-span-8" v-text="offer.title"></div>
-          <div class="col-span-2 flex justify-center items-center gap-x-4">
-            <div class="text-center flex flex-col justify-center items-center">
-              <span class="text-xs">Zobrazenia</span>
-              <div class="text-xl font-bold">{{ offer.views }}</div>
-            </div>
-          </div>
-          <div class="col-span-2 flex justify-end items-center gap-3">
-            <button class="form-secondary-button-sm" type="button" @click="openEditModal(offer.id)">
-              Upraviť
-            </button>
-          </div>
+    <!-- loading my offers -->
+    <template v-else>
+      <div v-for="key in 5" :key="key" class="flex flex-wrap gap-8 items-center p-4 bg-white/75 dark:bg-gray-800/50">
+        <div class="animate-pulse">
+          <div :style="{ 'width': Math.floor(Math.random()*(600-300+1)+300) + 'px' }" class="loading-bar h-3.5 max-w-full"></div>
+          <div class="loading-bar h-2.5 w-36 mt-3.5"></div>
         </div>
-      </template>
+        <div class="animate-pulse ms-auto flex flex-col justify-center items-center">
+          <div class="loading-bar h-2.5 w-20"></div>
+          <div class="loading-bar h-3.5 w-10 mt-3.5"></div>
+        </div>
+        <div class="animate-pulse flex justify-end items-center gap-3">
+          <div class="loading-bar h-5 w-16"></div>
+          <div class="loading-bar h-5 w-16"></div>
+        </div>
+      </div>
     </template>
 
+    <!-- edit offer modal -->
     <transition enter-active-class="transition ease-out duration-100 transform" enter-from-class="translate-x-full" enter-to-class="translate-x-0" leave-active-class="transition ease-in duration-75 transform" leave-from-class="translate-x-0" leave-to-class="translate-x-full">
       <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-gallery" role="dialog" aria-modal="true" v-if="openEditPanel">
         <div class="flex items-end justify-center h-screen sm:block">
           <div class="fixed inset-0 bg-white/20 dark:bg-black/30 backdrop-blur transition-opacity" @click="closeEditModal"></div>
-          <div class="fixed top-28 bottom-0 right-0 w-full lg:w-[800px] bg-white dark:bg-gray-800 shadow-xl rounded-t-xl lg:rounded-t-none lg:rounded-tl-xl overflow-hidden">
-            <form @submit.prevent="submitEditOffer" class="flex flex-col divide-y divide-gray-200 dark:divide-gray-700/40 h-full">
+          <div class="fixed top-28 bottom-0 right-0 w-full lg:w-[800px] bg-white dark:bg-gray-900 shadow-xl rounded-t-xl lg:rounded-t-none lg:rounded-tl-xl overflow-hidden">
+            <form @submit.prevent="submitEditOffer" class="flex flex-col dark:bg-gray-800/70 divide-y divide-gray-200 dark:divide-gray-700/40 h-full">
 
-              <div class="px-5 flex justify-between items-center h-16 shadow-lg shadow-black/5">
+              <div class="px-5 flex justify-between items-center h-16">
                 <div>
                   Upraviť požiadavku
                 </div>
@@ -86,7 +129,7 @@
 
               <div class="h-full mb-16 overflow-y-auto divide-y divide-gray-200 dark:divide-gray-700/40">
 
-                <panel-form>
+                <panel-form width="full">
                   <div class="mb-10">
                     <label class="mb-1 block" for="title">Názov požiadavky</label>
                     <input type="text" :class="[ getError('title') ? 'input-danger' : 'input', 'w-full']" v-model="form.title" @change="validTitle" id="title" placeholder="Požiadavka na..." required>
@@ -187,6 +230,7 @@
       </div>
     </transition>
 
+    <!-- modal setAddress in editing offer -->
     <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
       <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-address" role="dialog" aria-modal="true" v-if="showModalAddress">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block">
@@ -255,6 +299,7 @@ import categoriesData from "@/plugins/categories.json";
 import {useToast} from "primevue/usetoast";
 import PanelForm from "@/components/PanelForm.vue";
 import PanelFormActions from "@/components/PanelFormActions.vue";
+import {timeUntil} from "@/plugins/functions";
 
 useMeta({ title: 'Moje požiadavky' });
 
@@ -296,8 +341,8 @@ const location = ref<string>('');
 const location_from = ref<string>('');
 const location_to = ref<string>('');
 
-const myOffers = () => {
-  loading.value = true
+const myOffers = (load = true) => {
+  if (load) loading.value = true
 
   axios.post(`${settings.backend}/api/offers/my`, null, { withCredentials: true })
     .then(response => {
@@ -311,11 +356,26 @@ const myOffers = () => {
     })
 }
 
+const removeOffer = (ids: any) => {
+
+  axios.post(`${settings.backend}/api/offers/remove`, { ids }, { withCredentials: true })
+    .then(response => {
+      if (response.data.success) {
+        //ok
+        toast.add({severity: 'success', summary: 'Požiadavka', detail: 'Vaša požiadavka bola odstránená.', group: 'br', life: 3000})
+        myOffers(false)
+      } else {
+        //error
+        toast.add({severity: 'error', summary: 'Požiadavka', detail: response.data.message, group: 'br', life: 3000})
+      }
+    })
+
+}
+
 const openEditModal = (offerId: number) => {
   offerEditingData(offerId)
   openEditPanel.value = !openEditPanel.value
 }
-
 const closeEditModal = () => {
   form.value = {
     offer_id: 0 as number,
@@ -330,7 +390,6 @@ const closeEditModal = () => {
   };
   openEditPanel.value = !openEditPanel.value
 }
-
 const offerEditingData = async (offerId: number) => {
   await axios.get(`${settings.backend}/api/offers/${offerId}`, { withCredentials: true })
     .then(response => {
@@ -355,7 +414,6 @@ const offerEditingData = async (offerId: number) => {
       };
     })
 };
-
 const submitEditOffer = () => {
   loadingEdit.value = true
 
@@ -371,7 +429,7 @@ const submitEditOffer = () => {
       if (response.data.success) {
         toast.add({severity: 'success', summary: 'Požiadavka', detail: 'Vaša požiadavka bola aktualizovaná.', group: 'br', life: 3000})
         closeEditModal()
-        myOffers()
+        myOffers(false)
       } else {
         console.log(response.data.message)
       }
@@ -384,7 +442,6 @@ const submitEditOffer = () => {
     })
 
 }
-
 const checkEditingForm = () => {
   errorsEdit.value = []
 
@@ -400,7 +457,6 @@ const checkEditingForm = () => {
   }
 
 }
-
 const validTitle = () => {
   errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'title')
   if (form.value.title.length < 30) {
@@ -409,32 +465,26 @@ const validTitle = () => {
     errorsEdit.value.push({ where: 'title', message: 'Názov požiadavky môže mať maximálne 100 znakov.' })
   }
 }
-
 const validSection = () => {
   errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'section')
   if (form.value.section === 0) errorsEdit.value.push({ where: 'section', message: 'Vyberte sekciu.' })
 }
-
 const validCategory = () => {
   errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'category')
   if (form.value.category === 0) errorsEdit.value.push({ where: 'category', message: 'Vyberte kategóriu.' })
 }
-
 const validAddress = () => {
   errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'address')
   if (!form.value.address.length) errorsEdit.value.push({ where: 'address', message: 'Adresa musí byť nastavená.' })
 }
-
 const validStartAt = () => {
   errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'start_at')
   if (form.value.start_at === null) errorsEdit.value.push({ where: 'start_at', message: 'Nastavte čas kedy majú práce začať.' })
 }
-
 const validEndAt = () => {
   errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'end_at')
   if (form.value.end_at === null) errorsEdit.value.push({ where: 'end_at', message: 'Nastavte čas kedy majú práce skončiť.' })
 }
-
 const validDescription = () => {
   errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'description')
   if (form.value.description.length < 150) {
@@ -443,26 +493,22 @@ const validDescription = () => {
     errorsEdit.value.push({ where: 'description', message: 'Informácie o požiadavke môžu mať maximálne 1000 znakov.' })
   }
 }
-
 const checkSelectSection = () => {
   validSection()
   if (form.value.section! > 0) {
     form.value.category = 0
   }
 }
-
 const filteredCategories = computed(() => {
   if (form.value.section === 0) return [];
   return categories.value.filter(category => category.section_id === form.value.section);
 });
-
 const addressMode = (input: string) => {
   address_mode.value = input
   location.value = ''
   location_from.value = ''
   location_to.value = ''
 }
-
 const setAddress = () => {
 
   checkAddress()
@@ -483,7 +529,6 @@ const setAddress = () => {
   showButtonSetAddress.value = false
   closeModalAddress()
 }
-
 const checkAddress = () => {
 
   addressErrors.value = []
@@ -498,31 +543,25 @@ const checkAddress = () => {
   }
 
 }
-
 const setTimeRange = () => {
   form.value.time_range = true
 }
-
 const closeTimeRange = () => {
   form.value.start_at = null
   form.value.end_at = null
   form.value.time_range = false
 }
-
 const getAddressError = (search: any) => {
   const emailError = addressErrors.value.find((error: any) => error.where === search);
   return emailError ? emailError.message : '';
 }
-
 const getError = (search: any) => {
   const emailError = errorsEdit.value.find((error: any) => error.where === search);
   return emailError ? emailError.message : '';
 }
-
 const closeModalAddress = () => {
   showModalAddress.value = false
 }
-
 const checkScroll = (event?: any) => {
   const { scrollWidth, scrollLeft, clientWidth } = event.target;
 
@@ -531,14 +570,12 @@ const checkScroll = (event?: any) => {
   overlayLeft.value = scrollLeft;
   overlayRight.value = scrollWidth - (scrollLeft + clientWidth);
 }
-
 const onWheel = (e: WheelEvent) => {
   e.preventDefault();
   if (scrollable.value) {
     scrollable.value.scrollLeft += e.deltaY / 3;
   }
 }
-
 
 onMounted(() => {
   myOffers()

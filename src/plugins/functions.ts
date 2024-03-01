@@ -30,9 +30,45 @@ function timeSince(isoDate: string) {
     }
 }
 
-function nl2br(str: string) {
+function sklonovanie(num: number, jednotka: string): string {
+    const array: { [key: string]: string[] } = {
+        sekunda: ['sekunda', 'sekundy', 'sekúnd'],
+        minuta: ['minúta', 'minúty', 'minút'],
+        hodina: ['hodina', 'hodiny', 'hodín'],
+        den: ['deň', 'dni', 'dní'],
+    };
+
+    if (num === 1) {
+        return array[jednotka][0];
+    } else if (num > 1 && num < 5) {
+        return array[jednotka][1];
+    } else {
+        return array[jednotka][2];
+    }
+}
+
+function timeUntil(isoDate: string): string {
+    const now = new Date();
+    const future = new Date(isoDate);
+    let secondsUntil = Math.floor((future.getTime() - now.getTime()) / 1000);
+
+    if (secondsUntil < 60) {
+        return `${secondsUntil} ${sklonovanie(secondsUntil, 'sekunda')}`;
+    } else if (secondsUntil < 3600) {
+        let minutes = Math.floor(secondsUntil / 60);
+        return `${minutes} ${sklonovanie(minutes, 'minuta')}`;
+    } else if (secondsUntil <= 86400) {
+        let hours = Math.floor(secondsUntil / 3600);
+        return `${hours} ${sklonovanie(hours, 'hodina')}`;
+    } else {
+        let days = Math.floor(secondsUntil / 86400);
+        return `${days} ${sklonovanie(days, 'den')}`;
+    }
+}
+
+function nl2br(str: string | undefined) {
     if(!str) return '';
     return str.replace(/\n/g, '<br>');
 }
 
-export { formatIsoDate, timeSince, nl2br }
+export { formatIsoDate, timeSince, nl2br, timeUntil }

@@ -16,6 +16,12 @@ export type Offer = {
     views?: string,
     section_title?: string,
     category_title?: string,
+    author_id?: number,
+    author_username?: string,
+    author_name?: string,
+    author_type?: 'normal' | 'company' | 'worker',
+    author_avatar?: string,
+    author_verify?: boolean
 }
 
 export type Sections = {

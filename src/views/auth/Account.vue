@@ -4,11 +4,26 @@
       <div class="lg:w-3/12 hidden lg:block">
         <div class="sticky top-0 p-4">
           <ul class="flex flex-col gap-2">
+
+            <!-- Create Offer -->
+            <li class="mb-4">
+              <router-link :to="{ name: 'offerAdd' }" class="flex items-center divide-x divide-white/30 py-3 bg-gradient-to-bl from-blue-600 to-indigo-500 rounded-xl shadow-xl text-lg text-blue-100 hover:text-white transition">
+                <div class="ps-4 pe-3">
+                  <svg class="w-6 h-6" :class="[$route.name === 'offerAdd' ? 'text-white' : 'opacity-75']" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M8 7V2.2a2 2 0 0 0-.5.4l-4 3.9a2 2 0 0 0-.3.5H8Zm2 0V2h7a2 2 0 0 1 2 2v.1a5 5 0 0 0-4.7 1.4l-6.7 6.6a3 3 0 0 0-.8 1.6l-.7 3.7a3 3 0 0 0 3.5 3.5l3.7-.7a3 3 0 0 0 1.5-.9l4.2-4.2V20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Z" clip-rule="evenodd"/>
+                    <path fill-rule="evenodd" d="M17.4 8a1 1 0 0 1 1.2.3 1 1 0 0 1 0 1.6l-.3.3-1.6-1.5.4-.4.3-.2Zm-2.1 2.1-4.6 4.7-.4 1.9 1.9-.4 4.6-4.7-1.5-1.5ZM17.9 6a3 3 0 0 0-2.2 1L9 13.5a1 1 0 0 0-.2.5L8 17.8a1 1 0 0 0 1.2 1.1l3.7-.7c.2 0 .4-.1.5-.3l6.6-6.6A3 3 0 0 0 18 6Z" clip-rule="evenodd"/>
+                  </svg>
+                </div>
+                <div class="ps-4" :class="{'text-white': $route.name === 'offerAdd'}">
+                  Vytvoriť požiadavku
+                </div>
+              </router-link>
+            </li>
+
             <li v-for="tab in user_links">
               <router-link :to="{ name: tab.name }"
                            :class="[$route.name === tab.name || (tab.subs && findSelectTab(tab.subs)) ? 'tab-active' : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300']"
-                           class="flex items-center gap-2 cursor-pointer w-full hover:bg-white/80 dark:hover:bg-gray-800/50 transition duration-100 px-4 py-2.5 rounded-md font-medium"
-                           @click="scrollTop"
+                           class="flex items-center gap-2 cursor-pointer w-full hover:bg-white/80 dark:hover:bg-gray-800/50 transition px-4 py-2.5 rounded-md font-medium"
               ><div class="menu-icon"><i :class="tab.icon"></i></div>
                 <div class="flex w-full gap-1 items-center justify-between">
                   {{ tab.title }}
@@ -19,8 +34,7 @@
                 <div v-for="sub in tab.subs">
                   <router-link :to="{ name: sub.name }"
                                v-text="sub.title"
-                               @click="scrollTop"
-                               class="cursor-pointer block w-full hover:bg-white/80 dark:hover:bg-gray-800/50 transition duration-100 px-3 py-2 -ms-[1px] rounded-md text-sm font-medium"
+                               class="cursor-pointer block w-full hover:bg-white/80 dark:hover:bg-gray-800/50 transition px-3 py-2 -ms-[1px] rounded-md text-sm font-medium"
                                :class="[$route.name === sub.name ? 'tab-active' : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300']"
                   ></router-link>
                 </div>
@@ -34,8 +48,14 @@
           </ul>
         </div>
       </div>
-      <div class="lg:w-9/12">
-        <router-view name="userPanel"/>
+      <div class="lg:w-9/12 p-4">
+        <router-view v-slot="{ Component, route }">
+          <transition :name="String(route.meta.transition)">
+            <KeepAlive>
+              <component :is="Component" :key="route.path"/>
+            </KeepAlive>
+          </transition>
+        </router-view>
       </div>
     </div>
   </div>
@@ -103,9 +123,6 @@ const notifyMsg = ref(0);
 const findSelectTab = (tabs: TabType[]) => {
   return tabs && tabs.some(tab => tab.name === route.name);
 }
-const scrollTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
 const fetchNewMessagesCount = async (id: number) => {
   notifyMsg.value = <number> await checkNewMessages(id);
 }
