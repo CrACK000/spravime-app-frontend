@@ -2,8 +2,8 @@
 import {formatIsoDate, timeSince} from "@/plugins/functions";
 import store from "@/plugins/offers";
 import Panel from "@/components/Panel.vue";
-import SkeletonOfferInformation from "@/components/skeleton/SkeletonOfferInformation.vue";
-import Nickname from "@/components/Nickname.vue";
+import SkeletonOfferInformation from "@/components/skeletons/SkeletonOfferInformation.vue";
+import Nickname from "@/components/app/Nickname.vue";
 </script>
 
 <!--

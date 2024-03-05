@@ -1,8 +1,5 @@
 import { reactive } from 'vue';
 import axios from 'axios';
-import { settings } from '@/plugins/config';
-import type {User, UserGallery} from '@/types/users'
-import type {Reviews} from "@/types/reviews";
 
 export interface StoreState {
     data: User | null;
@@ -22,23 +19,16 @@ const user: StoreState = reactive({
     loading_reviews: true,
 });
 
-async function useUser(id: number): Promise<void> {
+async function useUser(id: string): Promise<void> {
     user.loading = true
-    const response = await axios.get(`${settings.backend}/api/user/${id}`, { withCredentials: true })
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND}/profile/${id}`, { withCredentials: true })
     user.data = response.data
     user.loading = false
 }
 
-async function useUserGallery(id: number): Promise<void> {
-    user.loading_gallery = true
-    const response = await axios.get(`${settings.backend}/api/user/gallery/${id}`, { withCredentials: true })
-    user.gallery = response.data
-    user.loading_gallery = false
-}
-
-async function useUserReviews(id: number): Promise<void> {
+async function useUserReviews(key: string): Promise<void> {
     user.loading_reviews = true
-    const response = await axios.get(`${settings.backend}/api/reviews/all/${id}`, { withCredentials: true })
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND}/reviews/${key}/all`, { withCredentials: true })
     user.reviews = response.data
     user.loading_reviews = false
 }
@@ -46,7 +36,6 @@ async function useUserReviews(id: number): Promise<void> {
 const profile = {
     user,
     useUser,
-    useUserGallery,
     useUserReviews,
 };
 

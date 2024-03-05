@@ -257,7 +257,7 @@ const submitForm = () => {
     return false
   }
 
-  axios.post(`${settings.backend}/api/offers/create`, form.value, { withCredentials: true })
+  axios.post(`${settings.backend}/auth/offers/create`, form.value, { withCredentials: true })
     .then(response => {
       if (response.data.success) {
         toast.add({severity: 'success', summary: 'Požiadavka', detail: 'Vaša požiadavka úspešne vytvorená.', group: 'br', life: 4000})

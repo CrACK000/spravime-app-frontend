@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import panel from "@/plugins/panels";
-import Nickname from "@/components/Nickname.vue";
+import Nickname from "@/components/app/Nickname.vue";
 import Panel from "@/components/Panel.vue";
-import SkeletonTopProfilesPanel from "@/components/skeleton/SkeletonTopProfilesPanel.vue";
-import AverageRating from "@/components/AverageRating.vue";
+import SkeletonTopProfilesPanel from "@/components/skeletons/SkeletonTopProfilesPanel.vue";
+import AverageRating from "@/components/app/AverageRating.vue";
 </script>
 
 <template>

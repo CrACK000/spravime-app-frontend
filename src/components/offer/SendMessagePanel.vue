@@ -6,7 +6,7 @@ import {inject, onMounted, ref, watchEffect} from "vue";
 import type {Auth, User} from "@/types/users";
 import axios from "axios";
 import {settings} from "@/plugins/config";
-import SkeletonOfferMessage from "@/components/skeleton/SkeletonOfferMessage.vue";
+import SkeletonOfferMessage from "@/components/skeletons/SkeletonOfferMessage.vue";
 
 const auth = inject<Auth>('auth');
 const user = ref(auth?.user as User)

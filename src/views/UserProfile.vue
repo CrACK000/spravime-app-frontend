@@ -2,21 +2,21 @@
 import profile from "@/plugins/profile";
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from "vue-router";
-import Avatar from "@/components/user-profile/AvatarProfile.vue";
-import Information from "@/components/user-profile/InformationProfile.vue";
-import TitleProfile from "@/components/user-profile/TitleProfile.vue";
-import DescriptionProfile from "@/components/user-profile/DescriptionProfile.vue";
-import GalleryProfile from "@/components/user-profile/GalleryProfile.vue";
-import RatingProfile from "@/components/user-profile/RatingProfile.vue";
-import ReviewsProfile from "@/components/user-profile/ReviewsProfile.vue";
+import Avatar from "@/components/profile/AvatarProfile.vue";
+import Information from "@/components/profile/InformationProfile.vue";
+import TitleProfile from "@/components/profile/TitleProfile.vue";
+import DescriptionProfile from "@/components/profile/DescriptionProfile.vue";
+import GalleryProfile from "@/components/profile/GalleryProfile.vue";
+import RatingProfile from "@/components/profile/RatingProfile.vue";
+import ReviewsProfile from "@/components/profile/ReviewsProfile.vue";
 import checkAndIncrementCounter from "@/plugins/counter-views";
-import SkeletonProfileTitle from "@/components/skeleton/SkeletonProfileTitle.vue";
-import SkeletonProfileDescription from "@/components/skeleton/SkeletonProfileDescription.vue";
-import SkeletonProfileGallery from "@/components/skeleton/SkeletonProfileGallery.vue";
-import SkeletonProfileReviews from "@/components/skeleton/SkeletonProfileReviews.vue";
-import SkeletonProfileAvatar from "@/components/skeleton/SkeletonProfileAvatar.vue";
-import SkeletonProfileInformation from "@/components/skeleton/SkeletonProfileInformation.vue";
-import SkeletonProfileRating from "@/components/skeleton/SkeletonProfileRating.vue";
+import SkeletonProfileTitle from "@/components/skeletons/SkeletonProfileTitle.vue";
+import SkeletonProfileDescription from "@/components/skeletons/SkeletonProfileDescription.vue";
+import SkeletonProfileGallery from "@/components/skeletons/SkeletonProfileGallery.vue";
+import SkeletonProfileReviews from "@/components/skeletons/SkeletonProfileReviews.vue";
+import SkeletonProfileAvatar from "@/components/skeletons/SkeletonProfileAvatar.vue";
+import SkeletonProfileInformation from "@/components/skeletons/SkeletonProfileInformation.vue";
+import SkeletonProfileRating from "@/components/skeletons/SkeletonProfileRating.vue";
 
 watch(() => profile.user.data, (profileTitleValue) => {
   if (profileTitleValue && profileTitleValue.username) {

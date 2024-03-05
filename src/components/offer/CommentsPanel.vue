@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Panel from "@/components/Panel.vue";
-import SkeletonOfferComments from "@/components/skeleton/SkeletonOfferComments.vue";
+import SkeletonOfferComments from "@/components/skeletons/SkeletonOfferComments.vue";
 </script>
 
 <template>

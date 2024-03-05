@@ -68,7 +68,7 @@ const login = () => {
   errors.value = []
   loading.value = true
 
-  axios.post(settings.backend + "/api/login", loginData.value, { withCredentials: true })
+  axios.post(settings.backend + "/auth/login", loginData.value, { withCredentials: true })
     .then((response) => {
       if (response.data.success) {
         toast.add({severity: 'info', summary: 'Účet', detail: 'Si prihlásený !', group: 'br', life: 3000})

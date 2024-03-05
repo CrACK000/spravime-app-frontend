@@ -2,7 +2,7 @@
 import {nl2br} from "@/plugins/functions";
 import store from "@/plugins/offers";
 import Panel from "@/components/Panel.vue";
-import SkeletonOfferTitleDescription from "@/components/skeleton/SkeletonOfferTitleDescription.vue";
+import SkeletonOfferTitleDescription from "@/components/skeletons/SkeletonOfferTitleDescription.vue";
 </script>
 
 <template>

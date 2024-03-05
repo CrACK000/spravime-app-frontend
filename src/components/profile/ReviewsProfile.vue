@@ -9,7 +9,7 @@ import ReportReview from "@/views/modals/ReportReview.vue";
 import EditReview from "@/views/modals/EditReview.vue";
 import WriteReview from "@/views/modals/WriteReview.vue";
 import profile from "@/plugins/profile";
-import Nickname from "@/components/Nickname.vue";
+import Nickname from "@/components/app/Nickname.vue";
 
 const auth = inject<Auth>('auth');
 const user = ref(auth?.user as User)

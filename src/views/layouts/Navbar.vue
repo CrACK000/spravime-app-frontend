@@ -93,7 +93,7 @@ import {ref, inject} from 'vue';
 import type {Auth, User} from "@/types/users";
 import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
 import {useRouter} from "vue-router";
-import Nickname from "@/components/Nickname.vue";
+import Nickname from "@/components/app/Nickname.vue";
 
 const router = useRouter();
 const auth = inject<Auth>('auth');

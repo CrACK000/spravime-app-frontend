@@ -3,7 +3,7 @@ import profile from "@/plugins/profile";
 import Panel from "@/components/Panel.vue";
 import {ref} from "vue";
 import type {Reviews} from "@/types/reviews";
-import AverageRating from "@/components/AverageRating.vue";
+import AverageRating from "@/components/app/AverageRating.vue";
 
 const reviews = ref<Reviews[]>(Object(profile.user.reviews));
 
