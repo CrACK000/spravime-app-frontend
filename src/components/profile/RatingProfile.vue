@@ -1,26 +1,36 @@
 <script setup lang="ts">
-import profile from "@/plugins/profile";
-import Panel from "@/components/Panel.vue";
-import {ref} from "vue";
-import type {Reviews} from "@/types/reviews";
-import AverageRating from "@/components/app/AverageRating.vue";
+import {onBeforeMount, ref} from "vue"
+import user from "@/plugins/profile"
+import Panel from "@/components/Panel.vue"
+import AverageRating from "@/components/app/AverageRating.vue"
+import SkeletonProfileRating from "@/components/skeletons/SkeletonProfileRating.vue";
+import {useRoute} from "vue-router";
 
-const reviews = ref<Reviews[]>(Object(profile.user.reviews));
+const reviews = ref<Review[]>(Object(user.data.reviews))
+const route = useRoute()
+const id = ref<string>(String(route.params.id))
 
+onBeforeMount(async () => {
+  if (user.data.user?._id !== id.value) {
+    await user.profileReviews(id.value)
+    reviews.value = user.data.reviews
+  }
+})
 </script>
 
 <template>
-  <panel divide="y">
+
+  <panel v-if="!user.data.reviews_loading" divide="y">
     <div class="flex justify-between items-center py-3.5 px-5">
       <div class="w-full">Priemer hodnotenia</div>
       <div class="text-xl w-20 font-bold text-center">
-        <average-rating :rating="Number(profile.user.data?.average_rating)"/>
+        <average-rating :rating="Number(user.data.user?.reviews.average_rating)"/>
       </div>
     </div>
     <div class="flex justify-between items-center py-3.5 px-5">
       <div class="w-full">Recenzie od užívateľov</div>
       <div class="text-xl w-20 font-bold text-center">
-        {{ profile.user.data?.count_reviews }}
+        {{ user.data.user?.reviews.count_reviews }}
       </div>
     </div>
     <div class="flex justify-between items-center py-3.5 px-5">
@@ -36,4 +46,7 @@ const reviews = ref<Reviews[]>(Object(profile.user.reviews));
       </div>
     </div>
   </panel>
+
+  <skeleton-profile-rating v-else />
+
 </template>

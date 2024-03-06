@@ -1,4 +1,214 @@
+<script setup lang="ts">
+import {ref, computed, inject} from 'vue'
+import {useMeta} from "vue-meta"
+import Panel from "@/components/Panel.vue"
+import PanelForm from "@/components/PanelForm.vue"
+import PanelFormActions from "@/components/PanelFormActions.vue"
+import skZipcodes from "@/plugins/zipcodes/sk.json"
+import categoriesData from "@/plugins/categories.json"
+import axios from "axios"
+import router from "@/router"
+import {useToast} from "primevue/usetoast"
+
+const auth = inject<Auth>('auth')
+const loggedIn = ref(auth?.loggedIn as boolean)
+const toast = useToast()
+
+useMeta({ title: 'Vytvoriť požiadavku' })
+
+const loading = ref<boolean>(false)
+const errors = ref<any>([])
+const form = ref<any>({
+  title: 'Požiadavka na ' as string,
+  section: 0 as number,
+  category: 0 as number,
+  address: '' as string,
+  time_range: false as boolean,
+  start_at: null,
+  end_at: null,
+  description: '' as string,
+  rules: false as boolean,
+})
+
+const slovakData = ref<Zipcodes[]>(skZipcodes)
+const sections = ref<Sections[]>(categoriesData.sections)
+const categories = ref<Categories[]>(categoriesData.categories)
+
+const showModalAddress = ref<boolean>(false)
+const showButtonSetAddress = ref<boolean>(true)
+const addressErrors = ref<any>([])
+const address_mode = ref<string>('address')
+const location = ref<string>('')
+const location_from = ref<string>('')
+const location_to = ref<string>('')
+
+const submitForm = () => {
+  loading.value = true
+
+  checkForm()
+
+  if (errors.value.length) {
+    loading.value = false
+    return false
+  }
+
+  axios.post(`${import.meta.env.VITE_BACKEND}/auth/offers/create`, form.value, { withCredentials: true })
+    .then(response => {
+      if (response.data.success) {
+        toast.add({severity: 'success', summary: 'Požiadavka', detail: 'Vaša požiadavka úspešne vytvorená.', group: 'br', life: 4000})
+        router.push({ name: 'offerDetail', params: { id: response.data.last_id } })
+      } else {
+        // backend error
+        console.log(response.data)
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    })
+    .finally(() => {
+      loading.value = false
+    })
+
+}
+const checkForm = () => {
+  errors.value = []
+
+  validTitle()
+  validSection()
+  validCategory()
+  validAddress()
+  validDescription()
+  validRules()
+
+  if (form.value.time_range) {
+    validStartAt()
+    validEndAt()
+  }
+
+}
+const validTitle = () => {
+  errors.value = errors.value.filter((error: any) => error.where !== 'title')
+  if (form.value.title.length < 30) {
+    errors.value.push({ where: 'title', message: 'Názov požiadavky musí mať aspoň 30 znakov.' })
+  } else if (form.value.title.length > 100) {
+    errors.value.push({ where: 'title', message: 'Názov požiadavky môže mať maximálne 100 znakov.' })
+  }
+}
+const validSection = () => {
+  errors.value = errors.value.filter((error: any) => error.where !== 'section')
+  if (form.value.section === 0) errors.value.push({ where: 'section', message: 'Vyberte sekciu.' })
+}
+const validCategory = () => {
+  errors.value = errors.value.filter((error: any) => error.where !== 'category')
+  if (form.value.category === 0) errors.value.push({ where: 'category', message: 'Vyberte kategóriu.' })
+}
+const validAddress = () => {
+  errors.value = errors.value.filter((error: any) => error.where !== 'address')
+  if (!form.value.address.length) errors.value.push({ where: 'address', message: 'Adresa musí byť nastavená.' })
+}
+const validStartAt = () => {
+  errors.value = errors.value.filter((error: any) => error.where !== 'start_at')
+  if (form.value.start_at === null) errors.value.push({ where: 'start_at', message: 'Nastavte čas kedy majú práce začať.' })
+}
+const validEndAt = () => {
+  errors.value = errors.value.filter((error: any) => error.where !== 'end_at')
+  if (form.value.end_at === null) errors.value.push({ where: 'end_at', message: 'Nastavte čas kedy majú práce skončiť.' })
+}
+const validDescription = () => {
+  errors.value = errors.value.filter((error: any) => error.where !== 'description')
+  if (form.value.description.length < 150) {
+    errors.value.push({ where: 'description', message: 'Informácie o požiadavke musia mať aspoň 150 znakov.' })
+  } else if (form.value.description.length > 1000) {
+    errors.value.push({ where: 'description', message: 'Informácie o požiadavke môžu mať maximálne 1000 znakov.' })
+  }
+}
+const validRules = () => {
+  errors.value = errors.value.filter((error: any) => error.where !== 'rules')
+  if (!form.value.rules) errors.value.push({ where: 'rules', message: 'Musíte označiť že súhlasíte s podmienkami požiadavky.' })
+}
+const checkSelectSection = () => {
+  validSection()
+  if (form.value.section! > 0) {
+    form.value.category = 0
+  }
+}
+const filteredCategories = computed(() => {
+  if (form.value.section === 0) return [];
+  return categories.value.filter(category => category.section_id === form.value.section);
+});
+const addressMode = (input: string) => {
+  address_mode.value = input
+  location.value = ''
+  location_from.value = ''
+  location_to.value = ''
+}
+const setAddress = () => {
+
+  checkAddress()
+
+  if (addressErrors.value.length) {
+    return false
+  }
+
+  if (address_mode.value === 'address') {
+    form.value.address = location.value
+  } else if (address_mode.value === 'route'){
+    form.value.address = `${location_from.value} - ${location_to.value}`
+  } else {
+    form.value.address = ''
+  }
+
+  validAddress()
+  showButtonSetAddress.value = false
+  closeModalAddress()
+}
+const checkAddress = () => {
+
+  addressErrors.value = []
+
+  if (address_mode.value === 'address') {
+    if (!location.value.length) addressErrors.value.push({ where: 'location', message: 'Adresa musí byť vyplnená.' })
+  }
+
+  if (address_mode.value === 'route'){
+    if (!location_from.value.length) addressErrors.value.push({ where: 'location_from', message: 'Adresa musí byť vyplnená.' })
+    if (!location_to.value.length) addressErrors.value.push({ where: 'location_to', message: 'Adresa musí byť vyplnená.' })
+  }
+
+}
+const getAddressError = (search: any) => {
+  const emailError = addressErrors.value.find((error: any) => error.where === search);
+  return emailError ? emailError.message : '';
+}
+const setTimeRange = () => {
+  form.value.time_range = true
+}
+const closeTimeRange = () => {
+  form.value.start_at = null
+  form.value.end_at = null
+  form.value.time_range = false
+}
+const getError = (search: any) => {
+  const emailError = errors.value.find((error: any) => error.where === search);
+  return emailError ? emailError.message : '';
+}
+const closeModalAddress = () => {
+  showModalAddress.value = false
+}
+const errorInflection = (count: number) => {
+  if (count === 1) {
+    return 'chybu';
+  } else if (count >= 2 && count <= 4) {
+    return 'chyby';
+  } else {
+    return 'chýb';
+  }
+}
+
+</script>
+
 <template>
+
   <form @submit.prevent="submitForm" v-if="loggedIn">
     <panel divide="y">
 
@@ -199,215 +409,3 @@
   </transition>
 
 </template>
-
-<script setup lang="ts">
-import {ref, computed, inject} from 'vue';
-import {useMeta} from "vue-meta";
-import Panel from "@/components/Panel.vue";
-import PanelForm from "@/components/PanelForm.vue";
-import PanelFormActions from "@/components/PanelFormActions.vue";
-import type {Categories, Sections, Zipcodes} from "@/types/offers";
-import skZipcodes from "@/plugins/zipcodes/sk.json";
-import categoriesData from "@/plugins/categories.json";
-import type {Auth} from "@/types/users";
-import axios from "axios";
-import router from "@/router";
-import {settings} from "@/plugins/config";
-import {useToast} from "primevue/usetoast";
-
-const auth = inject<Auth>('auth');
-const loggedIn = ref(auth?.loggedIn as boolean)
-
-const toast = useToast()
-useMeta({ title: 'crea' })
-
-const loading = ref<boolean>(false);
-const errors = ref<any>([]);
-const form = ref<any>({
-  title: 'Požiadavka na ' as string,
-  section: 0 as number,
-  category: 0 as number,
-  address: '' as string,
-  time_range: false as boolean,
-  start_at: null,
-  end_at: null,
-  description: '' as string,
-  rules: false as boolean,
-});
-
-const slovakData = ref<Zipcodes[]>(skZipcodes);
-const sections = ref<Sections[]>(categoriesData.sections);
-const categories = ref<Categories[]>(categoriesData.categories);
-
-const showModalAddress = ref<boolean>(false);
-const showButtonSetAddress = ref<boolean>(true)
-const addressErrors = ref<any>([]);
-const address_mode = ref<string>('address');
-const location = ref<string>('');
-const location_from = ref<string>('');
-const location_to = ref<string>('');
-
-const submitForm = () => {
-  loading.value = true
-
-  checkForm()
-
-  if (errors.value.length) {
-    loading.value = false
-    return false
-  }
-
-  axios.post(`${settings.backend}/auth/offers/create`, form.value, { withCredentials: true })
-    .then(response => {
-      if (response.data.success) {
-        toast.add({severity: 'success', summary: 'Požiadavka', detail: 'Vaša požiadavka úspešne vytvorená.', group: 'br', life: 4000})
-        router.push({ name: 'offerDetail', params: { id: response.data.last_id } })
-      } else {
-        // backend error
-        console.log(response.data)
-      }
-    })
-    .catch(error => {
-      console.log(error)
-    })
-    .finally(() => {
-      loading.value = false
-    })
-
-}
-const checkForm = () => {
-  errors.value = []
-
-  validTitle()
-  validSection()
-  validCategory()
-  validAddress()
-  validDescription()
-  validRules()
-
-  if (form.value.time_range) {
-    validStartAt()
-    validEndAt()
-  }
-
-}
-const validTitle = () => {
-  errors.value = errors.value.filter((error: any) => error.where !== 'title')
-  if (form.value.title.length < 30) {
-    errors.value.push({ where: 'title', message: 'Názov požiadavky musí mať aspoň 30 znakov.' })
-  } else if (form.value.title.length > 100) {
-    errors.value.push({ where: 'title', message: 'Názov požiadavky môže mať maximálne 100 znakov.' })
-  }
-}
-const validSection = () => {
-  errors.value = errors.value.filter((error: any) => error.where !== 'section')
-  if (form.value.section === 0) errors.value.push({ where: 'section', message: 'Vyberte sekciu.' })
-}
-const validCategory = () => {
-  errors.value = errors.value.filter((error: any) => error.where !== 'category')
-  if (form.value.category === 0) errors.value.push({ where: 'category', message: 'Vyberte kategóriu.' })
-}
-const validAddress = () => {
-  errors.value = errors.value.filter((error: any) => error.where !== 'address')
-  if (!form.value.address.length) errors.value.push({ where: 'address', message: 'Adresa musí byť nastavená.' })
-}
-const validStartAt = () => {
-  errors.value = errors.value.filter((error: any) => error.where !== 'start_at')
-  if (form.value.start_at === null) errors.value.push({ where: 'start_at', message: 'Nastavte čas kedy majú práce začať.' })
-}
-const validEndAt = () => {
-  errors.value = errors.value.filter((error: any) => error.where !== 'end_at')
-  if (form.value.end_at === null) errors.value.push({ where: 'end_at', message: 'Nastavte čas kedy majú práce skončiť.' })
-}
-const validDescription = () => {
-  errors.value = errors.value.filter((error: any) => error.where !== 'description')
-  if (form.value.description.length < 150) {
-    errors.value.push({ where: 'description', message: 'Informácie o požiadavke musia mať aspoň 150 znakov.' })
-  } else if (form.value.description.length > 1000) {
-    errors.value.push({ where: 'description', message: 'Informácie o požiadavke môžu mať maximálne 1000 znakov.' })
-  }
-}
-const validRules = () => {
-  errors.value = errors.value.filter((error: any) => error.where !== 'rules')
-  if (!form.value.rules) errors.value.push({ where: 'rules', message: 'Musíte označiť že súhlasíte s podmienkami požiadavky.' })
-}
-const checkSelectSection = () => {
-  validSection()
-  if (form.value.section! > 0) {
-    form.value.category = 0
-  }
-}
-const filteredCategories = computed(() => {
-  if (form.value.section === 0) return [];
-  return categories.value.filter(category => category.section_id === form.value.section);
-});
-const addressMode = (input: string) => {
-  address_mode.value = input
-  location.value = ''
-  location_from.value = ''
-  location_to.value = ''
-}
-const setAddress = () => {
-
-  checkAddress()
-
-  if (addressErrors.value.length) {
-    return false
-  }
-
-  if (address_mode.value === 'address') {
-    form.value.address = location.value
-  } else if (address_mode.value === 'route'){
-    form.value.address = `${location_from.value} - ${location_to.value}`
-  } else {
-    form.value.address = ''
-  }
-
-  validAddress()
-  showButtonSetAddress.value = false
-  closeModalAddress()
-}
-const checkAddress = () => {
-
-  addressErrors.value = []
-
-  if (address_mode.value === 'address') {
-    if (!location.value.length) addressErrors.value.push({ where: 'location', message: 'Adresa musí byť vyplnená.' })
-  }
-
-  if (address_mode.value === 'route'){
-    if (!location_from.value.length) addressErrors.value.push({ where: 'location_from', message: 'Adresa musí byť vyplnená.' })
-    if (!location_to.value.length) addressErrors.value.push({ where: 'location_to', message: 'Adresa musí byť vyplnená.' })
-  }
-
-}
-const getAddressError = (search: any) => {
-  const emailError = addressErrors.value.find((error: any) => error.where === search);
-  return emailError ? emailError.message : '';
-}
-const setTimeRange = () => {
-  form.value.time_range = true
-}
-const closeTimeRange = () => {
-  form.value.start_at = null
-  form.value.end_at = null
-  form.value.time_range = false
-}
-const getError = (search: any) => {
-  const emailError = errors.value.find((error: any) => error.where === search);
-  return emailError ? emailError.message : '';
-}
-const closeModalAddress = () => {
-  showModalAddress.value = false
-}
-const errorInflection = (count: number) => {
-  if (count === 1) {
-    return 'chybu';
-  } else if (count >= 2 && count <= 4) {
-    return 'chyby';
-  } else {
-    return 'chýb';
-  }
-}
-
-</script>

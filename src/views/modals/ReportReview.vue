@@ -1,21 +1,20 @@
 <script setup lang="ts">
 import {inject, ref} from "vue";
 import axios from "axios";
-import {settings} from "@/plugins/config";
 import {useToast} from "primevue/usetoast";
 
 const toggleModal = inject<() => void>('reportReviewModal')!
 const toast = useToast()
 const props = defineProps({
   showModal: Boolean,
-  reviewId: Number
+  reviewId: String
 })
 
 const loading = ref<boolean>(false)
 const errors = ref<any>([])
 
 const formData = ref<any>({
-  review_id: props.reviewId as number,
+  review_id: props.reviewId as string,
   reason: '' as string
 })
 
@@ -30,7 +29,7 @@ const submitReport = () => {
     return false
   }
 
-  axios.post(`${settings.backend}/api/reviews/report`, formData.value, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/api/reviews/report`, formData.value, { withCredentials: true })
     .then(response => {
       if (response.data.success) {
         toast.add({severity: 'success', summary: 'Hlásenie', detail: 'Hlásenie bolo odoslané.', group: 'br', life: 3000})

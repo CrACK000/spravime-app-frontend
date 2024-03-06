@@ -143,14 +143,14 @@ onBeforeMount(async () => {
               <div class="col-span-2 sm:col-span-1">
                 <img :src="user.avatar" class="rounded-full w-full shadow-xl mx-auto" :alt="user.profile.name ?? user.username">
               </div>
-              <div :class="[user.count_reviews ? 'col-span-6 sm:col-span-5' : 'col-span-8 sm:col-span-7']">
+              <div :class="[user.reviews.count_reviews ? 'col-span-6 sm:col-span-5' : 'col-span-8 sm:col-span-7']">
                 <nickname :nickname="user.profile.name ?? user.username" :verify="user.verify" class="mb-0.5 sm:mb-1 font-medium" />
                 <div class="text-xs opacity-75 line-clamp-2" v-text="user.profile.slogan"></div>
               </div>
-              <div class="col-span-2" v-if="user.count_reviews">
+              <div class="col-span-2" v-if="user.reviews.count_reviews">
                 <div class="text-sm font-semibold text-center mb-1 hidden sm:block">Hodnotenie</div>
                 <div class="text-xl font-bold text-center">
-                  <average-rating :rating="Number(user.average_rating)"/>
+                  <average-rating :rating="Number(user.reviews.average_rating)"/>
                 </div>
               </div>
               <div class="col-span-2 ms-auto hidden sm:block">

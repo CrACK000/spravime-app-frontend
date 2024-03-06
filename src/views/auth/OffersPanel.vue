@@ -1,3 +1,297 @@
+<script setup lang="ts">
+import {computed, onMounted, ref} from "vue"
+import {useMeta} from "vue-meta"
+import axios from "axios"
+import {useToast} from "primevue/usetoast"
+import {timeUntil} from "@/plugins/functions"
+import skZipcodes from "@/plugins/zipcodes/sk.json"
+import categoriesData from "@/plugins/categories.json"
+import PanelForm from "@/components/PanelForm.vue"
+import PanelFormActions from "@/components/PanelFormActions.vue"
+
+useMeta({ title: 'Moje požiadavky' });
+
+const toast = useToast()
+const backend = import.meta.env.VITE_BACKEND
+
+const offers = ref<Offer[]>([])
+const loading = ref(false)
+const loadingEdit = ref<boolean>(false);
+const errorsEdit = ref<any>([]);
+const openEditPanel = ref<boolean>(false);
+
+const form = ref<any>({
+  offer_id: 0 as number,
+  title: '' as string,
+  section: 0 as number,
+  category: 0 as number,
+  address: '' as string,
+  time_range: false as boolean,
+  start_at: null,
+  end_at: null,
+  description: '' as string,
+});
+
+const showRight = ref(true);
+const showLeft = ref(false);
+const overlayLeft = ref(0);
+const overlayRight = ref(0);
+const scrollable = ref<null | HTMLDivElement>(null);
+
+const slovakData = ref<Zipcodes[]>(skZipcodes);
+const sections = ref<Sections[]>(categoriesData.sections);
+const categories = ref<Categories[]>(categoriesData.categories);
+
+const showModalAddress = ref<boolean>(false);
+const showButtonSetAddress = ref<boolean>(true)
+const addressErrors = ref<any>([]);
+const address_mode = ref<string>('address');
+const location = ref<string>('');
+const location_from = ref<string>('');
+const location_to = ref<string>('');
+
+const myOffers = (load = true) => {
+  if (load) loading.value = true
+
+  axios.post(`${backend}/auth/offers`, null, { withCredentials: true })
+    .then(response => {
+      offers.value = response.data
+    })
+    .catch(err => {
+      console.log(err)
+    })
+    .finally(() => {
+      loading.value = false
+    })
+}
+
+const removeOffer = (ids: any) => {
+
+  axios.post(`${backend}/auth/offers/remove`, { ids }, { withCredentials: true })
+    .then(response => {
+      if (response.data.success) {
+        //ok
+        toast.add({severity: 'success', summary: 'Požiadavka', detail: 'Vaša požiadavka bola odstránená.', group: 'br', life: 3000})
+        myOffers(false)
+      } else {
+        //error
+        toast.add({severity: 'error', summary: 'Požiadavka', detail: response.data.message, group: 'br', life: 3000})
+      }
+    })
+
+}
+
+const openEditModal = (offerId: string) => {
+  offerEditingData(offerId)
+  openEditPanel.value = !openEditPanel.value
+}
+const closeEditModal = () => {
+  form.value = {
+    offer_id: 0 as number,
+    title: '' as string,
+    section: 0 as number,
+    category: 0 as number,
+    address: '' as string,
+    time_range: false as boolean,
+    start_at: null,
+    end_at: null,
+    description: '' as string,
+  };
+  openEditPanel.value = !openEditPanel.value
+}
+const offerEditingData = async (offerId: string) => {
+  await axios.get(`${backend}/offers/${offerId}`, { withCredentials: true })
+    .then(response => {
+
+      let dateTimeStartAt: string = response.data.start_at;
+      let startDate: Date = new Date(dateTimeStartAt);
+      let StartAt: string = new Date(startDate.getTime() - startDate.getTimezoneOffset() * 60000).toISOString().substring(0, 16);
+      let dateTimeEndAt: string = response.data.end_at;
+      let endDate: Date = new Date(dateTimeEndAt);
+      let EndAt: string = new Date(endDate.getTime() - endDate.getTimezoneOffset() * 60000).toISOString().substring(0, 16);
+
+      form.value = {
+        offer_id: response.data.id,
+        title: response.data.title,
+        section: response.data.section,
+        category: response.data.category,
+        address: response.data.address,
+        time_range: response.data.time_range,
+        start_at: response.data.start_at ? StartAt : null,
+        end_at: response.data.end_at ? EndAt : null,
+        description: response.data.description,
+      };
+    })
+};
+const submitEditOffer = () => {
+  loadingEdit.value = true
+
+  checkEditingForm()
+
+  if (errorsEdit.value.length) {
+    loadingEdit.value = false
+    return false
+  }
+
+  axios.post(`${backend}/auth/offers/edit`, form.value, { withCredentials: true })
+    .then(response => {
+      if (response.data.success) {
+        toast.add({severity: 'success', summary: 'Požiadavka', detail: 'Vaša požiadavka bola aktualizovaná.', group: 'br', life: 3000})
+        closeEditModal()
+        myOffers(false)
+      } else {
+        console.log(response.data.message)
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    })
+    .finally(() => {
+      loadingEdit.value = false
+    })
+
+}
+const checkEditingForm = () => {
+  errorsEdit.value = []
+
+  validTitle()
+  validSection()
+  validCategory()
+  validAddress()
+  validDescription()
+
+  if (form.value.time_range) {
+    validStartAt()
+    validEndAt()
+  }
+
+}
+const validTitle = () => {
+  errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'title')
+  if (form.value.title.length < 30) {
+    errorsEdit.value.push({ where: 'title', message: 'Názov požiadavky musí mať aspoň 30 znakov.' })
+  } else if (form.value.title.length > 100) {
+    errorsEdit.value.push({ where: 'title', message: 'Názov požiadavky môže mať maximálne 100 znakov.' })
+  }
+}
+const validSection = () => {
+  errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'section')
+  if (form.value.section === 0) errorsEdit.value.push({ where: 'section', message: 'Vyberte sekciu.' })
+}
+const validCategory = () => {
+  errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'category')
+  if (form.value.category === 0) errorsEdit.value.push({ where: 'category', message: 'Vyberte kategóriu.' })
+}
+const validAddress = () => {
+  errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'address')
+  if (!form.value.address.length) errorsEdit.value.push({ where: 'address', message: 'Adresa musí byť nastavená.' })
+}
+const validStartAt = () => {
+  errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'start_at')
+  if (form.value.start_at === null) errorsEdit.value.push({ where: 'start_at', message: 'Nastavte čas kedy majú práce začať.' })
+}
+const validEndAt = () => {
+  errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'end_at')
+  if (form.value.end_at === null) errorsEdit.value.push({ where: 'end_at', message: 'Nastavte čas kedy majú práce skončiť.' })
+}
+const validDescription = () => {
+  errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'description')
+  if (form.value.description.length < 150) {
+    errorsEdit.value.push({ where: 'description', message: 'Informácie o požiadavke musia mať aspoň 150 znakov.' })
+  } else if (form.value.description.length > 1000) {
+    errorsEdit.value.push({ where: 'description', message: 'Informácie o požiadavke môžu mať maximálne 1000 znakov.' })
+  }
+}
+const checkSelectSection = () => {
+  validSection()
+  if (form.value.section! > 0) {
+    form.value.category = 0
+  }
+}
+const filteredCategories = computed(() => {
+  if (form.value.section === 0) return [];
+  return categories.value.filter(category => category.section_id === form.value.section);
+});
+const addressMode = (input: string) => {
+  address_mode.value = input
+  location.value = ''
+  location_from.value = ''
+  location_to.value = ''
+}
+const setAddress = () => {
+
+  checkAddress()
+
+  if (addressErrors.value.length) {
+    return false
+  }
+
+  if (address_mode.value === 'address') {
+    form.value.address = location.value
+  } else if (address_mode.value === 'route'){
+    form.value.address = `${location_from.value} - ${location_to.value}`
+  } else {
+    form.value.address = ''
+  }
+
+  validAddress()
+  showButtonSetAddress.value = false
+  closeModalAddress()
+}
+const checkAddress = () => {
+
+  addressErrors.value = []
+
+  if (address_mode.value === 'address') {
+    if (!location.value.length) addressErrors.value.push({ where: 'location', message: 'Adresa musí byť vyplnená.' })
+  }
+
+  if (address_mode.value === 'route'){
+    if (!location_from.value.length) addressErrors.value.push({ where: 'location_from', message: 'Adresa musí byť vyplnená.' })
+    if (!location_to.value.length) addressErrors.value.push({ where: 'location_to', message: 'Adresa musí byť vyplnená.' })
+  }
+
+}
+const setTimeRange = () => {
+  form.value.time_range = true
+}
+const closeTimeRange = () => {
+  form.value.start_at = null
+  form.value.end_at = null
+  form.value.time_range = false
+}
+const getAddressError = (search: any) => {
+  const emailError = addressErrors.value.find((error: any) => error.where === search);
+  return emailError ? emailError.message : '';
+}
+const getError = (search: any) => {
+  const emailError = errorsEdit.value.find((error: any) => error.where === search);
+  return emailError ? emailError.message : '';
+}
+const closeModalAddress = () => {
+  showModalAddress.value = false
+}
+const checkScroll = (event?: any) => {
+  const { scrollWidth, scrollLeft, clientWidth } = event.target;
+
+  showLeft.value = scrollLeft > 0;
+  showRight.value = scrollLeft + clientWidth < scrollWidth;
+  overlayLeft.value = scrollLeft;
+  overlayRight.value = scrollWidth - (scrollLeft + clientWidth);
+}
+const onWheel = (e: WheelEvent) => {
+  e.preventDefault();
+  if (scrollable.value) {
+    scrollable.value.scrollLeft += e.deltaY / 3;
+  }
+}
+
+onMounted(() => {
+  myOffers()
+})
+
+</script>
+
 <template>
   <div class="shadow-md shadow-blue-700/5 dark:shadow-black/10 rounded-none md:rounded-lg overflow-hidden flex flex-col divide-y divide-gray-200 dark:divide-gray-700/40">
 
@@ -44,10 +338,10 @@
               </div>
             </div>
             <div class="flex justify-end items-center gap-3">
-              <button class="form-secondary-button-sm" type="button" @click="openEditModal(offer.id)">
+              <button class="form-secondary-button-sm" type="button" @click="openEditModal(offer._id)">
                 Upraviť
               </button>
-              <button type="button" class="form-danger-button-sm" @click="removeOffer(offer.id)">
+              <button type="button" class="form-danger-button-sm" @click="removeOffer(offer._id)">
                 Odstrániť
               </button>
             </div>
@@ -75,10 +369,10 @@
               </div>
             </div>
             <div class="flex justify-end items-center gap-3">
-              <button class="form-secondary-button-sm" type="button" @click="openEditModal(offer.id)">
+              <button class="form-secondary-button-sm" type="button" @click="openEditModal(offer._id)">
                 Upraviť
               </button>
-              <button type="button" class="form-danger-button-sm" @click="removeOffer(offer.id)">
+              <button type="button" class="form-danger-button-sm" @click="removeOffer(offer._id)">
                 Odstrániť
               </button>
             </div>
@@ -287,298 +581,3 @@
 
   </div>
 </template>
-
-<script setup lang="ts">
-import {computed, onMounted, ref} from "vue";
-import {useMeta} from "vue-meta";
-import axios from "axios";
-import {settings} from "@/plugins/config";
-import type {Categories, Offer, Sections, Zipcodes} from "@/types/offers";
-import skZipcodes from "@/plugins/zipcodes/sk.json";
-import categoriesData from "@/plugins/categories.json";
-import {useToast} from "primevue/usetoast";
-import PanelForm from "@/components/PanelForm.vue";
-import PanelFormActions from "@/components/PanelFormActions.vue";
-import {timeUntil} from "@/plugins/functions";
-
-useMeta({ title: 'Moje požiadavky' });
-
-const toast = useToast()
-
-const offers = ref<Offer[]>([])
-const loading = ref(false)
-const loadingEdit = ref<boolean>(false);
-const errorsEdit = ref<any>([]);
-const openEditPanel = ref<boolean>(false);
-
-const form = ref<any>({
-  offer_id: 0 as number,
-  title: '' as string,
-  section: 0 as number,
-  category: 0 as number,
-  address: '' as string,
-  time_range: false as boolean,
-  start_at: null,
-  end_at: null,
-  description: '' as string,
-});
-
-const showRight = ref(true);
-const showLeft = ref(false);
-const overlayLeft = ref(0);
-const overlayRight = ref(0);
-const scrollable = ref<null | HTMLDivElement>(null);
-
-const slovakData = ref<Zipcodes[]>(skZipcodes);
-const sections = ref<Sections[]>(categoriesData.sections);
-const categories = ref<Categories[]>(categoriesData.categories);
-
-const showModalAddress = ref<boolean>(false);
-const showButtonSetAddress = ref<boolean>(true)
-const addressErrors = ref<any>([]);
-const address_mode = ref<string>('address');
-const location = ref<string>('');
-const location_from = ref<string>('');
-const location_to = ref<string>('');
-
-const myOffers = (load = true) => {
-  if (load) loading.value = true
-
-  axios.post(`${settings.backend}/api/offers/my`, null, { withCredentials: true })
-    .then(response => {
-      offers.value = response.data
-    })
-    .catch(err => {
-      console.log(err)
-    })
-    .finally(() => {
-      loading.value = false
-    })
-}
-
-const removeOffer = (ids: any) => {
-
-  axios.post(`${settings.backend}/api/offers/remove`, { ids }, { withCredentials: true })
-    .then(response => {
-      if (response.data.success) {
-        //ok
-        toast.add({severity: 'success', summary: 'Požiadavka', detail: 'Vaša požiadavka bola odstránená.', group: 'br', life: 3000})
-        myOffers(false)
-      } else {
-        //error
-        toast.add({severity: 'error', summary: 'Požiadavka', detail: response.data.message, group: 'br', life: 3000})
-      }
-    })
-
-}
-
-const openEditModal = (offerId: number) => {
-  offerEditingData(offerId)
-  openEditPanel.value = !openEditPanel.value
-}
-const closeEditModal = () => {
-  form.value = {
-    offer_id: 0 as number,
-    title: '' as string,
-    section: 0 as number,
-    category: 0 as number,
-    address: '' as string,
-    time_range: false as boolean,
-    start_at: null,
-    end_at: null,
-    description: '' as string,
-  };
-  openEditPanel.value = !openEditPanel.value
-}
-const offerEditingData = async (offerId: number) => {
-  await axios.get(`${settings.backend}/api/offers/${offerId}`, { withCredentials: true })
-    .then(response => {
-
-      let dateTimeStartAt: string = response.data.start_at;
-      let startDate: Date = new Date(dateTimeStartAt);
-      let StartAt: string = new Date(startDate.getTime() - startDate.getTimezoneOffset() * 60000).toISOString().substring(0, 16);
-      let dateTimeEndAt: string = response.data.end_at;
-      let endDate: Date = new Date(dateTimeEndAt);
-      let EndAt: string = new Date(endDate.getTime() - endDate.getTimezoneOffset() * 60000).toISOString().substring(0, 16);
-
-      form.value = {
-        offer_id: response.data.id,
-        title: response.data.title,
-        section: response.data.section,
-        category: response.data.category,
-        address: response.data.address,
-        time_range: response.data.time_range,
-        start_at: response.data.start_at ? StartAt : null,
-        end_at: response.data.end_at ? EndAt : null,
-        description: response.data.description,
-      };
-    })
-};
-const submitEditOffer = () => {
-  loadingEdit.value = true
-
-  checkEditingForm()
-
-  if (errorsEdit.value.length) {
-    loadingEdit.value = false
-    return false
-  }
-
-  axios.post(`${settings.backend}/api/offers/edit`, form.value, { withCredentials: true })
-    .then(response => {
-      if (response.data.success) {
-        toast.add({severity: 'success', summary: 'Požiadavka', detail: 'Vaša požiadavka bola aktualizovaná.', group: 'br', life: 3000})
-        closeEditModal()
-        myOffers(false)
-      } else {
-        console.log(response.data.message)
-      }
-    })
-    .catch(error => {
-      console.log(error)
-    })
-    .finally(() => {
-      loadingEdit.value = false
-    })
-
-}
-const checkEditingForm = () => {
-  errorsEdit.value = []
-
-  validTitle()
-  validSection()
-  validCategory()
-  validAddress()
-  validDescription()
-
-  if (form.value.time_range) {
-    validStartAt()
-    validEndAt()
-  }
-
-}
-const validTitle = () => {
-  errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'title')
-  if (form.value.title.length < 30) {
-    errorsEdit.value.push({ where: 'title', message: 'Názov požiadavky musí mať aspoň 30 znakov.' })
-  } else if (form.value.title.length > 100) {
-    errorsEdit.value.push({ where: 'title', message: 'Názov požiadavky môže mať maximálne 100 znakov.' })
-  }
-}
-const validSection = () => {
-  errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'section')
-  if (form.value.section === 0) errorsEdit.value.push({ where: 'section', message: 'Vyberte sekciu.' })
-}
-const validCategory = () => {
-  errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'category')
-  if (form.value.category === 0) errorsEdit.value.push({ where: 'category', message: 'Vyberte kategóriu.' })
-}
-const validAddress = () => {
-  errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'address')
-  if (!form.value.address.length) errorsEdit.value.push({ where: 'address', message: 'Adresa musí byť nastavená.' })
-}
-const validStartAt = () => {
-  errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'start_at')
-  if (form.value.start_at === null) errorsEdit.value.push({ where: 'start_at', message: 'Nastavte čas kedy majú práce začať.' })
-}
-const validEndAt = () => {
-  errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'end_at')
-  if (form.value.end_at === null) errorsEdit.value.push({ where: 'end_at', message: 'Nastavte čas kedy majú práce skončiť.' })
-}
-const validDescription = () => {
-  errorsEdit.value = errorsEdit.value.filter((error: any) => error.where !== 'description')
-  if (form.value.description.length < 150) {
-    errorsEdit.value.push({ where: 'description', message: 'Informácie o požiadavke musia mať aspoň 150 znakov.' })
-  } else if (form.value.description.length > 1000) {
-    errorsEdit.value.push({ where: 'description', message: 'Informácie o požiadavke môžu mať maximálne 1000 znakov.' })
-  }
-}
-const checkSelectSection = () => {
-  validSection()
-  if (form.value.section! > 0) {
-    form.value.category = 0
-  }
-}
-const filteredCategories = computed(() => {
-  if (form.value.section === 0) return [];
-  return categories.value.filter(category => category.section_id === form.value.section);
-});
-const addressMode = (input: string) => {
-  address_mode.value = input
-  location.value = ''
-  location_from.value = ''
-  location_to.value = ''
-}
-const setAddress = () => {
-
-  checkAddress()
-
-  if (addressErrors.value.length) {
-    return false
-  }
-
-  if (address_mode.value === 'address') {
-    form.value.address = location.value
-  } else if (address_mode.value === 'route'){
-    form.value.address = `${location_from.value} - ${location_to.value}`
-  } else {
-    form.value.address = ''
-  }
-
-  validAddress()
-  showButtonSetAddress.value = false
-  closeModalAddress()
-}
-const checkAddress = () => {
-
-  addressErrors.value = []
-
-  if (address_mode.value === 'address') {
-    if (!location.value.length) addressErrors.value.push({ where: 'location', message: 'Adresa musí byť vyplnená.' })
-  }
-
-  if (address_mode.value === 'route'){
-    if (!location_from.value.length) addressErrors.value.push({ where: 'location_from', message: 'Adresa musí byť vyplnená.' })
-    if (!location_to.value.length) addressErrors.value.push({ where: 'location_to', message: 'Adresa musí byť vyplnená.' })
-  }
-
-}
-const setTimeRange = () => {
-  form.value.time_range = true
-}
-const closeTimeRange = () => {
-  form.value.start_at = null
-  form.value.end_at = null
-  form.value.time_range = false
-}
-const getAddressError = (search: any) => {
-  const emailError = addressErrors.value.find((error: any) => error.where === search);
-  return emailError ? emailError.message : '';
-}
-const getError = (search: any) => {
-  const emailError = errorsEdit.value.find((error: any) => error.where === search);
-  return emailError ? emailError.message : '';
-}
-const closeModalAddress = () => {
-  showModalAddress.value = false
-}
-const checkScroll = (event?: any) => {
-  const { scrollWidth, scrollLeft, clientWidth } = event.target;
-
-  showLeft.value = scrollLeft > 0;
-  showRight.value = scrollLeft + clientWidth < scrollWidth;
-  overlayLeft.value = scrollLeft;
-  overlayRight.value = scrollWidth - (scrollLeft + clientWidth);
-}
-const onWheel = (e: WheelEvent) => {
-  e.preventDefault();
-  if (scrollable.value) {
-    scrollable.value.scrollLeft += e.deltaY / 3;
-  }
-}
-
-onMounted(() => {
-  myOffers()
-})
-
-</script>

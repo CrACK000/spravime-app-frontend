@@ -1,52 +1,13 @@
-<template>
-  <div class="grid grid-cols-2 gap-0.5 md:gap-10 -mx-4 md:-mx-0">
-
-    <panel class="col-span-1 xxs:col-span-2 sm:col-span-1 p-2 md:p-4 flex justify-between relative">
-      <div id="pie-chart"></div>
-      <div class="absolute bottom-4 right-4">
-        <div class="leading-none text-5xl font-bold text-gray-900 dark:text-white pb-2 text-end">230</div>
-        <div class="font-normal text-gray-500 dark:text-gray-400 text-end">Zobrazenia profilu</div>
-      </div>
-    </panel>
-
-    <panel class="col-span-1 xxs:col-span-2 sm:col-span-1 p-2 md:p-4 flex justify-between items-end relative h-[200px]">
-      <div id="bar-chart" class="w-[180px] h-[200px]"></div>
-      <div class="absolute bottom-4 right-4">
-        <div class="leading-none text-5xl font-bold text-gray-900 dark:text-white pb-2 text-end">{{ user.average_rating }}</div>
-        <div class="font-normal text-gray-500 dark:text-gray-400 text-end">Hodnotenie profilu</div>
-      </div>
-    </panel>
-
-    <panel class="col-span-2">
-      <div class="grid grid-cols-12 items-end">
-        <div class="col-span-12 md:col-span-5 p-6">
-          <div>
-            <h5 class="leading-none text-5xl font-bold text-gray-900 dark:text-white pb-3">1 233</h5>
-            <p class="text-sm opacity-75">posledných 15 dní</p>
-            <p class="font-normal text-gray-500 dark:text-gray-400">Návštevnosť profilu</p>
-          </div>
-        </div>
-        <div class="col-span-12 md:col-span-7">
-          <div id="area-chart"></div>
-        </div>
-      </div>
-    </panel>
-
-  </div>
-</template>
-
 <script setup lang="ts">
 import Panel from "@/components/Panel.vue";
 import {inject, onMounted, ref} from "vue";
 import ApexCharts from 'apexcharts'
 import {useMeta} from "vue-meta";
-import type {Auth, User} from "@/types/users";
 
 useMeta({ title: 'Štatistika' })
 
 const auth = inject<Auth>('auth');
-const user = ref(auth?.user as User)
-const loggedIn = ref(auth?.loggedIn as boolean)
+const user = ref(auth?.userData as User)
 
 function generateRandomNumbers(min: number, max: number, count: number) {
   let numbers = [];
@@ -265,3 +226,40 @@ onMounted(() => {
   }
 })
 </script>
+
+<template>
+  <div class="grid grid-cols-2 gap-0.5 md:gap-10 -mx-4 md:-mx-0">
+
+    <panel class="col-span-1 xxs:col-span-2 sm:col-span-1 p-2 md:p-4 flex justify-between relative">
+      <div id="pie-chart"></div>
+      <div class="absolute bottom-4 right-4">
+        <div class="leading-none text-5xl font-bold text-gray-900 dark:text-white pb-2 text-end">230</div>
+        <div class="font-normal text-gray-500 dark:text-gray-400 text-end">Zobrazenia profilu</div>
+      </div>
+    </panel>
+
+    <panel class="col-span-1 xxs:col-span-2 sm:col-span-1 p-2 md:p-4 flex justify-between items-end relative h-[200px]">
+      <div id="bar-chart" class="w-[180px] h-[200px]"></div>
+      <div class="absolute bottom-4 right-4">
+        <div class="leading-none text-5xl font-bold text-gray-900 dark:text-white pb-2 text-end">{{ user.average_rating }}</div>
+        <div class="font-normal text-gray-500 dark:text-gray-400 text-end">Hodnotenie profilu</div>
+      </div>
+    </panel>
+
+    <panel class="col-span-2">
+      <div class="grid grid-cols-12 items-end">
+        <div class="col-span-12 md:col-span-5 p-6">
+          <div>
+            <h5 class="leading-none text-5xl font-bold text-gray-900 dark:text-white pb-3">1 233</h5>
+            <p class="text-sm opacity-75">posledných 15 dní</p>
+            <p class="font-normal text-gray-500 dark:text-gray-400">Návštevnosť profilu</p>
+          </div>
+        </div>
+        <div class="col-span-12 md:col-span-7">
+          <div id="area-chart"></div>
+        </div>
+      </div>
+    </panel>
+
+  </div>
+</template>

@@ -7,6 +7,8 @@ import Information from "@/components/profile/InformationProfile.vue"
 import TitleProfile from "@/components/profile/TitleProfile.vue"
 import DescriptionProfile from "@/components/profile/DescriptionProfile.vue"
 import GalleryProfile from "@/components/profile/GalleryProfile.vue"
+import RatingProfile from "@/components/profile/RatingProfile.vue"
+import ReviewsProfile from "@/components/profile/ReviewsProfile.vue";
 
 watch(() => user.data.user, (profileTitleValue) => {
   if (profileTitleValue && profileTitleValue.username) {
@@ -21,7 +23,6 @@ const id = ref<string>(String(route.params.id))
 onBeforeMount(() => {
   if (user.data.user?._id !== id.value) {
     user.profile(id.value)
-    user.profileReviews(id.value)
   }
 })
 </script>
@@ -52,14 +53,9 @@ onBeforeMount(() => {
         </div>
 
         <!-- Reviews Panel -->
-        <!--<transition name="fade">
-          <div class="mt-8" v-if="!user.data.reviews_loading && user.data.reviews.length">
-            <reviews-profile/>
-          </div>
-          <div class="mt-8" v-else-if="user.data.reviews_loading">
-            <skeleton-profile-reviews/>
-          </div>
-        </transition>-->
+        <div class="mt-8">
+          <reviews-profile/>
+        </div>
 
       </div>
       <div class="col-span-12 md:col-span-4 order-1 md:order-2">
@@ -78,14 +74,9 @@ onBeforeMount(() => {
         </div>
 
         <!-- Rating Panel -->
-        <!--<transition name="fade">
-          <div class="mt-0.5 md:mt-10 lg:mt-16" v-if="!user.data.reviews_loading && user.data.reviews.length">
-            <rating-profile/>
-          </div>
-          <div class="mt-0.5 md:mt-10 lg:mt-16" v-else-if="user.data.reviews_loading">
-            <skeleton-profile-rating/>
-          </div>
-        </transition>-->
+        <div class="mt-0.5 md:mt-10 lg:mt-16">
+          <rating-profile/>
+        </div>
 
       </div>
     </div>

@@ -1,21 +1,20 @@
 <script setup lang="ts">
 import {inject, ref} from "vue";
 import axios from "axios";
-import {settings} from "@/plugins/config";
 import {useToast} from "primevue/usetoast";
 
 const toggleModal = inject<() => void>('writeReviewModal')!
 const toast = useToast()
 const props = defineProps({
   showModal: Boolean,
-  profileId: Number
+  profileId: String
 })
 
 const loading = ref<boolean>(false)
 const errors = ref<any>([])
 
 const formData = ref<any>({
-  profile_id: props.profileId as number,
+  profile_id: props.profileId as string,
   star: 0 as number,
   recommendation: Boolean,
   description: '' as string
@@ -32,7 +31,7 @@ const submitReview = () => {
     return false
   }
 
-  axios.post(`${settings.backend}/api/reviews/create`, formData.value, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/reviews/create`, formData.value, { withCredentials: true })
     .then(response => {
       if (response.data.success) {
         toast.add({severity: 'success', summary: 'Recenzia', detail: 'Vaša recenzia bola úspešne pridaná.', group: 'br', life: 3000})

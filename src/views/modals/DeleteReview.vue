@@ -1,27 +1,26 @@
 <script setup lang="ts">
 import {inject, ref} from "vue";
 import axios from "axios";
-import {settings} from "@/plugins/config";
 import {useToast} from "primevue/usetoast";
 
 const toggleModal = inject<() => void>('deleteReviewModal')!
 const toast = useToast()
 const props = defineProps({
   showModal: Boolean,
-  reviewId: Number
+  reviewId: String
 })
 
 const loading = ref<boolean>(false)
 
 const formData = ref<any>({
-  review_id: props.reviewId as number
+  review_id: props.reviewId as string
 })
 
 const submitDelete = () => {
 
   loading.value = true
 
-  axios.post(`${settings.backend}/api/reviews/delete`, formData.value, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/reviews/remove`, formData.value, { withCredentials: true })
     .then(response => {
       if (response.data.success) {
         toast.add({severity: 'success', summary: 'Recenzia', detail: 'Vaša recenzia bola odstránená.', group: 'br', life: 3000})

@@ -1,60 +1,17 @@
-<template>
-  <panel-grid>
-
-    <form method="post" enctype="multipart/form-data" @submit.prevent="upload">
-      <panel divide="y">
-        <panel-form>
-          <div class="mb-2 text-sm">Profilový obrázok</div>
-          <img :src="imagePreview" alt="avatar" class="max-w-full w-56 rounded-lg shadow-xl block">
-          <div class="mt-10">
-            <label for="avatar" class="form-secondary-button cursor-pointer truncate">
-              <i class="fa-regular fa-file-image fa-lg me-2 opacity-75"></i>
-              <template v-if="inputText.length">{{ inputText }}</template>
-              <template v-else>Nahrať nový</template>
-            </label>
-            <ul class="mt-4 text-sm opacity-75">
-              <li>Povolené obrázky SVG, PNG, JPG alebo GIF. (Max 10MB)</li>
-              <li>Maximálne rozlíšenie 800x800</li>
-            </ul>
-            <input type="file" id="avatar" @change="onFileChange" hidden>
-          </div>
-        </panel-form>
-        <panel-form-actions>
-          <template #left>
-            Profilový obrázok
-          </template>
-          <template #right>
-            <button type="button" class="form-secondary-button" v-if="changed" @click.prevent="setData">
-              Zrušiť
-            </button>
-            <button type="submit" class="form-button" :disabled="!changed || loading || errors.length">
-              <template v-if="loading"><i class="fa-solid fa-circle-notch fa-spin me-1"></i> Ukladá sa</template>
-              <template v-else>Uložiť</template>
-            </button>
-          </template>
-        </panel-form-actions>
-      </panel>
-    </form>
-
-  </panel-grid>
-</template>
-
 <script setup lang="ts">
 import {inject, onMounted, ref} from "vue"
 import {useMeta} from "vue-meta"
 import axios from "axios"
-import { settings } from "@/plugins/config"
 import { useToast } from "primevue/usetoast"
 import Panel from "@/components/Panel.vue"
 import PanelGrid from "@/components/PanelGrid.vue"
 import PanelForm from "@/components/PanelForm.vue"
 import PanelFormActions from "@/components/PanelFormActions.vue"
-import type {Auth, User} from "@/types/users"
 
 useMeta({ title: 'Vzhľad profilu' })
 
 const auth = inject<Auth>('auth')
-const user = ref(auth?.user as User)
+const user = ref(auth?.userData as User)
 const toast = useToast()
 
 const imagePreview = ref<string>('')
@@ -148,7 +105,7 @@ const upload = () => {
 
   FileData.append('avatar', fileInput.files[0])
 
-  axios.post(settings.backend + '/api/avatar/update', FileData, {
+  axios.post(`${import.meta.env.VITE_BACKEND}/auth/avatar/update`, FileData, {
     withCredentials: true,
     headers: {
       'Content-Type': 'multipart/form-data'
@@ -185,3 +142,44 @@ onMounted(() => {
 })
 
 </script>
+
+<template>
+  <panel-grid>
+
+    <form method="post" enctype="multipart/form-data" @submit.prevent="upload">
+      <panel divide="y">
+        <panel-form>
+          <div class="mb-2 text-sm">Profilový obrázok</div>
+          <img :src="imagePreview" alt="avatar" class="max-w-full w-56 rounded-lg shadow-xl block">
+          <div class="mt-10">
+            <label for="avatar" class="form-secondary-button cursor-pointer truncate">
+              <i class="fa-regular fa-file-image fa-lg me-2 opacity-75"></i>
+              <template v-if="inputText.length">{{ inputText }}</template>
+              <template v-else>Nahrať nový</template>
+            </label>
+            <ul class="mt-4 text-sm opacity-75">
+              <li>Povolené obrázky SVG, PNG, JPG alebo GIF. (Max 10MB)</li>
+              <li>Maximálne rozlíšenie 800x800</li>
+            </ul>
+            <input type="file" id="avatar" @change="onFileChange" hidden>
+          </div>
+        </panel-form>
+        <panel-form-actions>
+          <template #left>
+            Profilový obrázok
+          </template>
+          <template #right>
+            <button type="button" class="form-secondary-button" v-if="changed" @click.prevent="setData">
+              Zrušiť
+            </button>
+            <button type="submit" class="form-button" :disabled="!changed || loading || errors.length">
+              <template v-if="loading"><i class="fa-solid fa-circle-notch fa-spin me-1"></i> Ukladá sa</template>
+              <template v-else>Uložiť</template>
+            </button>
+          </template>
+        </panel-form-actions>
+      </panel>
+    </form>
+
+  </panel-grid>
+</template>

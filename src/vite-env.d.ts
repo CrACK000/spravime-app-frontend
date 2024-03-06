@@ -33,6 +33,7 @@ interface User {
     profile: ProfileData,
     social: SocialData,
     gallery: [Gallery],
+    reviews: ReviewsData,
     views: number,
     verify: boolean,
     created_at: string,
@@ -64,9 +65,14 @@ interface SocialData {
     linkedin: string | null
 }
 
+interface ReviewsData {
+    average_rating: number,
+    count_reviews: number,
+}
+
 interface Review {
     _id: string,
-    author: string,
+    author: User,
     key: string,
     rating: number,
     recommendation: boolean,

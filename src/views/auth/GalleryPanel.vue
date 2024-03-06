@@ -1,20 +1,21 @@
 <script setup lang="ts">
-import {onMounted, ref} from "vue"
+import {inject, onBeforeMount, ref} from "vue"
 import {useMeta} from "vue-meta"
 import axios from "axios"
 import Panel from "@/components/Panel.vue"
 import PanelGrid from "@/components/PanelGrid.vue"
 import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue"
 import PanelFormActions from "@/components/PanelFormActions.vue"
-import { settings } from "@/plugins/config"
-import {useToast} from "primevue/usetoast";
+import {useToast} from "primevue/usetoast"
 
 useMeta({ title: 'Galéria' })
 
 const toast = useToast()
+const auth = inject<Auth>('auth')
+const backend = import.meta.env.VITE_BACKEND
 
 const loading = ref<boolean>(false)
-const gallery = ref([] as any)
+const gallery = ref<Gallery[]>(auth?.userData.value.gallery)
 const previews = ref([] as any)
 const selectedImg = ref([] as any)
 const filesData = ref(null as (FormData | null))
@@ -30,25 +31,7 @@ const remove = ref<any>({
   success: false as boolean,
 })
 
-const createGallery = () => {
-
-  loading.value = true
-
-  // @todo tu nemám napojené ID /------------------------------------------/
-
-  axios.get(settings.backend + "/api/user/gallery/" + 8, { withCredentials: true })
-    .then(response => {
-      gallery.value = response.data
-    })
-    .catch(err => {
-      console.error(err)
-    })
-    .finally(() => {
-      loading.value = false
-    })
-}
-
-const checkImg = (imgId: number) => {
+const checkImg = (imgId: string) => {
   if (selectedImg.value.includes(imgId)){
     selectedImg.value = selectedImg.value.filter((item: any) => item !== imgId)
   } else {
@@ -68,12 +51,12 @@ const onUpload = () => {
   const formData = new FormData();
 
   filesData.value.forEach(file => {
-    formData.append('files', file);
-  });
+    formData.append('files', file)
+  })
 
   if (upload.value.errors.length) return false
 
-  axios.post(settings.backend + '/api/gallery/upload', formData, { withCredentials: true })
+  axios.post(`${backend}/auth/gallery/upload`, formData, { withCredentials: true })
     .then((response) => {
       if (response.data.success === true) {
         toast.add({ severity: 'success', summary: 'Úspech', detail: response.data.message, group: 'br', life: 5000 })
@@ -95,19 +78,19 @@ const onUpload = () => {
       console.log(error)
     })
     .finally(() => {
-      createGallery()
+      //createGallery()
       upload.value.loading = false
     })
 
 }
 
 const previewImages = (e: any) => {
-  const files = e.target.files;
+  const files = e.target.files
 
   if (files.length > 10) {
     toast.add({ severity: 'error', summary: 'Chyba', detail: 'Môžete vybrať len 10 obrázkov.', group: 'br', life: 8000 })
     upload.value.errors.push({ where: 'error', message: 'Môžete vybrať len 10 obrázkov.' })
-    return;
+    return
   }
 
   const filesDataForm = new FormData();
@@ -117,49 +100,49 @@ const previewImages = (e: any) => {
     if (files[i].size > 15 * 1024 * 1024) {
       toast.add({ severity: 'error', summary: 'Chyba', detail: 'Každý súbor musí byť menší ako 15 MB.', group: 'br', life: 8000 })
       upload.value.errors.push({ where: 'error', message: 'Každý súbor musí byť menší ako 15 MB.' })
-      return;
+      return
     }
 
     if (!files[i].type.startsWith('image/')) {
       toast.add({ severity: 'error', summary: 'Chyba', detail: 'Všetky súbory musia byť obrázky.', group: 'br', life: 8000 })
       upload.value.errors.push({ where: 'error', message: 'Všetky súbory musia byť obrázky.' })
-      return;
+      return
     }
 
-    filesDataForm.append('images', files[i]);
-    previews.value.push(window.URL.createObjectURL(files[i]));
+    filesDataForm.append('images', files[i])
+    previews.value.push(window.URL.createObjectURL(files[i]))
   }
 
   if(allImagesValid) {
-    filesData.value = filesDataForm;
+    filesData.value = filesDataForm
   } else {
-    return;
+    return
   }
 }
 
 const clearPreviews = (index?: number) => {
   if (index !== undefined) {
-    URL.revokeObjectURL(previews.value[index]);
-    previews.value.splice(index, 1);
+    URL.revokeObjectURL(previews.value[index])
+    previews.value.splice(index, 1)
 
     if (filesData.value != null) {
-      let filesArray = [];
-      for(let pair of filesData.value.entries()) { // @todo možno robi zle entries
-        filesArray.push(pair[1]);
+      let filesArray = []
+      for(let pair of filesData.value.entries()) {
+        filesArray.push(pair[1])
       }
 
-      filesArray.splice(index, 1);
+      filesArray.splice(index, 1)
 
-      let newFilesData = new FormData();
+      let newFilesData = new FormData()
       for (let i = 0; i < filesArray.length; i++) {
-        newFilesData.append('images', filesArray[i]);
+        newFilesData.append('images', filesArray[i])
       }
-      filesData.value = newFilesData;
+      filesData.value = newFilesData
     }
   } else {
-    previews.value.forEach(URL.revokeObjectURL);
-    filesData.value = null;
-    previews.value = [];
+    previews.value.forEach(URL.revokeObjectURL)
+    filesData.value = null
+    previews.value = []
   }
 }
 
@@ -169,13 +152,13 @@ const removeImg = (imageIds: any) => {
 
   remove.value.loading = true
 
-  axios.post(settings.backend + '/api/gallery/delete', { imageIds }, { withCredentials: true })
+  axios.post(`${backend}/auth/gallery/remove`, { imageIds }, { withCredentials: true })
     .then((response) => {
       if (response.data.success === true) {
         toast.add({ severity: 'success', summary: 'Úspech', detail: response.data.message, group: 'br', life: 5000 })
         remove.value.success = true
         selectedImg.value = []
-        createGallery()
+        //createGallery()
       } else {
         remove.value.errors = response.data.errors
         remove.value.errors.forEach((el: any) => {
@@ -196,8 +179,10 @@ const removeImg = (imageIds: any) => {
 }
 
 
-onMounted(() => {
-  createGallery()
+onBeforeMount(() => {
+  if (!gallery.value) {
+    gallery.value = auth?.userData.value.gallery
+  }
 })
 </script>
 
@@ -218,13 +203,13 @@ onMounted(() => {
           </div>
 
           <div v-if="!loading" v-for="img in gallery" class="text-center relative h-36">
-            <img :src="`${settings.backend}/images/galleries/${img.path}`" class="rounded-lg w-full h-full object-cover" :class="{'ring-2 ring-blue-500 ring-offset-2 ring-offset-gray-50 dark:ring-offset-gray-800': selectedImg.includes(img.id)}" alt="img" />
-            <div class="absolute top-0 bottom-0 w-full flex items-start justify-between p-1" :class="{'bg-blue-500/30': selectedImg.includes(img.id)}">
+            <img :src="`${backend}/cloud/galleries/${img.path}`" class="rounded-lg w-full h-full object-cover" :class="{'ring-2 ring-blue-500 ring-offset-2 ring-offset-gray-50 dark:ring-offset-gray-800': selectedImg.includes(img._id)}" alt="img" />
+            <div class="absolute top-0 bottom-0 w-full flex items-start justify-between p-1" :class="{'bg-blue-500/30': selectedImg.includes(img._id)}">
               <Menu as="div" class="relative inline-block ms-auto">
                 <div class="flex items-center gap-2">
-                  <button @click="checkImg(img.id)"
+                  <button @click="checkImg(img._id)"
                           class="inline-flex items-center p-2 text-sm font-medium text-center rounded-lg focus:outline-none backdrop-blur shadow-lg"
-                          :class="[selectedImg.includes(img.id) ? 'text-blue-50 dark:text-blue-300 bg-blue-500/75 hover:bg-blue-500 dark:bg-blue-500/40 dark:hover:bg-blue-500/60' : 'text-gray-800 dark:text-gray-400 bg-white/50 hover:bg-gray-100 dark:bg-gray-800/50 dark:hover:bg-gray-700']">
+                          :class="[selectedImg.includes(img._id) ? 'text-blue-50 dark:text-blue-300 bg-blue-500/75 hover:bg-blue-500 dark:bg-blue-500/40 dark:hover:bg-blue-500/60' : 'text-gray-800 dark:text-gray-400 bg-white/50 hover:bg-gray-100 dark:bg-gray-800/50 dark:hover:bg-gray-700']">
                     <i class="fa-regular fa-circle-check text-base"></i>
                   </button>
                   <MenuButton class="inline-flex items-center p-2 shadow-lg text-sm font-medium text-center text-gray-900 bg-white/50 rounded-lg hover:bg-gray-100 focus:outline-none dark:text-white dark:bg-gray-800/50 dark:hover:bg-gray-700 backdrop-blur">
@@ -239,7 +224,7 @@ onMounted(() => {
                       <button class="block px-4 py-2 text-gray-200 hover:bg-gray-600 hover:text-white w-full">Zobraziť</button>
                     </MenuItem>
                     <MenuItem>
-                      <button type="button" @click="removeImg(img.id)" class="block px-4 py-2 text-gray-200 hover:bg-red-600 hover:text-white w-full">Odstrániť</button>
+                      <button type="button" @click="removeImg(img._id)" class="block px-4 py-2 text-gray-200 hover:bg-red-600 hover:text-white w-full">Odstrániť</button>
                     </MenuItem>
                   </MenuItems>
                 </transition>
