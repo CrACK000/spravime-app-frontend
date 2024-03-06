@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import Panel from "@/components/Panel.vue"
+</script>
+
 <template>
   <div class="w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-9/12 mx-auto mt-auto">
     <panel class="mb-4 p-4">
@@ -22,7 +26,3 @@
     </panel>
   </div>
 </template>
-
-<script setup lang="ts">
-import Panel from "@/components/Panel.vue";
-</script>

@@ -1,7 +1,7 @@
 import { reactive } from 'vue';
 import axios from 'axios';
 
-export interface StoreState {
+interface OfferStore {
     offers: Offer[];
     offers_loading: boolean;
 
@@ -9,7 +9,7 @@ export interface StoreState {
     offer_loading: boolean;
 }
 
-const state: StoreState = reactive({
+const data: OfferStore = reactive({
     offers: [],
     offers_loading: true,
 
@@ -17,23 +17,24 @@ const state: StoreState = reactive({
     offer_loading: true,
 })
 
-async function fetchOffers(): Promise<void> {
+async function all(): Promise<void> {
+    data.offers_loading = true
     const response = await axios.get(`${import.meta.env.VITE_BACKEND}/offers`, { withCredentials: true })
-    state.offers = response.data
-    state.offers_loading = false
+    data.offers = response.data
+    data.offers_loading = false
 }
 
-async function loadOffer(id: number): Promise<void> {
-    state.offer_loading = true
+async function view(id: string): Promise<void> {
+    data.offer_loading = true
     const response = await axios.get(`${import.meta.env.VITE_BACKEND}/offers/${id}`, { withCredentials: true })
-    state.offer = response.data
-    state.offer_loading = false
+    data.offer = response.data
+    data.offer_loading = false
 }
 
-const store = {
-    state,
-    fetchOffers,
-    loadOffer
-};
+const offer = {
+    data,
+    all,
+    view
+}
 
-export default store;
+export default offer

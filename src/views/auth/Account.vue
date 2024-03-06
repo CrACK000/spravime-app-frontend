@@ -1,3 +1,73 @@
+<script setup lang="ts">
+import {inject, onMounted, ref} from 'vue'
+import router from "@/router"
+//import {checkNewMessages} from "@/plugins/checkNewMessages"
+import {useRoute} from "vue-router"
+
+const route = useRoute()
+const auth = inject<Auth>('auth')
+const user = ref(auth?.userData as User)
+const loggedIn = ref(auth?.loggedIn as boolean)
+
+if (!loggedIn.value){
+  router.push({ name: 'index' })
+}
+
+type TabType = {
+  name?: string,
+  title?: string,
+  badge?: boolean,
+  icon?: string,
+  subs?: TabType[]
+}
+
+const user_links = ref([
+  {
+    name: 'dashboard',
+    title: 'Dashboard',
+    icon: 'fa-solid fa-gauge-high',
+  },
+  {
+    name: 'my-account',
+    title: 'Účet',
+    icon: 'fa-regular fa-circle-user',
+    subs: [
+      { name: 'edit-design', title: 'Vzhľad' },
+      { name: 'user-gallery', title: 'Galéria' },
+      { name: 'user-security', title: 'Zabezpečenie' },
+      { name: 'user-stats', title: 'Štatistika' },
+      { name: 'user-plus', title: 'Plus +' },
+    ]
+  },
+  {
+    name: 'messages',
+    title: 'Správy',
+    icon: 'fa-regular fa-message',
+  },
+  {
+    name: 'my-offers',
+    title: 'Moje požiadavky',
+    icon: 'fa-solid fa-briefcase',
+    subs: [
+      { name: 'offers-all', title: 'Všetky' },
+      { name: 'offers-waiting', title: 'Čakajúce na schválenie' },
+    ]
+  },
+]);
+const notifyMsg = ref(0);
+
+const findSelectTab = (tabs: TabType[]) => {
+  return tabs && tabs.some(tab => tab.name === route.name);
+}
+/*const fetchNewMessagesCount = async (id: number) => {
+  notifyMsg.value = <number> await checkNewMessages(id);
+}
+
+onMounted(async () => {
+  await fetchNewMessagesCount(user.value._id);
+})*/
+</script>
+
 <template>
   <div class="w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-9/12 mx-auto">
     <div class="flex flex-col lg:flex-row gap-10 relative" v-if="auth && loggedIn">
@@ -60,74 +130,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import {inject, onMounted, ref} from 'vue';
-import router from "@/router";
-import type {Auth, User} from "@/types/users";
-import {checkNewMessages} from "@/plugins/checkNewMessages";
-import {useRoute} from "vue-router";
-
-const route = useRoute();
-const auth = inject<Auth>('auth');
-const user = ref(auth?.user as User);
-const loggedIn = ref(auth?.loggedIn as boolean);
-
-if (!loggedIn.value){
-  router.push({ name: 'index' })
-}
-
-type TabType = {
-  name?: string,
-  title?: string,
-  badge?: boolean,
-  icon?: string,
-  subs?: TabType[]
-}
-
-const user_links = ref([
-  {
-    name: 'dashboard',
-    title: 'Dashboard',
-    icon: 'fa-solid fa-gauge-high',
-  },
-  {
-    name: 'my-account',
-    title: 'Účet',
-    icon: 'fa-regular fa-circle-user',
-    subs: [
-      { name: 'edit-design', title: 'Vzhľad' },
-      { name: 'user-gallery', title: 'Galéria' },
-      { name: 'user-security', title: 'Zabezpečenie' },
-      { name: 'user-stats', title: 'Štatistika' },
-      { name: 'user-plus', title: 'Plus +' },
-    ]
-  },
-  {
-    name: 'messages',
-    title: 'Správy',
-    icon: 'fa-regular fa-message',
-  },
-  {
-    name: 'my-offers',
-    title: 'Moje požiadavky',
-    icon: 'fa-solid fa-briefcase',
-    subs: [
-      { name: 'offers-all', title: 'Všetky' },
-      { name: 'offers-waiting', title: 'Čakajúce na schválenie' },
-    ]
-  },
-]);
-const notifyMsg = ref(0);
-
-const findSelectTab = (tabs: TabType[]) => {
-  return tabs && tabs.some(tab => tab.name === route.name);
-}
-const fetchNewMessagesCount = async (id: number) => {
-  notifyMsg.value = <number> await checkNewMessages(id);
-}
-
-onMounted(async () => {
-  await fetchNewMessagesCount(user.value.id);
-})
-</script>

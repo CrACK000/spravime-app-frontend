@@ -1,42 +1,40 @@
-import { reactive } from 'vue';
-import axios from 'axios';
+import { reactive } from 'vue'
+import axios from 'axios'
 
-export interface StoreState {
-    data: User | null;
-    gallery: UserGallery[];
-    reviews: Reviews[];
-    loading: boolean;
-    loading_gallery: boolean;
-    loading_reviews: boolean;
+export interface UserStore {
+    user: User | null;
+    user_loading: boolean;
+
+    reviews: Review[];
+    reviews_loading: boolean;
 }
 
-const user: StoreState = reactive({
-    data: null,
-    gallery: [],
+const data: UserStore = reactive({
+    user: null,
+    user_loading: true,
+
     reviews: [],
-    loading: true,
-    loading_gallery: true,
-    loading_reviews: true,
-});
+    reviews_loading: true,
+})
 
-async function useUser(id: string): Promise<void> {
-    user.loading = true
+async function profile(id: string): Promise<void> {
+    data.user_loading = true
     const response = await axios.get(`${import.meta.env.VITE_BACKEND}/profile/${id}`, { withCredentials: true })
-    user.data = response.data
-    user.loading = false
+    data.user = response.data
+    data.user_loading = false
 }
 
-async function useUserReviews(key: string): Promise<void> {
-    user.loading_reviews = true
+async function profileReviews(key: string): Promise<void> {
+    data.reviews_loading = true
     const response = await axios.get(`${import.meta.env.VITE_BACKEND}/reviews/${key}/all`, { withCredentials: true })
-    user.reviews = response.data
-    user.loading_reviews = false
+    data.reviews = response.data
+    data.reviews_loading = false
 }
 
-const profile = {
-    user,
-    useUser,
-    useUserReviews,
-};
+const user = {
+    data,
+    profile,
+    profileReviews,
+}
 
-export default profile;
+export default user

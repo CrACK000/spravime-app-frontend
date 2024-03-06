@@ -1,3 +1,55 @@
+<script setup lang="ts">
+import {useMeta} from "vue-meta"
+import axios from 'axios'
+import {inject, ref} from "vue"
+import router from "@/router"
+import Panel from "@/components/Panel.vue"
+import PanelFormActions from "@/components/PanelFormActions.vue"
+import {useToast} from "primevue/usetoast"
+
+useMeta({ title: 'Prihlásiť sa' })
+
+const auth = inject<Auth>('auth')
+
+const toast = useToast()
+
+const errors = ref<any>([])
+const loading = ref<boolean>(false)
+const changed = ref<boolean>(false)
+
+const loginData = ref<any>({
+  username: '',
+  password: '',
+})
+
+const login = () => {
+  errors.value = []
+  loading.value = true
+
+  axios.post(`${import.meta.env.VITE_BACKEND}/auth/login`, loginData.value, { withCredentials: true })
+    .then((response) => {
+      if (response.data.success) {
+        console.log('asd')
+        if (auth) {
+          auth.userData.value = response.data.user
+          auth.loggedIn.value = response.data.loggedIn
+        }
+        toast.add({severity: 'info', summary: 'Účet', detail: 'Si prihlásený !', group: 'br', life: 3000})
+        router.back()
+      } else {
+        errors.value = response.data.errors
+      }
+    })
+    .catch((error) => {
+      errors.value.push({ where: 'error', message: 'Nesprávne meno alebo heslo.' })
+    })
+    .finally(() => {
+      loading.value = false
+    })
+}
+
+</script>
+
 <template>
 
   <div class="w-full md:w-11/12 lg:w-6/12 xl:w-5/12 2xl:w-3/12 mx-auto">
@@ -35,56 +87,3 @@
     </form>
   </div>
 </template>
-
-<script setup lang="ts">
-import {useMeta} from "vue-meta"
-import axios from 'axios'
-import {inject, ref} from "vue"
-import router from "@/router"
-import { settings } from "@/plugins/config"
-import Panel from "@/components/Panel.vue"
-import PanelFormActions from "@/components/PanelFormActions.vue"
-import {useToast} from "primevue/usetoast";
-import type {Auth, User} from "@/types/users";
-
-useMeta({ title: 'Prihlásiť sa' })
-
-const auth = inject<Auth>('auth');
-const user = ref(auth?.user as User)
-const loggedIn = ref(auth?.loggedIn as boolean)
-
-const toast = useToast()
-
-const errors = ref<any>([])
-const loading = ref<boolean>(false)
-const changed = ref<boolean>(false)
-
-const loginData = ref<any>({
-  username: '',
-  password: '',
-})
-
-const login = () => {
-  errors.value = []
-  loading.value = true
-
-  axios.post(settings.backend + "/auth/login", loginData.value, { withCredentials: true })
-    .then((response) => {
-      if (response.data.success) {
-        toast.add({severity: 'info', summary: 'Účet', detail: 'Si prihlásený !', group: 'br', life: 3000})
-        user.value = response.data.user
-        loggedIn.value = response.data.loggedIn
-        router.back()
-      } else {
-        errors.value = response.data.errors
-      }
-    })
-    .catch((error) => {
-      errors.value.push({ where: 'error', message: 'Nesprávne meno alebo heslo.' })
-    })
-    .finally(() => {
-      loading.value = false
-    })
-}
-
-</script>

@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import {useMeta} from "vue-meta"
+import Panel from "@/components/Panel.vue"
+
+useMeta({ title: 'Dashboard' })
+</script>
+
 <template>
 
   <div class="grid grid-cols-3 gap-6 mb-6">
@@ -15,10 +22,3 @@
     </div>
   </panel>
 </template>
-
-<script setup lang="ts">
-import {useMeta} from "vue-meta";
-import Panel from "@/components/Panel.vue";
-
-useMeta({ title: 'Dashboard' })
-</script>

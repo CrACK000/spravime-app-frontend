@@ -1,41 +1,29 @@
-import { onMounted, inject, ref } from 'vue'
-import axios from 'axios'
-import router from '@/router'
-import { settings } from "@/plugins/config"
-import type {Auth, User} from "@/types/users";
-import {useToast} from "primevue/usetoast";
+import {inject} from "vue"
+import axios from "axios"
+import {useToast} from "primevue/usetoast"
+import router from "@/router"
 
-export default {
-    name: 'Logout',
-    setup() {
-        const toast = useToast()
-        const auth = inject<Auth>('auth');
-        const user = ref(auth?.user as User | null)
-        const loggedIn = ref(auth?.loggedIn as boolean)
+export async function logout() {
 
-        const logout = async () => {
-            try {
-                const response = await axios.get(settings.backend + '/api/logout', { withCredentials: true });
-                if (response.data.success) {
-                    await router.push({name: 'index'});
-                    loggedIn.value = false;
-                    user.value = null;
-                    toast.add({severity: 'info', summary: 'Účet', detail: 'Si odhlásený !', group: 'br', life: 3000})
-                } else {
-                    await router.push({name: 'index'});
-                    console.log('Failed to logout user');
+    const auth = inject<Auth>('auth')
+    const toast = useToast()
+
+    await axios.get(`${import.meta.env.VITE_BACKEND}/auth/logout`, { withCredentials: true })
+        .then(response => {
+            if (response.data.success) {
+
+                if (auth) {
+                    auth.loggedIn.value = false
+                    auth.userData.value = null
                 }
-            } catch (error) {
-                await router.push({name: 'index'});
-                console.error('Error when trying to logout:', error);
+
+                toast.add({severity: 'info', summary: 'Účet', detail: 'Si odhlásený !', group: 'br', life: 3000})
+
+                router.push({name: 'index'})
+
+            }   else {
+                router.push({name: 'index'})
+                console.log('Failed to logout user')
             }
-        };
-
-        onMounted(logout);
-
-        return {
-            loggedIn,
-            user
-        };
-    },
-};
+        })
+}

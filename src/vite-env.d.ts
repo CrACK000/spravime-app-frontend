@@ -20,5 +20,89 @@ interface Offer {
 
 interface TimeRange {
     start_at: string,
-    end_at: string
+    end_at: string,
+}
+
+interface User {
+    _id: string,
+    username: string,
+    email: string,
+    password: string,
+    phone: string | null,
+    avatar: string,
+    profile: ProfileData,
+    social: SocialData,
+    gallery: [Gallery],
+    views: number,
+    verify: boolean,
+    created_at: string,
+    updated_at: string,
+    last_login: string,
+}
+
+interface Gallery {
+    _id: string,
+    path: number,
+    description: string | null,
+    created_at: string,
+    updated_at: string,
+}
+
+interface ProfileData {
+    type: 'normal' | 'worker' | 'company',
+    name: string | null,
+    slogan: string | null,
+    description: string | null,
+    sections: any,
+    address: string | null,
+}
+
+interface SocialData {
+    facebook: string | null,
+    instagram: string | null,
+    tiktok: string | null,
+    linkedin: string | null
+}
+
+interface Review {
+    _id: string,
+    author: string,
+    key: string,
+    rating: number,
+    recommendation: boolean,
+    description: string,
+    created_at: string,
+    updated_at: string,
+}
+
+interface Sections {
+    id: number,
+    title: string,
+}
+
+interface Categories {
+    id: number,
+    section_id: number,
+    title: string,
+}
+
+interface Zipcodes {
+    country_code: string,
+    zipcode: string,
+    place: string,
+    state: string,
+    state_code: string,
+    province: string,
+    province_code: string,
+    community: string,
+    community_code: string,
+    latitude: string,
+    longitude: string,
+}
+
+interface Auth {
+    loggedIn: Ref<boolean>,
+    userData: Ref<User | null>,
+    loading: Ref<boolean>,
+    checkAuth: () => Promise<void>
 }

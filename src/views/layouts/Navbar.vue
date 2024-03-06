@@ -1,3 +1,45 @@
+<script setup lang="ts">
+import {ref, inject} from 'vue'
+import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue"
+import {useRouter} from "vue-router"
+import Nickname from "@/components/app/Nickname.vue"
+
+const router = useRouter()
+const auth = inject<Auth>('auth')
+const user = ref(auth?.userData as User)
+const loggedIn = ref(auth?.loggedIn as boolean)
+
+const user_links = ref([
+  {
+    name: { name: 'dashboard' },
+    title: 'Dashboard',
+    icon: 'fa-solid fa-gauge-high',
+  },
+  {
+    name: { name: 'my-account' },
+    title: 'Účet',
+    icon: 'fa-regular fa-circle-user'
+  },
+  {
+    name: { name: 'messages' },
+    title: 'Správy',
+    icon: 'fa-regular fa-message',
+  },
+  {
+    name: { name: 'my-offers' },
+    title: 'Moje požiadavky',
+    icon: 'fa-solid fa-briefcase'
+  },
+])
+const notifyMsg = ref(0)
+
+const navigateTo = async (routeName: any, close: () => void) => {
+  await router.push(routeName)
+  close()
+}
+
+</script>
+
 <template>
   <div>
     <div class="w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-9/12 mx-auto px-4 md:px-0 py-5 md:pt-14 md:pb-16 flex justify-between items-center">
@@ -42,7 +84,7 @@
 
                 <div class="py-1">
                   <MenuItem v-slot="{ close }">
-                    <div @click="navigateTo({ name: 'profile' , params: { id: user.id }}, close)" :class="['block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer']">
+                    <div @click="navigateTo({ name: 'profile' , params: { id: user._id }}, close)" :class="['block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer']">
                       <div class="flex w-full gap-1 items-center justify-between">
                         Profil
                       </div>
@@ -87,46 +129,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import {ref, inject} from 'vue';
-import type {Auth, User} from "@/types/users";
-import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
-import {useRouter} from "vue-router";
-import Nickname from "@/components/app/Nickname.vue";
-
-const router = useRouter();
-const auth = inject<Auth>('auth');
-const user = ref(auth?.user as User);
-const loggedIn = ref(auth?.loggedIn as boolean);
-
-const user_links = ref([
-  {
-    name: { name: 'dashboard' },
-    title: 'Dashboard',
-    icon: 'fa-solid fa-gauge-high',
-  },
-  {
-    name: { name: 'my-account' },
-    title: 'Účet',
-    icon: 'fa-regular fa-circle-user'
-  },
-  {
-    name: { name: 'messages' },
-    title: 'Správy',
-    icon: 'fa-regular fa-message',
-  },
-  {
-    name: { name: 'my-offers' },
-    title: 'Moje požiadavky',
-    icon: 'fa-solid fa-briefcase'
-  },
-]);
-const notifyMsg = ref(0);
-
-const navigateTo = async (routeName: any, close: () => void) => {
-  await router.push(routeName);
-  close();
-};
-
-</script>

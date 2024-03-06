@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import {computed, onMounted, ref} from 'vue';
+import {computed, onBeforeMount, onMounted, ref} from 'vue';
 import {useMeta} from 'vue-meta';
 import Panel from "@/components/Panel.vue";
 import Status from "@/components/app/OfferStatus.vue";
 import skZipcodes from "@/plugins/zipcodes/sk.json";
 import categoriesData from "@/plugins/categories.json";
-import store from "@/plugins/offers";
+import offer from "@/plugins/offers";
 import SkeletonOffers from "@/components/skeletons/SkeletonOffers.vue";
 import Container from "@/components/Container.vue";
 import PanelFilter from "@/components/PanelFilter.vue";
@@ -32,14 +32,14 @@ const submitFilter = () => {
   filteredResult.value = form.value.search.length || (form.value.section !== 0) || (form.value.category !== 0) || form.value.search.length;
 
   if (!search && !address && !section && !category) {
-    filteredOffers.value = store.state.offers;
+    filteredOffers.value = offer.data.offers;
     return;
   }
 
   const searchFragments = search.toLowerCase().split(' ');
   const addressFragments = address.toLowerCase().split(' ');
 
-  filteredOffers.value = store.state.offers.filter((offer: any) => {
+  filteredOffers.value = offer.data.offers.filter((offer: any) => {
     const titleLowerCased = offer.title.toLowerCase();
     const addressLowerCased = offer.address.toLowerCase();
 
@@ -63,14 +63,14 @@ const filteredCategories = computed(() => {
 });
 
 const loadFilteredOffers = () => {
-  filteredOffers.value = store.state.offers
+  filteredOffers.value = offer.data.offers
   if (filteredOffers.value.length){
     filteredLoading.value = false
   }
 }
 
-onMounted(async () => {
-  await store.fetchOffers()
+onBeforeMount(async () => {
+  await offer.all()
   loadFilteredOffers()
 });
 </script>
@@ -143,12 +143,12 @@ onMounted(async () => {
           <div class="p-4 font-medium uppercase">Výsledky vyhľadávania</div>
 
           <!-- Loading Panel Offers -->
-          <skeleton-offers :rows=15 v-if="filteredLoading || store.state.offers_loading" />
+          <skeleton-offers :rows=15 v-if="filteredLoading || offer.data.offers_loading" />
 
           <router-link
             v-else-if="filteredOffers.length"
             v-for="offer in filteredOffers"
-            :to="{ name: 'offerDetail', params: { id: offer.id } }"
+            :to="{ name: 'offerDetail', params: { id: offer._id } }"
           >
             <div class="panel-item py-4 px-4 flex gap-3 items-center">
               <div>

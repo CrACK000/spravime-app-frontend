@@ -1,24 +1,21 @@
 <script setup lang="ts">
-import PanelFormActions from "@/components/PanelFormActions.vue";
-import Panel from "@/components/Panel.vue";
-import store from "@/plugins/offers";
-import {inject, onMounted, ref, watchEffect} from "vue";
-import type {Auth, User} from "@/types/users";
-import axios from "axios";
-import {settings} from "@/plugins/config";
-import SkeletonOfferMessage from "@/components/skeletons/SkeletonOfferMessage.vue";
+import {inject, onMounted, ref, watchEffect} from "vue"
+import axios from "axios"
+import offer from "@/plugins/offers"
+import SkeletonOfferMessage from "@/components/skeletons/SkeletonOfferMessage.vue"
+import PanelFormActions from "@/components/PanelFormActions.vue"
+import Panel from "@/components/Panel.vue"
 
-const auth = inject<Auth>('auth');
-const user = ref(auth?.user as User)
+const auth = inject<Auth>('auth')
 const loggedIn = ref(auth?.loggedIn as boolean)
 
 const message = ref<string>('')
 const checkMsg = ref<boolean>(false)
 const loadingMsg = ref<boolean>(false)
 
-const checkMessages = (offerId: number) => {
+const checkMessages = (offerId: string) => {
   loadingMsg.value = true
-  axios.post(`${settings.backend}/api/offers/check-msg`, { offerId: offerId }, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/api/offers/check-msg`, { offerId: offerId }, { withCredentials: true })
     .then(response => {
       checkMsg.value = response.data.check_msg
     })
@@ -26,17 +23,16 @@ const checkMessages = (offerId: number) => {
       loadingMsg.value = false
     })
 }
-const sendMsg = () => {
 
+const sendMsg = () => {
   const data = {
-    offerId: store.state.offer?.id,
+    offerId: offer.data.offer?._id,
     msg: message.value
   }
-
-  axios.post(`${settings.backend}/api/offers/send-msg`, data, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/api/offers/send-msg`, data, { withCredentials: true })
     .then(response => {
       console.log(response)
-      checkMessages(Number(store.state.offer?.id))
+      checkMessages(String(offer.data.offer?._id))
     })
     .catch(err => {
       console.log(err)
@@ -45,19 +41,19 @@ const sendMsg = () => {
 
 onMounted(() => {
   watchEffect(() => {
-    if (store.state.offer?.id) {
-      checkMessages(Number(store.state.offer?.id));
+    if (offer.data.offer?._id) {
+      checkMessages(String(offer.data.offer?._id))
     }
-  });
-});
+  })
+})
 
 </script>
 
 <template>
   <transition name="fade">
 
-    <div v-if="!store.state.offer_loading && !loadingMsg">
-      <form method="post" v-if="store.state.offer?.status && loggedIn && (user.id !== store.state.offer.author)" @submit.prevent="sendMsg">
+    <div v-if="!offer.data.offer_loading && !loadingMsg">
+      <form method="post" v-if="offer.data.offer?.status && loggedIn && (offer.data.offer?._id !== offer.data.offer.author)" @submit.prevent="sendMsg">
         <panel divide="y" v-if="checkMsg">
           <div class="py-4 px-6 font-medium uppercase">
             Odpovedať

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import auth from '@/auth'
-import Logout from "@/plugins/logout"
+import { logout } from "@/plugins/logout"
+import {inject, onBeforeMount} from "vue";
 
 let isAuthChecked = false;
 
@@ -26,7 +26,7 @@ const router = createRouter({
       meta: { transition: 'fade' },
     },
     {
-      path: '/offers/:id(\\d+)',
+      path: '/offers/:id',
       name: 'offerDetail',
       component: () => import('@/views/OfferDetails.vue'),
       meta: { transition: 'fade' },
@@ -55,7 +55,14 @@ const router = createRouter({
         { path: 'security', name: 'user-security', component: () => import('@/views/auth/SecurityPanel.vue'), meta: { transition: 'slide-top' } },
         { path: 'stats', name: 'user-stats', component: () => import('@/views/auth/StatsPanel.vue'), meta: { transition: 'slide-top' } },
         { path: 'plus', name: 'user-plus', component: () => import('@/views/auth/PlusPanel.vue'), meta: { transition: 'slide-top' } },
-        { path: 'logout', name: 'logout', component: Logout },
+        {
+          path: 'logout',
+          name: 'logout',
+          component: { template: '' },
+          beforeEnter(to, from, next) {
+            logout()
+            next({ name: 'home' })
+          } },
       ]
     },
     {
@@ -82,17 +89,16 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
 
-  if (!isAuthChecked) {
-    await auth.checkAuth()
-    isAuthChecked = true
-  }
+  const auth = inject<Auth>('auth')
+
+  await auth?.checkAuth()
 
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
   const requiresUnAuth = to.matched.some(record => record.meta.requiresAuth === false);
 
-  if (requiresAuth && !auth.loggedIn.value) {
+  if (requiresAuth && !auth?.loggedIn.value) {
     next({ name: 'login' });
-  } else if (requiresUnAuth && auth.loggedIn.value) {
+  } else if (requiresUnAuth && auth?.loggedIn.value) {
     next({ name: 'index' });
   } else {
     next();

@@ -1,38 +1,28 @@
 <script setup lang="ts">
-import profile from "@/plugins/profile";
-import {onMounted, ref, watch} from "vue";
-import {useRoute} from "vue-router";
-import Avatar from "@/components/profile/AvatarProfile.vue";
-import Information from "@/components/profile/InformationProfile.vue";
-import TitleProfile from "@/components/profile/TitleProfile.vue";
-import DescriptionProfile from "@/components/profile/DescriptionProfile.vue";
-import GalleryProfile from "@/components/profile/GalleryProfile.vue";
-import RatingProfile from "@/components/profile/RatingProfile.vue";
-import ReviewsProfile from "@/components/profile/ReviewsProfile.vue";
-import checkAndIncrementCounter from "@/plugins/counter-views";
-import SkeletonProfileTitle from "@/components/skeletons/SkeletonProfileTitle.vue";
-import SkeletonProfileDescription from "@/components/skeletons/SkeletonProfileDescription.vue";
-import SkeletonProfileGallery from "@/components/skeletons/SkeletonProfileGallery.vue";
-import SkeletonProfileReviews from "@/components/skeletons/SkeletonProfileReviews.vue";
-import SkeletonProfileAvatar from "@/components/skeletons/SkeletonProfileAvatar.vue";
-import SkeletonProfileInformation from "@/components/skeletons/SkeletonProfileInformation.vue";
-import SkeletonProfileRating from "@/components/skeletons/SkeletonProfileRating.vue";
+import user from "@/plugins/profile"
+import {onBeforeMount, ref, watch} from "vue"
+import {useRoute} from "vue-router"
+import Avatar from "@/components/profile/AvatarProfile.vue"
+import Information from "@/components/profile/InformationProfile.vue"
+import TitleProfile from "@/components/profile/TitleProfile.vue"
+import DescriptionProfile from "@/components/profile/DescriptionProfile.vue"
+import GalleryProfile from "@/components/profile/GalleryProfile.vue"
 
-watch(() => profile.user.data, (profileTitleValue) => {
+watch(() => user.data.user, (profileTitleValue) => {
   if (profileTitleValue && profileTitleValue.username) {
-    let title = profileTitleValue.name ? profileTitleValue.name : profileTitleValue.username
+    let title = profileTitleValue.profile.name ? profileTitleValue.profile.name : profileTitleValue.username
     document.title = `Profil užívateľa ${title}`
   }
 }, { immediate: true })
 
 const route = useRoute()
-const id = ref<number>(Number(route.params.id))
+const id = ref<string>(String(route.params.id))
 
-onMounted(() => {
-  profile.useUser(id.value)
-  profile.useUserGallery(id.value)
-  profile.useUserReviews(id.value)
-  checkAndIncrementCounter('profile', id.value)
+onBeforeMount(() => {
+  if (user.data.user?._id !== id.value) {
+    user.profile(id.value)
+    user.profileReviews(id.value)
+  }
 })
 </script>
 
@@ -42,92 +32,60 @@ onMounted(() => {
       <div class="col-span-12 md:col-span-8 order-2 md:order-1">
 
         <!-- Title Panel (desktop) -->
-        <transition name="fade">
-          <div class="hidden md:block" v-if="!profile.user.loading">
-            <title-profile/>
-          </div>
-          <div class="hidden md:block" v-else-if="profile.user.loading">
-            <skeleton-profile-title/>
-          </div>
-        </transition>
+        <div class="hidden md:block">
+          <title-profile/>
+        </div>
 
         <!-- No INFO Panel -->
-        <div class="hidden md:block" v-if="!profile.user.loading && !profile.user.data?.description && !profile.user.gallery.length && !profile.user.reviews.length">
+        <div class="hidden md:block" v-if="!user.data.user_loading && !user.data.user?.profile.description && !user.data.user?.gallery.length && !user.data.reviews.length">
           <div class="my-8 text-2xl font-light text-center">Žiadne informácie</div>
         </div>
 
         <!-- Description Panel -->
-        <transition name="fade">
-          <div class="mt-0.5 md:mt-8" v-if="!profile.user.loading && profile.user.data?.description">
-            <description-profile/>
-          </div>
-          <div class="mt-0.5 md:mt-8" v-else-if="profile.user.loading">
-            <skeleton-profile-description/>
-          </div>
-        </transition>
+        <div class="mt-0.5 md:mt-8" v-if="user.data.user_loading || user.data.user?.profile.description">
+          <description-profile/>
+        </div>
 
         <!-- Gallery Panel -->
-        <transition name="fade">
-          <div class="mt-8" v-if="!profile.user.loading_gallery && profile.user.gallery.length">
-            <gallery-profile/>
-          </div>
-          <div class="mt-8" v-else-if="profile.user.loading_gallery">
-            <skeleton-profile-gallery/>
-          </div>
-        </transition>
+        <div class="mt-8" v-if="user.data.user_loading && user.data.user?.gallery.length">
+          <gallery-profile/>
+        </div>
 
         <!-- Reviews Panel -->
-        <transition name="fade">
-          <div class="mt-8" v-if="!profile.user.loading_reviews && profile.user.reviews.length">
+        <!--<transition name="fade">
+          <div class="mt-8" v-if="!user.data.reviews_loading && user.data.reviews.length">
             <reviews-profile/>
           </div>
-          <div class="mt-8" v-else-if="profile.user.loading_reviews">
+          <div class="mt-8" v-else-if="user.data.reviews_loading">
             <skeleton-profile-reviews/>
           </div>
-        </transition>
+        </transition>-->
 
       </div>
       <div class="col-span-12 md:col-span-4 order-1 md:order-2">
 
         <!-- Title Panel (mobile) -->
-        <transition name="fade">
-          <div class="md:hidden mt-5 mb-10" v-if="!profile.user.loading">
-            <title-profile/>
-          </div>
-          <div class="md:hidden mt-5 mb-10" v-else-if="profile.user.loading">
-            <skeleton-profile-title/>
-          </div>
-        </transition>
+        <div class="md:hidden mt-5 mb-10">
+          <title-profile/>
+        </div>
 
         <!-- Avatar Panel -->
-        <transition name="fade">
-          <div v-if="!profile.user.loading">
-            <avatar/>
-          </div>
-          <div v-else-if="profile.user.loading">
-            <skeleton-profile-avatar/>
-          </div>
-        </transition>
+        <avatar/>
 
         <!-- Information Panel -->
-        <transition name="fade">
-          <div class="mt-16" v-if="!profile.user.loading">
-            <information/>
-          </div>
-          <div class="mt-16" v-else-if="profile.user.loading">
-            <skeleton-profile-information/>
-          </div>
-        </transition>
+        <div class="mt-16">
+          <information/>
+        </div>
 
         <!-- Rating Panel -->
-        <transition name="fade">
-          <div class="mt-0.5 md:mt-10 lg:mt-16" v-if="!profile.user.loading_reviews && profile.user.reviews.length">
+        <!--<transition name="fade">
+          <div class="mt-0.5 md:mt-10 lg:mt-16" v-if="!user.data.reviews_loading && user.data.reviews.length">
             <rating-profile/>
           </div>
-          <div class="mt-0.5 md:mt-10 lg:mt-16" v-else-if="profile.user.loading_reviews">
+          <div class="mt-0.5 md:mt-10 lg:mt-16" v-else-if="user.data.reviews_loading">
             <skeleton-profile-rating/>
           </div>
-        </transition>
+        </transition>-->
 
       </div>
     </div>

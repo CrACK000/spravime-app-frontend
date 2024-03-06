@@ -1,19 +1,16 @@
 <script setup lang="ts">
-import {inject, onMounted, ref} from "vue";
-import { useMeta } from "vue-meta";
-import Panel from "@/components/Panel.vue";
-import skZipcodes from "@/plugins/zipcodes/sk.json";
-import categoriesData from "@/plugins/categories.json";
-import axios from "axios";
-import SkeletonWorkers from "@/components/skeletons/SkeletonWorkers.vue";
-import Nickname from "@/components/app/Nickname.vue";
-import AverageRating from "@/components/app/AverageRating.vue";
-import PanelFilter from "@/components/PanelFilter.vue";
+import {onBeforeMount, ref} from "vue"
+import { useMeta } from "vue-meta"
+import Panel from "@/components/Panel.vue"
+import skZipcodes from "@/plugins/zipcodes/sk.json"
+import categoriesData from "@/plugins/categories.json"
+import SkeletonWorkers from "@/components/skeletons/SkeletonWorkers.vue"
+import Nickname from "@/components/app/Nickname.vue"
+import AverageRating from "@/components/app/AverageRating.vue"
+import PanelFilter from "@/components/PanelFilter.vue"
+import account from "@/plugins/account"
 
 useMeta({ title: 'Vyhľadať si firmu alebo spoľahlivého majstra' })
-
-const auth = inject<Auth>('auth');
-const loggedIn = ref(auth?.loggedIn as boolean)
 
 const form = ref<any>({
   search: '',
@@ -22,9 +19,7 @@ const form = ref<any>({
   address: '',
 });
 
-const workers = ref<User[]>([])
 const filteredWorkers = ref<User[]>([])
-const loading = ref(false)
 
 const sections = ref<Sections[]>(categoriesData.sections);
 const slovakData = ref<Zipcodes[]>(skZipcodes);
@@ -39,7 +34,7 @@ const submitFilter = () => {
   const searchFragments = search.toLowerCase().split(' ').map(removeDiacritics); // Remove diacritics from search
   const addressFragments = address.toLowerCase().split(' ').map(removeDiacritics); // Remove diacritics from address
 
-  filteredWorkers.value = workers.value.filter((worker: any) => {
+  filteredWorkers.value = account.data.accounts.filter((worker: any) => {
 
     const usernameLowerCased = (removeDiacritics(worker.username ?? "")).toLowerCase(); // username
     const emailLowerCased = (removeDiacritics(worker.email ?? "")).toLowerCase(); // email
@@ -64,24 +59,11 @@ const submitFilter = () => {
   });
 }
 
-const fetchWorkers = async () => {
-  loading.value = true;
-
-  await axios.get(`${settings.backend}/api/workers`, { withCredentials: true })
-    .then(response => {
-      workers.value = response.data
-    })
-    .catch(error => {
-      console.log(error)
-    })
-    .finally(() => {
-      loading.value = false
-    })
-}
-
-onMounted(async () => {
-  await fetchWorkers()
-  filteredWorkers.value = workers.value;
+onBeforeMount(async () => {
+  if (!filteredWorkers.value.length) {
+    await account.all()
+    filteredWorkers.value = account.data.accounts
+  }
 })
 </script>
 
@@ -154,16 +136,16 @@ onMounted(async () => {
           <div class="p-4 font-medium uppercase">Výsledky vyhľadávania</div>
 
           <!-- Loading Panel Workers -->
-          <skeleton-workers v-if="loading" />
+          <skeleton-workers v-if="account.data.accounts_loading" />
 
-          <router-link v-else-if="filteredWorkers.length" v-for="user in filteredWorkers" :to="{ name: 'profile', params: { id: user.id } }">
+          <router-link v-else-if="filteredWorkers.length" v-for="user in filteredWorkers" :to="{ name: 'profile', params: { id: user._id } }">
             <div class="panel-item p-4 grid grid-cols-10 gap-3.5 items-center text-sm sm:text-lg">
               <div class="col-span-2 sm:col-span-1">
-                <img :src="user.avatar" class="rounded-full w-full shadow-xl mx-auto" :alt="user.name ?? user.username">
+                <img :src="user.avatar" class="rounded-full w-full shadow-xl mx-auto" :alt="user.profile.name ?? user.username">
               </div>
               <div :class="[user.count_reviews ? 'col-span-6 sm:col-span-5' : 'col-span-8 sm:col-span-7']">
-                <nickname :nickname="user.name ?? user.username" :verify="user.verify" class="mb-0.5 sm:mb-1 font-medium" />
-                <div class="text-xs opacity-75 line-clamp-2" v-text="user.slogan"></div>
+                <nickname :nickname="user.profile.name ?? user.username" :verify="user.verify" class="mb-0.5 sm:mb-1 font-medium" />
+                <div class="text-xs opacity-75 line-clamp-2" v-text="user.profile.slogan"></div>
               </div>
               <div class="col-span-2" v-if="user.count_reviews">
                 <div class="text-sm font-semibold text-center mb-1 hidden sm:block">Hodnotenie</div>

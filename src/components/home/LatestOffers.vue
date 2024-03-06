@@ -1,8 +1,19 @@
 <script setup lang="ts">
-import store from "@/plugins/offers";
-import {timeSince} from "@/plugins/functions";
-import SkeletonOffers from "@/components/skeletons/SkeletonOffers.vue";
-import OfferStatus from "@/components/app/OfferStatus.vue";
+import {onBeforeMount, ref} from "vue"
+import offer from "@/plugins/offers"
+import {timeSince} from "@/plugins/functions"
+import SkeletonOffers from "@/components/skeletons/SkeletonOffers.vue"
+import OfferStatus from "@/components/app/OfferStatus.vue"
+import Panel from "@/components/Panel.vue"
+
+const offers = ref<Offer[]>(offer.data.offers)
+
+onBeforeMount(async () => {
+  if (!offers.value.length) {
+    await offer.all()
+    offers.value = offer.data.offers
+  }
+})
 </script>
 
 <template>
@@ -12,13 +23,13 @@ import OfferStatus from "@/components/app/OfferStatus.vue";
     <panel divide="y" class="overflow-hidden text-lg">
 
       <!-- Loading Panel Offers -->
-      <skeleton-offers :rows=6 v-if="store.state.offers_loading" />
+      <skeleton-offers :rows="6" v-if="offer.data.offers_loading" />
 
-      <template v-for="offer in store.state.offers.slice(0, 6)">
-        <router-link :to="{ name: 'offerDetail', params: { id: offer.id } }" v-if="offer.status">
+      <template v-for="offer in  offers.slice(0, 6)">
+        <router-link :to="{ name: 'offerDetail', params: { id: offer._id } }" v-if="offer.status">
           <div class="panel-item py-4 px-4 flex gap-3 items-center">
             <div>
-              <OfferStatus :status="Boolean(offer.status)" />
+              <OfferStatus :status="offer.status" />
             </div>
             <div>
               {{ offer.title }} <i class="fa-solid fa-grip-lines-vertical mx-2 opacity-30"></i> <span class="text-sm">{{ offer.address }}</span>

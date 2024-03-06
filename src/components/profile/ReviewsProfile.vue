@@ -15,7 +15,7 @@ const auth = inject<Auth>('auth');
 const user = ref(auth?.user as User)
 const loggedIn = ref(auth?.loggedIn as boolean)
 
-const reviews = ref<Reviews[]>(Object(profile.user.reviews));
+const reviews = ref<Reviews[]>(Object());
 
 const showModalNewReview = ref<boolean>(false);
 const showModalEditReview = ref<boolean>(false);
