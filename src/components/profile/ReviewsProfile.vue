@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import {nl2br, timeSince} from "@/plugins/functions"
 import {inject, onBeforeMount, provide, ref} from "vue"
+import {useRoute} from "vue-router"
+import {nl2br, timeSince} from "@/plugins/functions"
 import user from "@/plugins/profile"
 import Panel from "@/components/Panel.vue"
 import DeleteReview from "@/views/modals/DeleteReview.vue"
-import ReportReview from "@/views/modals/ReportReview.vue"
 import EditReview from "@/views/modals/EditReview.vue"
 import WriteReview from "@/views/modals/WriteReview.vue"
 import Nickname from "@/components/app/Nickname.vue"
-import SkeletonProfileReviews from "@/components/skeletons/SkeletonProfileReviews.vue";
-import {useRoute} from "vue-router";
+import SkeletonProfileReviews from "@/components/skeletons/SkeletonProfileReviews.vue"
+import Avatar from "@/components/app/Avatar.vue"
 
 const auth = inject<Auth>('auth')
 const userData = ref(auth?.userData as User)
@@ -17,10 +17,9 @@ const loggedIn = ref(auth?.loggedIn as boolean)
 
 const reviews = ref<Review[]>(user.data.reviews)
 
-const showModalNewReview = ref<boolean>(false);
-const showModalEditReview = ref<boolean>(false);
-const showModalReportReview = ref<boolean>(false);
-const showModalDeleteReview = ref<boolean>(false);
+const showModalNewReview = ref<boolean>(false)
+const showModalEditReview = ref<boolean>(false)
+const showModalDeleteReview = ref<boolean>(false)
 
 const checkAlreadyReview = () => {
   return reviews.value.some(review => review.author._id === userData.value._id)
@@ -31,28 +30,21 @@ const writeReviewModal = () => {
 const editReviewModal = () => {
   showModalEditReview.value = !showModalEditReview.value
 }
-const reportReviewModal = () => {
-  showModalReportReview.value = !showModalReportReview.value
-}
 const deleteReviewModal = () => {
   showModalDeleteReview.value = !showModalDeleteReview.value
 }
 const openModalEditReview = () => {
-  showModalEditReview.value = true;
-}
-const openModalReportReview = () => {
-  showModalReportReview.value = true;
+  showModalEditReview.value = true
 }
 const openModalNewReview = () => {
-  showModalNewReview.value = true;
+  showModalNewReview.value = true
 }
 const openModalDeleteReview = () => {
-  showModalDeleteReview.value = true;
+  showModalDeleteReview.value = true
 }
 
 provide('writeReviewModal', writeReviewModal)
 provide('editReviewModal', editReviewModal)
-provide('reportReviewModal', reportReviewModal)
 provide('deleteReviewModal', deleteReviewModal)
 
 const route = useRoute()
@@ -78,7 +70,9 @@ onBeforeMount(async () => {
     <panel divide="y" v-if="loggedIn">
       <div v-for="review in reviews" v-if="reviews.length" class="p-4 review">
         <div class="flex items-center gap-4">
-          <img :src="review.author.avatar" class="w-10 h-10 xs:w-14 xs:h-14 rounded-full shadow-lg" :alt="review.author.profile.name ?? review.author.username">
+
+          <Avatar :img="review.author.avatar" :alt="review.author.profile.name ?? review.author.username" rounded="full" />
+
           <div class="flex flex-col md:flex-row justify-between items-start">
             <div>
               <router-link :to="{ name: 'profile', params: { id: review.author._id } }" class="font-medium hover:text-gray-900 dark:hover:text-gray-300 transition">
@@ -102,7 +96,7 @@ onBeforeMount(async () => {
             </div>
           </div>
           <div class="flex gap-1 review_buttons ms-auto" v-if="user && ((userData._id === user.data.user?._id && !(userData._id === review.author._id)) || (userData._id === review.author._id))">
-            <button v-tooltip.top="'Nahlásiť'" class="text-gray-600 hover:text-gray-500 transition px-2 py-1" @click="openModalReportReview" v-if="userData._id === user.data.user?._id && !(userData._id === review.author._id)">
+            <button v-tooltip.top="'Nahlásiť'" class="text-gray-600 hover:text-gray-500 transition px-2 py-1" v-if="userData._id === user.data.user?._id && !(userData._id === review.author._id)">
               <i class="fa-solid fa-triangle-exclamation"></i>
             </button>
             <button v-tooltip.top="'Upraviť'" class="text-gray-600 hover:text-gray-500 transition px-2 py-1" @click="openModalEditReview" v-if="userData._id === review.author._id">
@@ -117,9 +111,6 @@ onBeforeMount(async () => {
 
         <!-- Modálne okno Upraviť recenziu -->
         <edit-review :show-modal="showModalEditReview" :key="review._id" :review-data="{ reviewId: review._id, reviewStar: review.rating, reviewRecommendation: review.recommendation, reviewDescription: review.description }" v-if="userData._id === review.author._id"/>
-
-        <!-- Modálne okno Nahlásiť recenziu -->
-        <report-review :show-modal="showModalReportReview" :key="review._id" :review-id="review._id" v-if="userData._id === user.data.user?._id && !(userData._id === review.author._id)"/>
 
         <!-- Modálne confirm okno Odstrániť recenziu -->
         <delete-review :show-modal="showModalDeleteReview" :key="review._id" :review-id="review._id" v-if="userData._id === review.author._id"/>

@@ -5,7 +5,7 @@ interface Offer {
     title: string,
     address: string,
     description: string,
-    author: string,
+    author: User,
     section: number,
     category: number,
     status: boolean,
@@ -29,7 +29,7 @@ interface User {
     email: string,
     password: string,
     phone: string | null,
-    avatar: string,
+    avatar: string | undefined,
     profile: ProfileData,
     social: SocialData,
     gallery: [Gallery],
@@ -109,6 +109,30 @@ interface Zipcodes {
 interface Auth {
     loggedIn: Ref<boolean>,
     userData: Ref<User | null>,
+    newMsgCount: Ref<number>,
     loading: Ref<boolean>,
     checkAuth: () => Promise<void>
+}
+
+interface MessagesContainer {
+    _id: string,
+    key: Offer,
+    from: User,
+    to: User,
+    container: Container,
+    created_at: string,
+    updated_at: string,
+}
+
+interface Container {
+    from: Message[],
+    to: Message[]
+}
+
+interface Message {
+    _id: string,
+    message: string,
+    new: boolean,
+    created_at: string,
+    updated_at: string,
 }

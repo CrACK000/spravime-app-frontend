@@ -29,7 +29,6 @@ const login = () => {
   axios.post(`${import.meta.env.VITE_BACKEND}/auth/login`, loginData.value, { withCredentials: true })
     .then((response) => {
       if (response.data.success) {
-        console.log('asd')
         if (auth) {
           auth.userData.value = response.data.user
           auth.loggedIn.value = response.data.loggedIn

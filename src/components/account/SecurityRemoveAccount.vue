@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import Panel from "@/components/Panel.vue";
-import {useToast} from "primevue/usetoast";
-import {useRouter} from "vue-router";
-import {ref} from "vue";
-import axios from "axios";
-import {settings} from "@/plugins/config";
+import {useToast} from "primevue/usetoast"
+import {useRouter} from "vue-router"
+import {ref} from "vue"
+import axios from "axios"
+import Panel from "@/components/Panel.vue"
 
 const toast = useToast()
 const router = useRouter()
@@ -12,7 +11,7 @@ const router = useRouter()
 const check_password = ref<string>('')
 
 const removeAccount = () => {
-  axios.post(`${settings.backend}/api/security/remove-account`, { password: check_password.value, }, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/auth/security/remove-account`, { password: check_password.value, }, { withCredentials: true })
     .then(response => {
       if (response.data.success) {
         toast.add({severity: 'warn', summary: 'Účet', detail: 'Váš účet a všetky data spojené účtom boli odstránené. !', group: 'br', life: 3000})

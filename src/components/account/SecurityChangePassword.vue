@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import PanelForm from "@/components/PanelForm.vue";
-import PanelFormActions from "@/components/PanelFormActions.vue";
-import Panel from "@/components/Panel.vue";
-import {useToast} from "primevue/usetoast";
-import {ref} from "vue";
-import axios from "axios";
-import {settings} from "@/plugins/config";
+import {useToast} from "primevue/usetoast"
+import {ref} from "vue"
+import axios from "axios"
+import PanelForm from "@/components/PanelForm.vue"
+import PanelFormActions from "@/components/PanelFormActions.vue"
+import Panel from "@/components/Panel.vue"
 
 const toast = useToast()
 
@@ -114,7 +113,7 @@ const changePass = () => {
     newPass: dataPassword.value.newPass,
   }
 
-  axios.post(settings.backend + '/api/security/password', data, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/auth/security/password`, data, { withCredentials: true })
     .then((response) => {
       if (response.data.success === true) {
         toast.add({ severity: 'success', summary: 'Úspech', detail: response.data.message, group: 'br', life: 5000 })

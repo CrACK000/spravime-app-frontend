@@ -4,11 +4,12 @@ import offer from "@/plugins/offers"
 import Panel from "@/components/Panel.vue"
 import SkeletonOfferInformation from "@/components/skeletons/SkeletonOfferInformation.vue"
 import Nickname from "@/components/app/Nickname.vue"
-</script>
+import categories from "@/plugins/data/categories.json"
 
-<!--
-  @todo ukazuje chybu
--->
+const Categories = categories.categories
+const Sections = categories.sections
+
+</script>
 
 <template>
   <transition name="fade">
@@ -19,23 +20,22 @@ import Nickname from "@/components/app/Nickname.vue"
       </div>
       <div class="p-6">
         <ul class="divide-y divide-gray-200 dark:divide-gray-700/40">
-          <!--
           <li class="flex justify-between p-2">
             <span>Vytvoril</span>
             <div>
-              <router-link :to="{ name: 'profile' , params: { id: offer.data.offer?.author }}" class="link" :class="{ 'font-medium': store.state.offer?.author_verify }">
-                <nickname :nickname="store.state.offer?.author_name ? store.state.offer?.author_name : store.state.offer?.author_username" :verify="store.state.offer?.author_verify" />
+              <router-link :to="{ name: 'profile' , params: { id: offer.data.offer?.author._id }}" class="link" :class="{ 'font-medium': offer.data.offer?.author.verify }">
+                <nickname :nickname="`${offer.data.offer?.author.profile.name?.length ? offer.data.offer?.author.profile.name : offer.data.offer?.author.username}`" :verify="offer.data.offer?.author.verify" />
               </router-link>
             </div>
           </li>
           <li class="flex items-center justify-between px-2 py-2.5 pt-3">
             <span>Sekcia</span>
-            <div v-text="store.state.offer?.section_title" class="text-end"></div>
+            <div v-text="Sections.find(section => section.id === offer.data.offer?.section)?.title" class="text-end"></div>
           </li>
           <li class="flex items-center justify-between px-2 py-2.5 pt-3">
             <span>Kategória</span>
-            <div v-text="store.state.offer?.category_title" class="text-end"></div>
-          </li>-->
+            <div v-text="Categories.find(category => category.id === offer.data.offer?.category)?.title" class="text-end"></div>
+          </li>
           <li class="flex items-center justify-between px-2 py-2.5 pt-3">
             <span>Vytvorené</span>
             <div v-text="timeSince(String(offer.data.offer?.created_at))" class="text-end"></div>

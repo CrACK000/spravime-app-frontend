@@ -5,7 +5,7 @@ import axios from "axios"
 import {useToast} from "primevue/usetoast"
 import {timeUntil} from "@/plugins/functions"
 import skZipcodes from "@/plugins/zipcodes/sk.json"
-import categoriesData from "@/plugins/categories.json"
+import categoriesData from "@/plugins/data/categories.json"
 import PanelForm from "@/components/PanelForm.vue"
 import PanelFormActions from "@/components/PanelFormActions.vue"
 

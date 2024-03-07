@@ -5,6 +5,7 @@ export function useAuth() {
 
     const loggedIn = ref<boolean>(false)
     const userData = ref<User | null>(null)
+    const newMsgCount = ref<number>(0)
     const loading = ref<boolean>(false)
 
     const checkAuth = async () => {
@@ -13,6 +14,7 @@ export function useAuth() {
             .then(response => {
                 loggedIn.value = response.data.loggedIn
                 userData.value = response.data.user
+                newMsgCount.value = response.data.newMsgCount
             })
             .catch(error => {
                 console.error(error)
@@ -25,6 +27,7 @@ export function useAuth() {
     return {
         loggedIn,
         userData,
+        newMsgCount,
         loading,
         checkAuth
     }

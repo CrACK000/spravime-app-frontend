@@ -4,7 +4,7 @@ import {useMeta} from 'vue-meta';
 import Panel from "@/components/Panel.vue";
 import Status from "@/components/app/OfferStatus.vue";
 import skZipcodes from "@/plugins/zipcodes/sk.json";
-import categoriesData from "@/plugins/categories.json";
+import categoriesData from "@/plugins/data/categories.json";
 import offer from "@/plugins/offers";
 import SkeletonOffers from "@/components/skeletons/SkeletonOffers.vue";
 import Container from "@/components/Container.vue";

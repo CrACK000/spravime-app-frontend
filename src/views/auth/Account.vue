@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import {inject, onMounted, ref} from 'vue'
+import {inject, ref} from 'vue'
 import router from "@/router"
-//import {checkNewMessages} from "@/plugins/checkNewMessages"
 import {useRoute} from "vue-router"
 
 const route = useRoute()
 const auth = inject<Auth>('auth')
-const user = ref(auth?.userData as User)
 const loggedIn = ref(auth?.loggedIn as boolean)
 
 if (!loggedIn.value){
@@ -53,19 +51,12 @@ const user_links = ref([
       { name: 'offers-waiting', title: 'Čakajúce na schválenie' },
     ]
   },
-]);
-const notifyMsg = ref(0);
+])
+const newMsg = ref<number>(auth?.newMsgCount)
 
 const findSelectTab = (tabs: TabType[]) => {
-  return tabs && tabs.some(tab => tab.name === route.name);
+  return tabs && tabs.some(tab => tab.name === route.name)
 }
-/*const fetchNewMessagesCount = async (id: number) => {
-  notifyMsg.value = <number> await checkNewMessages(id);
-}
-
-onMounted(async () => {
-  await fetchNewMessagesCount(user.value._id);
-})*/
 </script>
 
 <template>
@@ -96,8 +87,13 @@ onMounted(async () => {
                            class="flex items-center gap-2 cursor-pointer w-full hover:bg-white/80 dark:hover:bg-gray-800/50 transition px-4 py-2.5 rounded-md font-medium"
               ><div class="menu-icon"><i :class="tab.icon"></i></div>
                 <div class="flex w-full gap-1 items-center justify-between">
+
                   {{ tab.title }}
-                  <div v-if="tab.name === 'messages' && notifyMsg" class="bg-blue-500/60 text-xs text-white w-5 h-5 rounded-md flex justify-center items-center shadow font-medium" v-text="notifyMsg"></div>
+
+                  <div v-if="tab.name === 'messages' && newMsg" class="bg-blue-500 text-xs text-white drop-shadow w-5 h-5 rounded-lg flex justify-center items-center shadow-xl font-bold"
+                       v-text="newMsg"
+                  ></div>
+
                 </div>
               </router-link>
               <div v-if="tab.subs" class="flex flex-col gap-2 border-l border-gray-300 dark:border-gray-800 ms-1 p-1.5">

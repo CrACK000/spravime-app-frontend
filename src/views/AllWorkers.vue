@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import {onBeforeMount, ref} from "vue"
 import { useMeta } from "vue-meta"
+import account from "@/plugins/account"
 import Panel from "@/components/Panel.vue"
 import skZipcodes from "@/plugins/zipcodes/sk.json"
-import categoriesData from "@/plugins/categories.json"
+import categoriesData from "@/plugins/data/categories.json"
 import SkeletonWorkers from "@/components/skeletons/SkeletonWorkers.vue"
 import Nickname from "@/components/app/Nickname.vue"
 import AverageRating from "@/components/app/AverageRating.vue"
 import PanelFilter from "@/components/PanelFilter.vue"
-import account from "@/plugins/account"
+import Avatar from "@/components/app/Avatar.vue"
 
 useMeta({ title: 'Vyhľadať si firmu alebo spoľahlivého majstra' })
 
@@ -141,7 +142,7 @@ onBeforeMount(async () => {
           <router-link v-else-if="filteredWorkers.length" v-for="user in filteredWorkers" :to="{ name: 'profile', params: { id: user._id } }">
             <div class="panel-item p-4 grid grid-cols-10 gap-3.5 items-center text-sm sm:text-lg">
               <div class="col-span-2 sm:col-span-1">
-                <img :src="user.avatar" class="rounded-full w-full shadow-xl mx-auto" :alt="user.profile.name ?? user.username">
+                <Avatar :img="user.avatar" :alt="user.profile.name ?? user.username" class="mx-auto" />
               </div>
               <div :class="[user.reviews.count_reviews ? 'col-span-6 sm:col-span-5' : 'col-span-8 sm:col-span-7']">
                 <nickname :nickname="user.profile.name ?? user.username" :verify="user.verify" class="mb-0.5 sm:mb-1 font-medium" />

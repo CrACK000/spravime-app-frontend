@@ -1,18 +1,15 @@
 <script setup lang="ts">
-
-import PanelForm from "@/components/PanelForm.vue";
-import PanelFormActions from "@/components/PanelFormActions.vue";
-import Panel from "@/components/Panel.vue";
-import {useToast} from "primevue/usetoast";
-import {inject, onMounted, ref} from "vue";
-import type {Auth, User} from "@/types/users";
-import axios from "axios";
-import {settings} from "@/plugins/config";
+import {useToast} from "primevue/usetoast"
+import {inject, onMounted, ref} from "vue"
+import axios from "axios"
+import PanelForm from "@/components/PanelForm.vue"
+import PanelFormActions from "@/components/PanelFormActions.vue"
+import Panel from "@/components/Panel.vue"
 
 const toast = useToast()
 
 const auth = inject<Auth>('auth');
-const user = ref(auth?.user as User)
+const user = ref(auth?.userData as User)
 
 const socialData = ref({
   facebook: '' as string,
@@ -28,14 +25,14 @@ const socialData = ref({
 const setSocialData = () => {
   socialData.value.errors = []
   socialData.value.changed = false
-  socialData.value.facebook = <string>user.value.facebook
-  socialData.value.instagram = <string>user.value.instagram
-  socialData.value.tiktok = <string>user.value.tiktok
-  socialData.value.linkedin = <string>user.value.linkedin
+  socialData.value.facebook = <string>user.value.social.facebook
+  socialData.value.instagram = <string>user.value.social.instagram
+  socialData.value.tiktok = <string>user.value.social.tiktok
+  socialData.value.linkedin = <string>user.value.social.linkedin
 }
 const checkSocialData = () => {
   socialData.value.errors = []
-  socialData.value.changed = !(socialData.value.facebook === user.value.facebook && socialData.value.instagram === user.value.instagram && socialData.value.tiktok === user.value.tiktok && socialData.value.linkedin === user.value.linkedin)
+  socialData.value.changed = !(socialData.value.facebook === user.value.social.facebook && socialData.value.instagram === user.value.social.instagram && socialData.value.tiktok === user.value.social.tiktok && socialData.value.linkedin === user.value.social.linkedin)
 
   if (socialData.value.facebook.length) validURL(socialData.value.facebook, 'facebook')
   if (socialData.value.instagram.length) validURL(socialData.value.instagram, 'instagram')
@@ -54,16 +51,16 @@ const updateSocialData = () => {
     linkedin: socialData.value.linkedin,
   })
 
-  axios.post(`${settings.backend}/api/profile/update/social-data`, SocialData.value, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/auth/profile/update/social-data`, SocialData.value, { withCredentials: true })
     .then((response) => {
       if (response.data.success) {
         toast.add({ severity: 'success', summary: 'Úspech', detail: 'Sociálne siete boli aktualizované.', group: 'br', life: 5000 })
         socialData.value.success = true
         socialData.value.changed = false
-        user.value.facebook = socialData.value.facebook
-        user.value.instagram = socialData.value.instagram
-        user.value.tiktok = socialData.value.tiktok
-        user.value.linkedin = socialData.value.linkedin
+        user.value.social.facebook = socialData.value.facebook
+        user.value.social.instagram = socialData.value.instagram
+        user.value.social.tiktok = socialData.value.tiktok
+        user.value.social.linkedin = socialData.value.linkedin
       } else {
         socialData.value.errors = response.data.errors
         socialData.value.errors.forEach((el: any) => {

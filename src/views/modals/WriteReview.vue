@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import {inject, ref} from "vue";
-import axios from "axios";
-import {useToast} from "primevue/usetoast";
+import {inject, ref} from "vue"
+import axios from "axios"
+import {useToast} from "primevue/usetoast"
+import user from "@/plugins/profile"
 
 const toggleModal = inject<() => void>('writeReviewModal')!
 const toast = useToast()
@@ -34,11 +35,11 @@ const submitReview = () => {
   axios.post(`${import.meta.env.VITE_BACKEND}/reviews/create`, formData.value, { withCredentials: true })
     .then(response => {
       if (response.data.success) {
-        toast.add({severity: 'success', summary: 'Recenzia', detail: 'Vaša recenzia bola úspešne pridaná.', group: 'br', life: 3000})
+        user.data.reviews.push(response.data.review)
         closeModalNewReview()
+        toast.add({severity: 'success', summary: 'Recenzia', detail: response.data.message, group: 'br', life: 3000})
       } else {
         toast.add({severity: 'error', summary: 'Recenzia', detail: response.data.message, group: 'br', life: 3000})
-        console.log(response)
       }
     })
     .catch(error => {
@@ -46,7 +47,6 @@ const submitReview = () => {
     })
     .finally(() => {
       loading.value = false
-      console.log('finally')
     })
 }
 
@@ -60,12 +60,10 @@ const checkForm = () => {
   if (formData.value.star <= 0) errors.value.push({ where: 'star', message: 'Vyberte hodnotenie.' })
   if (typeof formData.value.recommendation !== 'boolean') errors.value.push({ where: 'recommendation', message: 'Odporúčanie musí byť určené.' })
 }
-
 const getError = (search: any) => {
   const emailError = errors.value.find((error: any) => error.where === search);
   return emailError ? emailError.message : '';
 }
-
 const closeModalNewReview = () => {
   toggleModal()
 }

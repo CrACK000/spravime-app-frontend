@@ -15,6 +15,7 @@ export async function logout() {
                 if (auth) {
                     auth.loggedIn.value = false
                     auth.userData.value = null
+                    auth.newMsgCount.value = 0
                 }
 
                 toast.add({severity: 'info', summary: 'Účet', detail: 'Si odhlásený !', group: 'br', life: 3000})

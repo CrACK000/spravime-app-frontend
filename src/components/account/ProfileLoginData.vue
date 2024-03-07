@@ -1,18 +1,16 @@
 <script setup lang="ts">
+import {inject, onMounted, ref} from "vue"
+import {useToast} from "primevue/usetoast"
+import axios from "axios"
+import PanelForm from "@/components/PanelForm.vue"
+import PanelFormActions from "@/components/PanelFormActions.vue"
+import Panel from "@/components/Panel.vue"
 
-import PanelForm from "@/components/PanelForm.vue";
-import PanelFormActions from "@/components/PanelFormActions.vue";
-import Panel from "@/components/Panel.vue";
-import {useToast} from "primevue/usetoast";
-import {inject, onMounted, ref} from "vue";
-import type {Auth, User} from "@/types/users";
-import axios from "axios";
-import {settings} from "@/plugins/config";
 
 const toast = useToast()
 
 const auth = inject<Auth>('auth');
-const user = ref(auth?.user as User)
+const user = ref(auth?.userData as User)
 
 const loginData = ref({
   email: '' as string,
@@ -29,11 +27,11 @@ const setLoginData = () => {
   loginData.value.changed = false
   loginData.value.email = user.value.email
   loginData.value.username = user.value.username
-  loginData.value.mobile = user.value.mobile
+  loginData.value.mobile = user.value.phone
 }
 const checkLoginData = () => {
   loginData.value.errors = []
-  loginData.value.changed = !(loginData.value.email === user.value.email && loginData.value.username === user.value.username && loginData.value.mobile === user.value.mobile)
+  loginData.value.changed = !(loginData.value.email === user.value.email && loginData.value.username === user.value.username && loginData.value.mobile === user.value.phone)
 
   validEmail(loginData.value.email)
   validUsername(loginData.value.username)
@@ -46,7 +44,7 @@ const updateLoginData = () => {
 
   const LoginData = loginData.value
 
-  axios.post(settings.backend + '/api/profile/update/login-data', LoginData, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/auth/profile/update/login-data`, LoginData, { withCredentials: true })
     .then((response) => {
       if (response.data.success === true) {
         toast.add({ severity: 'success', summary: 'Úspech', detail: response.data.message, group: 'br', life: 5000 })
@@ -54,7 +52,7 @@ const updateLoginData = () => {
         loginData.value.changed = false
         user.value.email = loginData.value.email
         user.value.username = loginData.value.username
-        user.value.mobile = loginData.value.mobile
+        user.value.phone = loginData.value.mobile
       } else {
         loginData.value.errors = response.data.errors
         loginData.value.errors.forEach((el: any) => {

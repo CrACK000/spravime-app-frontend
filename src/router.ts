@@ -1,8 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { logout } from "@/plugins/logout"
-import {inject, onBeforeMount} from "vue";
-
-let isAuthChecked = false;
+import {inject} from "vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -80,9 +78,9 @@ const router = createRouter({
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
-      return savedPosition;
+      return savedPosition
     } else {
-      return { top: 0, behavior: 'smooth' };
+      return { top: 0, behavior: 'smooth' }
     }
   },
 })
@@ -90,18 +88,17 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
 
   const auth = inject<Auth>('auth')
-
   await auth?.checkAuth()
 
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  const requiresUnAuth = to.matched.some(record => record.meta.requiresAuth === false);
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  const requiresUnAuth = to.matched.some(record => record.meta.requiresAuth === false)
 
   if (requiresAuth && !auth?.loggedIn.value) {
-    next({ name: 'login' });
+    next({ name: 'login' })
   } else if (requiresUnAuth && auth?.loggedIn.value) {
-    next({ name: 'index' });
+    next({ name: 'index' })
   } else {
-    next();
+    next()
   }
 })
 

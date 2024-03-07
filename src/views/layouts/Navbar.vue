@@ -3,9 +3,11 @@ import {ref, inject} from 'vue'
 import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue"
 import {useRouter} from "vue-router"
 import Nickname from "@/components/app/Nickname.vue"
+import Avatar from "@/components/app/Avatar.vue"
 
 const router = useRouter()
 const auth = inject<Auth>('auth')
+
 const user = ref(auth?.userData as User)
 const loggedIn = ref(auth?.loggedIn as boolean)
 
@@ -31,7 +33,7 @@ const user_links = ref([
     icon: 'fa-solid fa-briefcase'
   },
 ])
-const notifyMsg = ref(0)
+const notifyMsg = ref<number>(auth?.newMsgCount)
 
 const navigateTo = async (routeName: any, close: () => void) => {
   await router.push(routeName)
@@ -67,12 +69,9 @@ const navigateTo = async (routeName: any, close: () => void) => {
 
         <div v-if="loggedIn">
           <Menu as="div" class="relative inline-block">
-            <div>
-              <MenuButton class="w-10 h-10 ms-3 cursor-pointer rounded-full hover:ring-8 hover:ring-white dark:hover:ring-gray-700 relative">
-                <div v-if="notifyMsg" class="absolute top-1/2 right-1/2 translate-x-[50%] translate-y-[-50%] -z-30 w-12 h-12 rounded-full bg-blue-500/50 animate-pulse"></div>
-                <img class="w-10 h-10 z-50 rounded-full" alt="User dropdown" :src="user.avatar">
-              </MenuButton>
-            </div>
+            <MenuButton class="cursor-pointer rounded-full hover:ring-8 hover:ring-white dark:hover:ring-gray-700 relative">
+              <Avatar :img="user.avatar" :alt="user.username" rounded="full" size="sm" :notify="Boolean(notifyMsg)"/>
+            </MenuButton>
 
             <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
               <MenuItems class="absolute right-0 z-10 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 overflow-hidden text-sm">
@@ -93,8 +92,13 @@ const navigateTo = async (routeName: any, close: () => void) => {
                   <MenuItem v-slot="{ close }" v-for="ulink in user_links">
                     <div @click="navigateTo(ulink.name, close)" :class="['block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer']">
                       <div class="flex w-full gap-1 items-center justify-between">
+
                         {{ ulink.title }}
-                        <div v-if="notifyMsg" class="bg-blue-500/60 text-xs text-white w-5 h-5 rounded-md flex justify-center items-center shadow font-medium" v-text="notifyMsg"></div>
+
+                        <div v-if="ulink.name.name === 'messages' && notifyMsg" class="bg-blue-500 text-xs text-white drop-shadow w-5 h-5 rounded-lg flex justify-center items-center shadow-xl font-bold"
+                             v-text="notifyMsg"
+                        ></div>
+
                       </div>
                     </div>
                   </MenuItem>

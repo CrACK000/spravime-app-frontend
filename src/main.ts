@@ -14,7 +14,6 @@ const app = createApp(App)
 
 app.provide('auth', useAuth())
 
-
 app.directive('tooltip', Tooltip)
 app.use(ToastService)
 app.use(router)

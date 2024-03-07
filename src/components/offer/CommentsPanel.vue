@@ -20,7 +20,3 @@ import SkeletonOfferComments from "@/components/skeletons/SkeletonOfferComments.
 
   </transition>
 </template>
-
-<style scoped>
-
-</style>

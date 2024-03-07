@@ -7,6 +7,7 @@ import Panel from "@/components/Panel.vue"
 import PanelGrid from "@/components/PanelGrid.vue"
 import PanelForm from "@/components/PanelForm.vue"
 import PanelFormActions from "@/components/PanelFormActions.vue"
+import Avatar from "@/components/app/Avatar.vue"
 
 useMeta({ title: 'Vzhľad profilu' })
 
@@ -14,7 +15,7 @@ const auth = inject<Auth>('auth')
 const user = ref(auth?.userData as User)
 const toast = useToast()
 
-const imagePreview = ref<string>('')
+const imagePreview = ref<string | undefined>('')
 const inputText = ref<string>('')
 const changed = ref<boolean>(false)
 const loading = ref<boolean>(false)
@@ -150,8 +151,8 @@ onMounted(() => {
       <panel divide="y">
         <panel-form>
           <div class="mb-2 text-sm">Profilový obrázok</div>
-          <img :src="imagePreview" alt="avatar" class="max-w-full w-56 rounded-lg shadow-xl block">
-          <div class="mt-10">
+          <Avatar :img="imagePreview" :alt="user.username" size="xxl" rounded="xl" />
+          <div class="mt-6">
             <label for="avatar" class="form-secondary-button cursor-pointer truncate">
               <i class="fa-regular fa-file-image fa-lg me-2 opacity-75"></i>
               <template v-if="inputText.length">{{ inputText }}</template>

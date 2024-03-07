@@ -1,21 +1,17 @@
 <script setup lang="ts">
-
-import PanelForm from "@/components/PanelForm.vue";
-import PanelFormActions from "@/components/PanelFormActions.vue";
-import Panel from "@/components/Panel.vue";
-import {useToast} from "primevue/usetoast";
-import {inject, onMounted, ref} from "vue";
-import type {Auth, User} from "@/types/users";
-import type {Sections, Zipcodes} from "@/types/offers";
-import categoriesData from "@/plugins/categories.json";
-import skZipcodes from "@/plugins/zipcodes/sk.json";
-import axios from "axios";
-import {settings} from "@/plugins/config";
+import PanelForm from "@/components/PanelForm.vue"
+import PanelFormActions from "@/components/PanelFormActions.vue"
+import Panel from "@/components/Panel.vue"
+import {useToast} from "primevue/usetoast"
+import {inject, onMounted, ref} from "vue"
+import categoriesData from "@/plugins/data/categories.json"
+import skZipcodes from "@/plugins/zipcodes/sk.json"
+import axios from "axios"
 
 const toast = useToast()
 
 const auth = inject<Auth>('auth');
-const user = ref(auth?.user as User)
+const user = ref(auth?.userData as User)
 
 const advancedData = ref({
   type: '' as 'company' | 'worker' | 'normal',
@@ -36,22 +32,22 @@ const slovakData = ref<Zipcodes[]>(skZipcodes)
 const setAdvancedData = () => {
   advancedData.value.errors = []
   advancedData.value.changed = false
-  advancedData.value.type = user.value.type
-  advancedData.value.address = user.value.address
-  advancedData.value.name = user.value.name
-  advancedData.value.sections = user.value.sections
-  advancedData.value.slogan = user.value.slogan
-  advancedData.value.description = user.value.description
+  advancedData.value.type = user.value.profile.type
+  advancedData.value.address = user.value.profile.address ?? ''
+  advancedData.value.name = user.value.profile.name ?? ''
+  advancedData.value.sections = user.value.profile.sections
+  advancedData.value.slogan = user.value.profile.slogan ?? ''
+  advancedData.value.description = user.value.profile.description ?? ''
 }
 const checkAdvancedData = () => {
   advancedData.value.errors = []
   advancedData.value.changed = !(
-    advancedData.value.type === user.value.type &&
-    advancedData.value.address === user.value.address &&
-    advancedData.value.name === user.value.name &&
-    advancedData.value.sections === user.value.sections &&
-    advancedData.value.slogan === user.value.slogan &&
-    advancedData.value.description === user.value.description
+    advancedData.value.type === user.value.profile.type &&
+    advancedData.value.address === user.value.profile.address &&
+    advancedData.value.name === user.value.profile.name &&
+    advancedData.value.sections === user.value.profile.sections &&
+    advancedData.value.slogan === user.value.profile.slogan &&
+    advancedData.value.description === user.value.profile.description
   )
 
   if (advancedData.value.type !== 'normal'){
@@ -76,18 +72,18 @@ const updateAdvancedData = () => {
     AdvancedData.description = ''
   }
 
-  axios.post(settings.backend + '/api/profile/update/advanced-data', AdvancedData, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/auth/profile/update/advanced-data`, AdvancedData, { withCredentials: true })
     .then((response) => {
       if (response.data.success === true) {
         toast.add({ severity: 'success', summary: 'Úspech', detail: response.data.message, group: 'br', life: 5000 })
         advancedData.value.success = true
         advancedData.value.changed = false
-        user.value.type = advancedData.value.type
-        user.value.address = advancedData.value.address
-        user.value.name = advancedData.value.name
-        user.value.sections = advancedData.value.sections
-        user.value.slogan = advancedData.value.slogan
-        user.value.description = advancedData.value.description
+        user.value.profile.type = advancedData.value.type
+        user.value.profile.address = advancedData.value.address
+        user.value.profile.name = advancedData.value.name
+        user.value.profile.sections = advancedData.value.sections
+        user.value.profile.slogan = advancedData.value.slogan
+        user.value.profile.description = advancedData.value.description
       } else {
         advancedData.value.errors = response.data.errors
         advancedData.value.errors.forEach((el: any) => {
@@ -172,7 +168,7 @@ onMounted(() => {
           </div>
           <div>
             <label class="mb-1 block" for="sections">Sekcie</label>
-            <select :class="[ getErrorAdvancedData('sections') ? 'input-danger' : 'input', 'w-full']" id="sections" v-model="advancedData.sections" multiple>
+            <select :class="[ getErrorAdvancedData('sections') ? 'input-danger' : 'input', 'w-full h-56']" id="sections" v-model="advancedData.sections" multiple>
               <option v-for="section in allSections" :value="section.id">{{ section.title }}</option>
             </select>
             <div class="text-red-500 text-sm mt-2" v-if="getErrorAdvancedData('sections')" v-text="getErrorAdvancedData('sections')"></div>
