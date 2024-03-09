@@ -4,7 +4,6 @@ import {useMeta} from "vue-meta"
 import axios from "axios"
 import { useToast } from "primevue/usetoast"
 import Panel from "@/components/Panel.vue"
-import PanelGrid from "@/components/PanelGrid.vue"
 import PanelForm from "@/components/PanelForm.vue"
 import PanelFormActions from "@/components/PanelFormActions.vue"
 import Avatar from "@/components/app/Avatar.vue"
@@ -25,7 +24,7 @@ const errors = ref<any>([])
 const setData = () => {
   errors.value = []
   changed.value = false
-  imagePreview.value = user.value.avatar
+  imagePreview.value = `${import.meta.env.VITE_BACKEND}/cloud/${user.value.avatar}`
   inputText.value = ''
 }
 
@@ -43,7 +42,7 @@ const createImage = (file: any) => {
           changed.value = false;
           inputText.value = '';
         } else {
-          imagePreview.value = e.target.result;
+          imagePreview.value = e.target.result
         }
       };
       img.onerror = () => {
@@ -139,19 +138,18 @@ const upload = () => {
 }
 
 onMounted(() => {
-  imagePreview.value = user.value.avatar
+  imagePreview.value = `${import.meta.env.VITE_BACKEND}/cloud/${user.value.avatar}`
 })
 
 </script>
 
 <template>
-  <panel-grid>
 
     <form method="post" enctype="multipart/form-data" @submit.prevent="upload">
       <panel divide="y">
         <panel-form>
           <div class="mb-2 text-sm">Profilový obrázok</div>
-          <Avatar :img="imagePreview" :alt="user.username" size="xxl" rounded="xl" />
+          <Avatar class="inline-block" :img="imagePreview" :alt="user.username" :prefix="false" resolution="250x250" size="xxl" rounded="xxl" />
           <div class="mt-6">
             <label for="avatar" class="form-secondary-button cursor-pointer truncate">
               <i class="fa-regular fa-file-image fa-lg me-2 opacity-75"></i>
@@ -182,5 +180,4 @@ onMounted(() => {
       </panel>
     </form>
 
-  </panel-grid>
 </template>

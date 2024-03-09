@@ -142,7 +142,7 @@ onBeforeMount(async () => {
           <router-link v-else-if="filteredWorkers.length" v-for="user in filteredWorkers" :to="{ name: 'profile', params: { id: user._id } }">
             <div class="panel-item p-4 grid grid-cols-10 gap-3.5 items-center text-sm sm:text-lg">
               <div class="col-span-2 sm:col-span-1">
-                <Avatar :img="user.avatar" :alt="user.profile.name ?? user.username" class="mx-auto" />
+                <Avatar :img="user.avatar" :alt="user.profile.name ?? user.username" class="mx-auto" rounded="xxl" />
               </div>
               <div :class="[user.reviews.count_reviews ? 'col-span-6 sm:col-span-5' : 'col-span-8 sm:col-span-7']">
                 <nickname :nickname="user.profile.name ?? user.username" :verify="user.verify" class="mb-0.5 sm:mb-1 font-medium" />

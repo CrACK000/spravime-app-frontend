@@ -22,7 +22,7 @@ type TabType = {
 const user_links = ref([
   {
     name: 'dashboard',
-    title: 'Dashboard',
+    title: 'Centrum',
     icon: 'fa-solid fa-gauge-high',
   },
   {
@@ -30,7 +30,7 @@ const user_links = ref([
     title: 'Účet',
     icon: 'fa-regular fa-circle-user',
     subs: [
-      { name: 'edit-design', title: 'Vzhľad' },
+      { name: 'my-account', title: 'Profil' },
       { name: 'user-gallery', title: 'Galéria' },
       { name: 'user-security', title: 'Zabezpečenie' },
       { name: 'user-stats', title: 'Štatistika' },
@@ -43,7 +43,7 @@ const user_links = ref([
     icon: 'fa-regular fa-message',
   },
   {
-    name: 'my-offers',
+    name: 'offers-all',
     title: 'Moje požiadavky',
     icon: 'fa-solid fa-briefcase',
     subs: [
@@ -114,9 +114,13 @@ const findSelectTab = (tabs: TabType[]) => {
           </ul>
         </div>
       </div>
-      <div class="lg:w-9/12 p-4">
+      <div class="lg:w-9/12 mt-4">
         <router-view v-slot="{ Component, route }">
-          <transition :name="String(route.meta.transition)">
+          <transition
+            enter-active-class="animate__animated animate__fadeIn"
+            leave-active-class="animate__animated animate__fadeOut"
+            mode="out-in"
+          >
             <KeepAlive>
               <component :is="Component" :key="route.path"/>
             </KeepAlive>

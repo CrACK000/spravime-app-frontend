@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {useMeta} from "vue-meta";
 import PanelGrid from "@/components/PanelGrid.vue";
-import SecurityRemoveAccount from "@/components/account/SecurityRemoveAccount.vue";
-import SecurityChangePassword from "@/components/account/SecurityChangePassword.vue";
+import SecurityRemoveAccount from "@/components/account/security/SecurityRemoveAccount.vue";
+import SecurityChangePassword from "@/components/account/security/SecurityChangePassword.vue";
 
 useMeta({ title: 'Zabezpečenie' })
 </script>

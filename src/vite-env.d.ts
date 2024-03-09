@@ -117,16 +117,20 @@ interface Auth {
 interface MessagesContainer {
     _id: string,
     key: Offer,
-    from: User,
-    to: User,
     container: Container,
     created_at: string,
     updated_at: string,
 }
 
 interface Container {
-    from: Message[],
-    to: Message[]
+    from: {
+        user_id: User,
+        messages: Message[]
+    },
+    to: {
+        user_id: User,
+        messages: Message[]
+    }
 }
 
 interface Message {

@@ -1,10 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 @import "variables";
+@import "animate.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --animate-duration: 200ms;
+  --animate-delay: 0.2s;
+}
 
 html {
   @apply
@@ -414,31 +420,6 @@ body {
   text-red-300
 }
 
-.p-dialog {
-  @apply
-  bg-white dark:bg-gray-800
-  shadow-2xl shadow-black/30
-  rounded-md md:rounded-lg
-}
-.p-dialog-header {
-  @apply
-  p-4
-  border-b border-gray-200 dark:border-gray-700/40
-}
-.p-dialog-content {
-  @apply
-  flex flex-col
-  divide-y divide-gray-200 dark:divide-gray-700/40
-}
-.p-dialog-content-form {
-  @extend .p-dialog-content;
-}
-.p-dialog-mask {
-  @apply
-  bg-black/20 dark:bg-gray-950/20
-  backdrop-blur-sm
-}
-
 .p-tooltip .p-tooltip-text {
   @apply
   bg-gray-300 dark:bg-gray-600 backdrop-blur
@@ -467,39 +448,6 @@ body {
 .input-checkbox {
   @apply
   w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600
-}
-
-
-.fade-leave-active {
-  @apply ease-linear transition duration-300;
-}
-.fade-enter-active {
-  @apply ease-linear;
-}
-.fade-leave-from,
-.fade-enter-to {
-  @apply transform opacity-100 transition duration-300;
-}
-.fade-leave-to,
-.fade-enter-from {
-  @apply transform opacity-0 transition duration-[0ms];
-}
-
-.slide-top-enter-active {
-  @apply transition ease-out duration-[50ms];
-}
-.slide-top-enter-from {
-  @apply transform opacity-0 scale-100 -translate-y-full;
-}
-.slide-top-leave-active {
-  @apply transition ease-in duration-[50ms];
-}
-.slide-top-leave-from,
-.slide-top-enter-to {
-  @apply transform opacity-100 scale-100 translate-y-0;
-}
-.slide-top-leave-to {
-  @apply transform opacity-0 scale-100 translate-y-full;
 }
 
 

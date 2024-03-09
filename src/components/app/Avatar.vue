@@ -10,7 +10,9 @@ interface AvatarComponent {
   alt?: string,
   size?: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl",
   rounded?: "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | "full",
-  notify?: boolean
+  notify?: boolean,
+  prefix?: boolean,
+  resolution?: string,
 }
 
 const Size = {
@@ -48,18 +50,22 @@ withDefaults(defineProps<AvatarComponent>(), {
   alt: '',
   size: "md",
   rounded: "md",
-  notify: false
+  notify: false,
+  prefix: true,
+  resolution: '150x150',
 })
+
+const Prefix = `${import.meta.env.VITE_BACKEND}/cloud/`
 </script>
 
 <template>
-  <div class="relative">
-    <div :class="`relative overflow-hidden ${Rounded[rounded]}`">
+  <div class="relative inline-block">
+    <div :class="`relative overflow-hidden -mb-2 ${Rounded[rounded]}`">
       <div v-if="!img?.length" :class="`bg-gray-100 dark:bg-gray-600 ${Size[size]}`">
         <svg :class="`absolute ${SizeIcon[size]} text-gray-400 inset-x-1/2 -translate-x-1/2`" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
       </div>
       <div v-else :class="`${Size[size]}`">
-        <img :src="img" :alt="alt" :class="`${Size[size]}`"/>
+        <img :src="`${prefix ? Prefix : ''}${img}/${resolution}`" :alt="alt" :class="`${Size[size]}`"/>
       </div>
     </div>
     <div v-if="notify" class="absolute top-0 right-0">

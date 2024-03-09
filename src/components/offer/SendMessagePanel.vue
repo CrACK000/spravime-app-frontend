@@ -4,10 +4,12 @@ import {useRoute} from "vue-router"
 import {useToast} from "primevue/usetoast"
 import axios from "axios"
 import offer from "@/plugins/offers"
-import {FwbButton} from "flowbite-vue"
 import SkeletonOfferMessage from "@/components/skeletons/SkeletonOfferMessage.vue"
 import PanelFormActions from "@/components/PanelFormActions.vue"
 import Panel from "@/components/Panel.vue"
+import TextareaLabel from "@/components/TextareaLabel.vue"
+
+interface ResponseAlready { data: { isAlready: boolean } }
 
 const route = useRoute()
 const toast = useToast()
@@ -18,7 +20,6 @@ const message = ref<string>('')
 const checkMsg = ref<boolean>(false)
 const loadingMsg = ref<boolean>(false)
 const loadingPost = ref<boolean>(false)
-const changed = ref<boolean>(false)
 const errors = ref<any>([])
 
 const checkAlreadyWrittenMessages = async () => {
@@ -26,8 +27,11 @@ const checkAlreadyWrittenMessages = async () => {
   loadingMsg.value = true
 
   await axios.post(`${import.meta.env.VITE_BACKEND}/messages/check`, { offerId: route.params.id }, { withCredentials: true })
-    .then(response => {
+    .then((response: ResponseAlready) => {
       checkMsg.value = response.data.isAlready
+    })
+    .catch(error => {
+      console.error('Server neodpovedá.', error)
     })
     .finally(() => {
       loadingMsg.value = false
@@ -36,7 +40,7 @@ const checkAlreadyWrittenMessages = async () => {
 }
 const sendMsg = () => {
 
-  if (!checkForm()) return
+  if (!message.value) return false
 
   loadingPost.value = true
 
@@ -57,28 +61,9 @@ const sendMsg = () => {
     })
 
 }
-const checkForm = () => {
-
-  errors.value = []
-
-  changed.value = message.value.length > 0
-
-  if (!(message.value.length > 5)) {
-    errors.value.push({where: 'message', message: 'Napíšte správu.'})
-  }
-
-  return !errors.value.length
-
-}
-const getError = (search: any) => {
-  const emailError = errors.value.find((error: any) => error.where === search);
-  return emailError ? emailError.message : '';
-}
 
 onBeforeMount(async () => {
-  if (loggedIn.value) {
-    await checkAlreadyWrittenMessages()
-  }
+  if (loggedIn.value) { await checkAlreadyWrittenMessages() }
 })
 
 </script>
@@ -87,14 +72,13 @@ onBeforeMount(async () => {
   <transition name="fade">
 
     <div v-if="!offer.data.offer_loading && !loadingMsg">
-      <form v-if="offer.data.offer?.status && loggedIn && (auth?.userData.value._id !== offer.data.offer.author._id)" @submit.prevent="sendMsg" @keyup="checkForm">
+      <form v-if="offer.data.offer?.status && loggedIn && (auth?.userData.value._id !== offer.data.offer.author._id)" @submit.prevent="sendMsg">
         <panel divide="y" v-if="!checkMsg">
           <div class="py-4 px-6 font-medium uppercase">
             Odpovedať
           </div>
           <div class="p-6">
-            <label class="mb-1 block" for="message">Správa</label>
-            <textarea v-model="message" :class="[ getError('message') ? 'input-danger' : 'input', 'w-full']" rows="4" id="message"></textarea>
+            <TextareaLabel label="Správa" label-key="message" v-model="message"/>
           </div>
           <panel-form-actions>
             <template #left>
@@ -103,7 +87,7 @@ onBeforeMount(async () => {
               </a>
             </template>
             <template #right>
-              <button type="submit" class="form-button" :disabled="!changed || loadingPost || errors.length">
+              <button type="submit" class="form-button" :disabled="loadingPost || errors.length">
                 <template v-if="loadingPost"><i class="fa-solid fa-circle-notch fa-spin me-1"></i> Odosiela sa</template>
                 <template v-else><i class="fa-regular fa-paper-plane me-1"></i> Odoslať</template>
               </button>

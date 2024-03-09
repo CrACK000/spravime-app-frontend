@@ -6,7 +6,7 @@ useMeta({ title: 'Vylepšiť účet' })
 </script>
 
 <template>
-  <panel class="p-10">
+  <panel class="rework-element p-10">
     Plus+
 
     <p>Overený profil je dôveryhodný.</p>
