@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b1d8e0a7-c378-409e-9b1f-24e9261b35fe" name="Changes" comment="v0.7.0 Beta" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="Vue Composition API Component" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="dev" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\php-8.2.0\php.exe" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2bWCNbSYy1bfFDVO3dHQYsteJhc" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Node.js.index.js.executor": "Run",
+    "Node.js.main.js.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.laravel-idea.search-composer-json": "true",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/patri/PhpstormProjects/spravime-app-frontend/src/components/dialogs",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.build.executor": "Run",
+    "npm.dev (1).executor": "Run",
+    "npm.dev Backend.executor": "Run",
+    "npm.dev.executor": "Run",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "C:\\Users\\patri\\PhpstormProjects\\spravime-app-frontend\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ],
+    "vue.recent.templates": [
+      "Vue Composition API Component"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\components\dialogs" />
+      <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\components" />
+      <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\views\auth" />
+      <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src" />
+      <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\components\skeleton" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\components\dialogs" />
+      <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\components\account\messages" />
+      <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\views\authentication\user" />
+      <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\views\authentication\guest" />
+      <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\views\authentication" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.dev Backend">
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="dev Backend" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/../spravime-app/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="npm.dev Backend" />
+      <item itemvalue="npm.build" />
+      <item itemvalue="npm.dev" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+        <item itemvalue="npm.build" />
+        <item itemvalue="npm.build" />
+        <item itemvalue="npm.dev" />
+        <item itemvalue="npm.dev" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SeleniumInternalSettingsState">
+    <option name="lastUrl" value="http://localhost:5173/search" />
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.14475.35" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b1d8e0a7-c378-409e-9b1f-24e9261b35fe" name="Changes" comment="" />
+      <created>1706321408970</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1706321408970</updated>
+      <workItem from="1706321410086" duration="2244000" />
+      <workItem from="1706323974409" duration="251000" />
+      <workItem from="1706324498861" duration="444000" />
+      <workItem from="1706357080476" duration="657000" />
+      <workItem from="1706359016753" duration="83000" />
+      <workItem from="1706359124031" duration="195000" />
+      <workItem from="1706364037593" duration="26839000" />
+      <workItem from="1706408666799" duration="54000" />
+      <workItem from="1706460063827" duration="44822000" />
+      <workItem from="1706574644326" duration="4980000" />
+      <workItem from="1706584711896" duration="1814000" />
+      <workItem from="1706624593981" duration="38676000" />
+      <workItem from="1706722243005" duration="19255000" />
+      <workItem from="1706747234164" duration="3720000" />
+      <workItem from="1706756650137" duration="9535000" />
+      <workItem from="1706797099101" duration="22460000" />
+      <workItem from="1706879536163" duration="3076000" />
+      <workItem from="1706903533468" duration="9155000" />
+      <workItem from="1706923012016" duration="14413000" />
+      <workItem from="1706968750976" duration="2785000" />
+      <workItem from="1706990970745" duration="177000" />
+      <workItem from="1706991493643" duration="625000" />
+      <workItem from="1707296833382" duration="1923000" />
+      <workItem from="1707318777751" duration="11427000" />
+      <workItem from="1707332539913" duration="5550000" />
+      <workItem from="1707362101622" duration="5000" />
+      <workItem from="1707362326982" duration="1256000" />
+      <workItem from="1707392577434" duration="182000" />
+      <workItem from="1707397920185" duration="3326000" />
+      <workItem from="1707495296323" duration="650000" />
+      <workItem from="1707568606445" duration="159000" />
+      <workItem from="1707568934106" duration="5724000" />
+      <workItem from="1707582974141" duration="5980000" />
+      <workItem from="1707594004720" duration="3695000" />
+      <workItem from="1707601442512" duration="3458000" />
+      <workItem from="1707613220434" duration="669000" />
+      <workItem from="1707650625347" duration="1063000" />
+      <workItem from="1707673228636" duration="16000" />
+      <workItem from="1707685194017" duration="599000" />
+      <workItem from="1707744373355" duration="719000" />
+      <workItem from="1707947424467" duration="101000" />
+      <workItem from="1707947599879" duration="133000" />
+      <workItem from="1707948487579" duration="18000" />
+      <workItem from="1709321200731" duration="225000" />
+      <workItem from="1709325155519" duration="629000" />
+      <workItem from="1709328922629" duration="170000" />
+      <workItem from="1709330386119" duration="375000" />
+      <workItem from="1709339725305" duration="65000" />
+      <workItem from="1709585372491" duration="1076000" />
+      <workItem from="1709596722471" duration="3891000" />
+      <workItem from="1709641910264" duration="1053000" />
+      <workItem from="1709676139094" duration="11889000" />
+      <workItem from="1709688123955" duration="3368000" />
+      <workItem from="1709727610993" duration="1138000" />
+      <workItem from="1709730649420" duration="864000" />
+      <workItem from="1709733898617" duration="1007000" />
+      <workItem from="1709735588745" duration="2128000" />
+      <workItem from="1709739286080" duration="559000" />
+      <workItem from="1709740906208" duration="1517000" />
+      <workItem from="1709744788303" duration="16444000" />
+      <workItem from="1709776419061" duration="472000" />
+      <workItem from="1709821025454" duration="3659000" />
+      <workItem from="1709828416174" duration="3163000" />
+      <workItem from="1709831974685" duration="6447000" />
+      <workItem from="1709839820606" duration="9748000" />
+      <workItem from="1709852725747" duration="1167000" />
+      <workItem from="1709860345826" duration="41000" />
+      <workItem from="1709861608029" duration="228000" />
+      <workItem from="1709861983138" duration="719000" />
+      <workItem from="1709863935906" duration="5358000" />
+      <workItem from="1709869460259" duration="2499000" />
+      <workItem from="1709910461275" duration="5208000" />
+      <workItem from="1709919143019" duration="30413000" />
+      <workItem from="1709985158351" duration="2728000" />
+      <workItem from="1709988499024" duration="20341000" />
+      <workItem from="1710077657421" duration="607000" />
+      <workItem from="1710078280914" duration="22173000" />
+      <workItem from="1710109765984" duration="7706000" />
+      <workItem from="1710118140463" duration="4058000" />
+      <workItem from="1710161489759" duration="8350000" />
+      <workItem from="1710169996868" duration="3478000" />
+      <workItem from="1710173691222" duration="203000" />
+    </task>
+    <task id="LOCAL-00001" summary="Start">
+      <option name="closed" value="true" />
+      <created>1706323306244</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1706323306244</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Start">
+      <option name="closed" value="true" />
+      <created>1706323397394</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1706323397394</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Start">
+      <option name="closed" value="true" />
+      <created>1706637255686</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1706637255686</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Start">
+      <option name="closed" value="true" />
+      <created>1706637265030</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1706637265030</updated>
+    </task>
+    <task id="LOCAL-00005" summary="v0.5.0">
+      <option name="closed" value="true" />
+      <created>1709328968177</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1709328968177</updated>
+    </task>
+    <task id="LOCAL-00006" summary="v0.5.1">
+      <option name="closed" value="true" />
+      <created>1709599096850</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1709599096850</updated>
+    </task>
+    <task id="LOCAL-00007" summary="v0.5.1">
+      <option name="closed" value="true" />
+      <created>1709689997868</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1709689997868</updated>
+    </task>
+    <task id="LOCAL-00008" summary="v0.5.2">
+      <option name="closed" value="true" />
+      <created>1709741487541</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1709741487541</updated>
+    </task>
+    <task id="LOCAL-00009" summary="v0.5.3">
+      <option name="closed" value="true" />
+      <created>1709853864477</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1709853864477</updated>
+    </task>
+    <task id="LOCAL-00010" summary="v0.5.4">
+      <option name="closed" value="true" />
+      <created>1709952617287</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1709952617287</updated>
+    </task>
+    <task id="LOCAL-00011" summary="v0.6.0">
+      <option name="closed" value="true" />
+      <created>1710122206085</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1710122206085</updated>
+    </task>
+    <task id="LOCAL-00012" summary="v0.7.0 Beta">
+      <option name="closed" value="true" />
+      <created>1710173854490</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1710173854490</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Start" />
+    <MESSAGE value="v0.5.0" />
+    <MESSAGE value="v0.5.1" />
+    <MESSAGE value="v0.5.2" />
+    <MESSAGE value="v0.5.3" />
+    <MESSAGE value="v0.5.4" />
+    <MESSAGE value="v0.6.0" />
+    <MESSAGE value="v0.7.0 Beta" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.7.0 Beta" />
+  </component>
+</project>
