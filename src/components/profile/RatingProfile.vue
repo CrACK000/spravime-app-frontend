@@ -1,26 +1,25 @@
 <script setup lang="ts">
-import {onBeforeMount, ref} from "vue"
+import {ref, watch} from "vue"
 import user from "@/plugins/profile"
 import Panel from "@/components/Panel.vue"
 import AverageRating from "@/components/app/AverageRating.vue"
 import SkeletonProfileRating from "@/components/skeletons/SkeletonProfileRating.vue";
 import {useRoute} from "vue-router";
 
-const reviews = ref<Review[]>(Object(user.data.reviews))
 const route = useRoute()
-const id = ref<string>(String(route.params.id))
+const reviews = ref<Review[]>(user.data.reviews)
+const loading = ref<boolean>(user.data.reviews_loading)
 
-onBeforeMount(async () => {
-  if (user.data.user?._id !== id.value) {
-    await user.profileReviews(id.value)
-    reviews.value = user.data.reviews
-  }
-})
+watch(() => route.params.id, async (newId, oldId) => {
+  await user.profileReviews(String(newId ?? oldId))
+  reviews.value = user.data.reviews
+  loading.value = user.data.reviews_loading
+}, { immediate: true })
 </script>
 
 <template>
 
-  <panel v-if="!user.data.reviews_loading" divide="y">
+  <panel v-if="!loading" divide="y">
     <div class="flex justify-between items-center py-3.5 px-5">
       <div class="w-full">Priemer hodnotenia</div>
       <div class="text-xl w-20 font-bold text-center">

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import {inject, onBeforeMount, ref} from "vue"
 import {useMeta} from "vue-meta"
-import axios from "axios"
-import Panel from "@/components/Panel.vue"
-import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue"
-import PanelFormActions from "@/components/PanelFormActions.vue"
 import {useToast} from "primevue/usetoast"
+import axios from "axios"
+import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue"
+import Panel from "@/components/Panel.vue"
+import PanelFormActions from "@/components/PanelFormActions.vue"
 
 useMeta({ title: 'Galéria' })
 
@@ -21,13 +21,11 @@ const filesData = ref(null as (FormData | null))
 
 const upload = ref<any>({
   loading: false as boolean,
-  errors: [] as any,
-  success: false as boolean,
+  errors: [] as any
 })
 const remove = ref<any>({
   loading: false as boolean,
-  errors: [] as any,
-  success: false as boolean,
+  errors: [] as any
 })
 
 const checkImg = (imgId: string) => {
@@ -37,17 +35,23 @@ const checkImg = (imgId: string) => {
     selectedImg.value.push(imgId)
   }
 }
-
 const onUpload = () => {
+
   upload.value.loading = true
 
   if (filesData.value === null) {
-    toast.add({ severity: 'error', summary: 'Chyba', detail: 'Nie sú vybraté žiadne súbory.', group: 'br', life: 8000 })
+    toast.add({
+      severity: 'error',
+      summary: 'Chyba',
+      detail: 'Nie sú vybraté žiadne súbory.',
+      group: 'br',
+      life: 8000
+    })
     upload.value.errors.push({ where: 'error', message: 'Nie sú vybraté žiadne súbory.' })
     return false
   }
 
-  const formData = new FormData();
+  const formData = new FormData()
 
   filesData.value.forEach(file => {
     formData.append('files', file)
@@ -57,19 +61,34 @@ const onUpload = () => {
 
   axios.post(`${backend}/auth/gallery/upload`, formData, { withCredentials: true })
     .then((response) => {
+
       if (response.data.success === true) {
-        toast.add({ severity: 'success', summary: 'Úspech', detail: response.data.message, group: 'br', life: 5000 })
-        upload.value.success = true
+
+        gallery.value     = response.data.images
+        filesData.value   = null
+
         clearPreviews()
-        previews.value = []
-        filesData.value = null
-      } else {
-        upload.value.errors = response.data.errors
-        upload.value.errors.forEach((el: any) => {
-          toast.add({ severity: 'error', summary: 'Chyba', detail: el.message, group: 'br', life: 8000 })
+
+        toast.add({
+          severity: 'success',
+          summary: 'Úspech',
+          detail: response.data.message,
+          group: 'br',
+          life: 5000
         })
+
+      } else {
+
+        upload.value.errors = response.data.errors
+        toast.add({
+          severity: 'error',
+          summary: 'Chyba',
+          detail: response.data.message,
+          group: 'br',
+          life: 5000
+        })
+
       }
-      console.log(response)
     })
     .catch(error =>{
       toast.add({ severity: 'error', summary: 'Chyba', detail: error, group: 'br', life: 8000 })
@@ -82,7 +101,6 @@ const onUpload = () => {
     })
 
 }
-
 const previewImages = (e: any) => {
   const files = e.target.files
 
@@ -118,7 +136,6 @@ const previewImages = (e: any) => {
     return
   }
 }
-
 const clearPreviews = (index?: number) => {
   if (index !== undefined) {
     URL.revokeObjectURL(previews.value[index])
@@ -144,7 +161,6 @@ const clearPreviews = (index?: number) => {
     previews.value = []
   }
 }
-
 const removeImg = (imageIds: any) => {
 
   if (!imageIds) return false
@@ -153,27 +169,40 @@ const removeImg = (imageIds: any) => {
 
   axios.post(`${backend}/auth/gallery/remove`, { imageIds }, { withCredentials: true })
     .then((response) => {
+
       if (response.data.success === true) {
+
+        gallery.value         = response.data.images
+        remove.value.success  = true
+        selectedImg.value     = []
+
         toast.add({ severity: 'success', summary: 'Úspech', detail: response.data.message, group: 'br', life: 5000 })
-        remove.value.success = true
-        selectedImg.value = []
-        //createGallery()
+
       } else {
+
         remove.value.errors = response.data.errors
-        remove.value.errors.forEach((el: any) => {
-          toast.add({ severity: 'error', summary: 'Chyba', detail: el.message, group: 'br', life: 8000 })
+        toast.add({
+          severity: 'error',
+          summary: 'Chyba',
+          detail: response.data.message,
+          group: 'br',
+          life: 5000
         })
       }
-      console.log(response)
     })
     .catch((error) => {
-      toast.add({ severity: 'error', summary: 'Chyba', detail: error, group: 'br', life: 8000 })
-      remove.value.errors.push({ where: 'error', message: error })
-      console.log(error)
+      toast.add({
+        severity: 'error',
+        summary: 'Server',
+        detail: "Vyskytla sa systémová chyba. Skúste to neskôr.",
+        group: 'br',
+        life: 8000
+      })
     })
     .finally(() => {
+
       remove.value.loading = false
-      console.log('finally')
+
     })
 }
 
@@ -190,17 +219,8 @@ onBeforeMount(() => {
     <div class="p-2 xxs:p-2.5 xs:p-3 sm:p-4 md:p-5">
       <div class="grid grid-cols-1 xxs:grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 gap-2 xxs:gap-2.5 xs:gap-3 sm:gap-4 md:gap-5">
 
-        <div v-for="(src, index) in previews" :key="index" class="relative h-36">
-          <img :src="src" class="rounded-lg w-full h-full object-cover ring-4 ring-emerald-500" alt="img" />
-          <div class="absolute top-0 right-0 m-1">
-            <button type="button" @click="clearPreviews(index)" class="text-gray-900 bg-white/50 hover:bg-gray-100 focus:outline-none dark:text-white dark:bg-gray-800/50 dark:hover:bg-gray-700 backdrop-blur leading-none py-1.5 px-2 rounded-md transition">
-              <i class="fa-solid fa-xmark"></i>
-            </button>
-          </div>
-        </div>
-
         <div v-if="!loading" v-for="img in gallery" class="text-center relative h-36">
-          <img :src="`${backend}/cloud/galleries/${img.path}`" class="rounded-lg w-full h-full object-cover" :class="{'ring-2 ring-blue-500 ring-offset-2 ring-offset-gray-50 dark:ring-offset-gray-800': selectedImg.includes(img._id)}" alt="img" />
+          <img :src="`${backend}/cloud/${img.path}`" class="rounded-lg w-full h-full object-cover" :class="{'ring-2 ring-blue-500 ring-offset-2 ring-offset-gray-50 dark:ring-offset-gray-800': selectedImg.includes(img._id)}" alt="img" />
           <div class="absolute top-0 bottom-0 w-full flex items-start justify-between p-1" :class="{'bg-blue-500/30': selectedImg.includes(img._id)}">
             <Menu as="div" class="relative inline-block ms-auto">
               <div class="flex items-center gap-2">
@@ -236,6 +256,19 @@ onBeforeMount(() => {
               <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
             </svg>
           </div>
+        </div>
+
+        <div v-for="(src, index) in previews" :key="index" class="relative h-36">
+          <img :src="src" class="rounded-lg w-full h-full object-cover ring-4 ring-emerald-500" alt="img" />
+          <div class="absolute top-0 right-0 m-1">
+            <button type="button" @click="clearPreviews(index)" class="text-gray-900 bg-white/50 hover:bg-gray-100 focus:outline-none dark:text-white dark:bg-gray-800/50 dark:hover:bg-gray-700 backdrop-blur leading-none py-1.5 px-2 rounded-md transition">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+        </div>
+
+        <div v-if="!gallery.length && !previews.length" class="col-span-full p-6 text-center">
+          Zatiaľ neboli pridané žiadne obrázky do galérie.
         </div>
 
       </div>

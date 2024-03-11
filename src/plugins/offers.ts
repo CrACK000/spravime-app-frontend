@@ -1,12 +1,12 @@
-import { reactive } from 'vue';
-import axios from 'axios';
+import { reactive } from 'vue'
+import axios from 'axios'
 
 interface OfferStore {
-    offers: Offer[];
-    offers_loading: boolean;
+    offers: Offer[]
+    offers_loading: boolean
 
-    offer: Offer | null;
-    offer_loading: boolean;
+    offer: Offer | null
+    offer_loading: boolean
 }
 
 const data: OfferStore = reactive({

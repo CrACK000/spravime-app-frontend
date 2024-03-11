@@ -5,10 +5,10 @@ defineProps({
   label: String,
   labelKey: { type: String, required: true },
   error: String,
-  modelValue: String,
+  modelValue: { type: [String, Number] },
   placeholder: String,
-  change: Function as PropType<(event: Event) => void>,
-  data: Array as () => Array<{ value: string; name: string }>,
+  placeholderValue: { type: [String, Number] as PropType<String | Number> },
+  data: Array as () => Array<{ value: string | number; name: string }>,
   info: String,
   classText: String
 })
@@ -23,10 +23,12 @@ defineProps({
       :class="[ error ? 'input-danger' : 'input', classText]"
       :id="labelKey"
       :value="modelValue"
-      @input="$emit('update:modelValue', ($event.target as HTMLSelectElement).value)"
-      @change="change">
+      @input="$emit('update:modelValue', ($event.target as HTMLSelectElement).value)">
 
-      <option v-for="item in data" :value="item.value">{{ item.name }}</option>
+      <option v-if="placeholder" :value="placeholderValue" disabled>{{ placeholder }}</option>
+      <option v-if="data" v-for="item in data" :value="item.value">{{ item.name }}</option>
+
+      <slot v-if="!data" name="data"/>
 
     </select>
 

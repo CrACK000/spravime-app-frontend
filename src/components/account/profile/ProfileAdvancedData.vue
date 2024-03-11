@@ -147,7 +147,7 @@ onMounted(() => {
               { value: 'company', name: 'Firma' },
               { value: 'worker', name: 'Živnostník' }
             ]"
-            :change="checkForm"
+            @change="checkForm"
           />
 
           <InputLabel

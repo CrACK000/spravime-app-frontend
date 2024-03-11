@@ -31,10 +31,27 @@ async function profileReviews(key: string): Promise<void> {
     data.reviews_loading = false
 }
 
+async function profileEditReview(key: string, options: string): Promise<void> {
+
+    const form = {
+        review_id: key,
+        description: options,
+    }
+
+    return axios.post(`${import.meta.env.VITE_BACKEND}/reviews/edit`, form, { withCredentials: true })
+        .then(response => {
+            return response.data
+        })
+        .catch(error => {
+            throw error
+        })
+}
+
 const user = {
     data,
     profile,
     profileReviews,
+    profileEditReview
 }
 
 export default user

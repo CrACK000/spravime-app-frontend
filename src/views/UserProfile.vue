@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import user from "@/plugins/profile"
-import {onBeforeMount, ref, watch} from "vue"
+import {watch} from "vue"
 import {useRoute} from "vue-router"
 import Avatar from "@/components/profile/AvatarProfile.vue"
 import Information from "@/components/profile/InformationProfile.vue"
@@ -8,23 +8,15 @@ import TitleProfile from "@/components/profile/TitleProfile.vue"
 import DescriptionProfile from "@/components/profile/DescriptionProfile.vue"
 import GalleryProfile from "@/components/profile/GalleryProfile.vue"
 import RatingProfile from "@/components/profile/RatingProfile.vue"
-import ReviewsProfile from "@/components/profile/ReviewsProfile.vue";
-
-watch(() => user.data.user, (profileTitleValue) => {
-  if (profileTitleValue && profileTitleValue.username) {
-    let title = profileTitleValue.profile.name ? profileTitleValue.profile.name : profileTitleValue.username
-    document.title = `Profil užívateľa ${title}`
-  }
-}, { immediate: true })
+import ReviewsProfile from "@/components/profile/ReviewsProfile.vue"
 
 const route = useRoute()
-const id = ref<string>(String(route.params.id))
 
-onBeforeMount(() => {
-  if (user.data.user?._id !== id.value) {
-    user.profile(id.value)
-  }
-})
+watch(() => route.params.id, async (newId, oldId) => {
+  await user.profile(String(newId ?? oldId))
+  const title = user.data.user?.profile.name ? user.data.user?.profile.name : user.data.user?.username
+  document.title = `Profil užívateľa ${title}`
+}, { immediate: true })
 </script>
 
 <template>

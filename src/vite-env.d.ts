@@ -140,3 +140,13 @@ interface Message {
     created_at: string,
     updated_at: string,
 }
+
+interface ReportData {
+    _id: string,
+    type: 'review' | 'comment',
+    key: string,
+    author: User | string,
+    reason: string,
+    created_at: string,
+    updated_at: string,
+}

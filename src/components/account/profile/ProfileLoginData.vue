@@ -11,7 +11,6 @@ import InputLabel from "@/components/InputLabel.vue"
 
 
 const toast = useToast()
-
 const auth = inject<Auth>('auth')
 const user = ref(auth?.userData as User)
 

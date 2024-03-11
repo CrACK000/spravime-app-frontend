@@ -1,24 +1,30 @@
 <script setup lang="ts">
-import {ref, computed, inject} from 'vue'
+import {ref, inject} from 'vue'
 import {useMeta} from "vue-meta"
-import Panel from "@/components/Panel.vue"
-import PanelForm from "@/components/PanelForm.vue"
-import PanelFormActions from "@/components/PanelFormActions.vue"
-import skZipcodes from "@/plugins/zipcodes/sk.json"
-import categoriesData from "@/plugins/data/categories.json"
 import axios from "axios"
 import router from "@/router"
 import {useToast} from "primevue/usetoast"
+import {  getError, validTitle, checkError,
+          validSection, validCategory, validAddress,
+          validDescription, validRules, validStartAt, validEndAt } from "@/plugins/validation"
+import Panel from "@/components/Panel.vue"
+import PanelForm from "@/components/PanelForm.vue"
+import PanelFormActions from "@/components/PanelFormActions.vue"
+import categoriesData from "@/plugins/data/categories.json"
+import InputContainer from "@/components/InputContainer.vue"
+import InputLabel from "@/components/InputLabel.vue"
+import SelectLabel from "@/components/SelectLabel.vue"
+import TextareaLabel from "@/components/TextareaLabel.vue"
 
-const auth = inject<Auth>('auth')
-const loggedIn = ref(auth?.loggedIn as boolean)
-const toast = useToast()
+const auth      = inject<Auth>('auth')
+const loggedIn  = ref(auth?.loggedIn as boolean)
+const toast     = useToast()
 
 useMeta({ title: 'Vytvoriť požiadavku' })
 
 const loading = ref<boolean>(false)
-const errors = ref<any>([])
-const form = ref<any>({
+const errors  = ref<any>([])
+const form    = ref<any>({
   title: 'Požiadavka na ' as string,
   section: 0 as number,
   category: 0 as number,
@@ -30,112 +36,86 @@ const form = ref<any>({
   rules: false as boolean,
 })
 
-const slovakData = ref<Zipcodes[]>(skZipcodes)
-const sections = ref<Sections[]>(categoriesData.sections)
-const categories = ref<Categories[]>(categoriesData.categories)
+const sections    = ref<Sections[]>(categoriesData.sections)
+const categories  = ref<Categories[]>(categoriesData.categories)
 
-const showModalAddress = ref<boolean>(false)
-const showButtonSetAddress = ref<boolean>(true)
-const addressErrors = ref<any>([])
-const address_mode = ref<string>('address')
-const location = ref<string>('')
-const location_from = ref<string>('')
-const location_to = ref<string>('')
+const showModalAddress      = ref<boolean>(false)
+const showButtonSetAddress  = ref<boolean>(true)
+const addressErrors         = ref<any>([])
+const address_mode          = ref<string>('address')
+const location              = ref<string>('')
+const location_from         = ref<string>('')
+const location_to           = ref<string>('')
 
 const submitForm = () => {
+
+  if (!checkForm()) return false
+
   loading.value = true
-
-  checkForm()
-
-  if (errors.value.length) {
-    loading.value = false
-    return false
-  }
 
   axios.post(`${import.meta.env.VITE_BACKEND}/auth/offers/create`, form.value, { withCredentials: true })
     .then(response => {
+
       if (response.data.success) {
-        toast.add({severity: 'success', summary: 'Požiadavka', detail: 'Vaša požiadavka úspešne vytvorená.', group: 'br', life: 4000})
+
+        toast.add({
+          severity: 'success',
+          summary: 'Požiadavka',
+          detail: 'Vaša požiadavka úspešne vytvorená.',
+          group: 'br',
+          life: 4000
+        })
         router.push({ name: 'offerDetail', params: { id: response.data.last_id } })
+
       } else {
-        // backend error
-        console.log(response.data)
+
+        errors.value = response.data.errors
+        toast.add({
+          severity: 'error',
+          summary: 'Chyba',
+          detail: response.data.message,
+          group: 'br',
+          life: 5000
+        })
+
       }
+
     })
     .catch(error => {
-      console.log(error)
+      toast.add({
+        severity: 'error',
+        summary: 'Server',
+        detail: "Vyskytla sa systémová chyba. Skúste to neskôr.",
+        group: 'br',
+        life: 8000
+      })
     })
     .finally(() => {
+
       loading.value = false
+
     })
 
 }
 const checkForm = () => {
+
   errors.value = []
 
-  validTitle()
-  validSection()
-  validCategory()
-  validAddress()
-  validDescription()
-  validRules()
+  checkError(errors.value, validTitle(form.value.title))
+  checkError(errors.value, validSection(form.value.section))
+  checkError(errors.value, validCategory(form.value.category))
+  checkError(errors.value, validAddress(form.value.address))
+  checkError(errors.value, validDescription(form.value.description))
+  checkError(errors.value, validRules(form.value.rules))
 
   if (form.value.time_range) {
-    validStartAt()
-    validEndAt()
+    checkError(errors.value, validStartAt(form.value.start_at))
+    checkError(errors.value, validEndAt(form.value.end_at))
   }
 
+  return !errors.value.length
+
 }
-const validTitle = () => {
-  errors.value = errors.value.filter((error: any) => error.where !== 'title')
-  if (form.value.title.length < 30) {
-    errors.value.push({ where: 'title', message: 'Názov požiadavky musí mať aspoň 30 znakov.' })
-  } else if (form.value.title.length > 100) {
-    errors.value.push({ where: 'title', message: 'Názov požiadavky môže mať maximálne 100 znakov.' })
-  }
-}
-const validSection = () => {
-  errors.value = errors.value.filter((error: any) => error.where !== 'section')
-  if (form.value.section === 0) errors.value.push({ where: 'section', message: 'Vyberte sekciu.' })
-}
-const validCategory = () => {
-  errors.value = errors.value.filter((error: any) => error.where !== 'category')
-  if (form.value.category === 0) errors.value.push({ where: 'category', message: 'Vyberte kategóriu.' })
-}
-const validAddress = () => {
-  errors.value = errors.value.filter((error: any) => error.where !== 'address')
-  if (!form.value.address.length) errors.value.push({ where: 'address', message: 'Adresa musí byť nastavená.' })
-}
-const validStartAt = () => {
-  errors.value = errors.value.filter((error: any) => error.where !== 'start_at')
-  if (form.value.start_at === null) errors.value.push({ where: 'start_at', message: 'Nastavte čas kedy majú práce začať.' })
-}
-const validEndAt = () => {
-  errors.value = errors.value.filter((error: any) => error.where !== 'end_at')
-  if (form.value.end_at === null) errors.value.push({ where: 'end_at', message: 'Nastavte čas kedy majú práce skončiť.' })
-}
-const validDescription = () => {
-  errors.value = errors.value.filter((error: any) => error.where !== 'description')
-  if (form.value.description.length < 150) {
-    errors.value.push({ where: 'description', message: 'Informácie o požiadavke musia mať aspoň 150 znakov.' })
-  } else if (form.value.description.length > 1000) {
-    errors.value.push({ where: 'description', message: 'Informácie o požiadavke môžu mať maximálne 1000 znakov.' })
-  }
-}
-const validRules = () => {
-  errors.value = errors.value.filter((error: any) => error.where !== 'rules')
-  if (!form.value.rules) errors.value.push({ where: 'rules', message: 'Musíte označiť že súhlasíte s podmienkami požiadavky.' })
-}
-const checkSelectSection = () => {
-  validSection()
-  if (form.value.section! > 0) {
-    form.value.category = 0
-  }
-}
-const filteredCategories = computed(() => {
-  if (form.value.section === 0) return [];
-  return categories.value.filter(category => category.section_id === form.value.section);
-});
 const addressMode = (input: string) => {
   address_mode.value = input
   location.value = ''
@@ -158,7 +138,7 @@ const setAddress = () => {
     form.value.address = ''
   }
 
-  validAddress()
+  clearError('address')
   showButtonSetAddress.value = false
   closeModalAddress()
 }
@@ -180,29 +160,18 @@ const getAddressError = (search: any) => {
   const emailError = addressErrors.value.find((error: any) => error.where === search);
   return emailError ? emailError.message : '';
 }
-const setTimeRange = () => {
-  form.value.time_range = true
-}
 const closeTimeRange = () => {
+
   form.value.start_at = null
   form.value.end_at = null
   form.value.time_range = false
-}
-const getError = (search: any) => {
-  const emailError = errors.value.find((error: any) => error.where === search);
-  return emailError ? emailError.message : '';
+
 }
 const closeModalAddress = () => {
   showModalAddress.value = false
 }
-const errorInflection = (count: number) => {
-  if (count === 1) {
-    return 'chybu';
-  } else if (count >= 2 && count <= 4) {
-    return 'chyby';
-  } else {
-    return 'chýb';
-  }
+const clearError = (where: string) => {
+  return errors.value = errors.value.filter((error: any) => error.where !== where)
 }
 
 </script>
@@ -212,42 +181,57 @@ const errorInflection = (count: number) => {
     <form @submit.prevent="submitForm" v-if="loggedIn">
       <panel divide="y">
 
-        <div class="text-xl font-light py-4 xs:py-6 md:py-10 px-4 xs:px-6 md:px-10">Vytvoriť novú požiadavku</div>
+        <div class="text-xl font-light py-4 xs:py-6 md:py-8 px-4 xs:px-6 md:px-10">Vytvoriť novú požiadavku</div>
 
         <panel-form>
-          <div class="mb-10">
-            <label class="mb-1 block" for="title">Stručný názov požiadavky</label>
-            <input type="text" :class="[ getError('title') ? 'input-danger' : 'input', 'w-full']" v-model="form.title" @change="validTitle" id="title" placeholder="Požiadavka na..." required>
-            <div class="text-red-500 text-sm mt-1.5" v-if="getError('title')" v-text="getError('title')"></div>
-            <div class="text-sm mt-2 opacity-75">
-              Príklad „<span class="italic">Požiadavka na výstavbu štvorizbového bungalovu na kľúč</span>”
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-x-4 gap-y-2">
-            <div class="col-span-1">
-              <label class="mb-1 block" for="section">Sekcia</label>
-              <select :class="[ getError('section') ? 'input-danger' : 'input', 'w-full']" v-model="form.section" id="section" @change="checkSelectSection">
+          <InputContainer>
+
+            <InputLabel
+              type="text"
+              label="Stručný názov požiadavky"
+              label-key="title"
+              placeholder="Požiadavka na..."
+              v-model="form.title"
+              @change="clearError('title')"
+              :error="getError(errors, 'title')"
+              info="Príklad „Požiadavka na výstavbu štvorizbového bungalovu na kľúč”"
+            />
+
+            <SelectLabel
+              label="Sekcia"
+              label-key="section"
+              v-model="form.section"
+              @change="clearError('section')"
+              :error="getError(errors, 'section')"
+              class-text="w-full"
+            >
+              <template #data>
                 <option :value="0" class="text-gray-500">Vyberte sekciu</option>
                 <option v-for="section in sections" :value="section.id">{{ section.title }}</option>
-              </select>
-              <div class="text-red-500 text-sm mt-1.5" v-if="getError('section')" v-text="getError('section')"></div>
-            </div>
-            <div v-if="form.section != 0" class="col-span-1">
-              <label class="mb-1 block" for="category">Kategórie</label>
-              <select :class="[ getError('category') ? 'input-danger' : 'input', 'w-full']" v-model="form.category" @change="validCategory" id="category">
+              </template>
+            </SelectLabel>
+
+            <SelectLabel
+              label="Kategórie"
+              label-key="category"
+              v-model="form.category"
+              @change="clearError('category')"
+              :error="getError(errors, 'category')"
+              class-text="w-full"
+              info="Výber kategórie pod ktorú spadá požiadavka."
+            >
+              <template #data>
                 <option :value="0" class="text-gray-500">Vyberte kategóriu</option>
-                <option v-for="category in filteredCategories" :value="category.id">{{ category.title }}</option>
-              </select>
-              <div class="text-red-500 text-sm mt-1.5" v-if="getError('category')" v-text="getError('category')"></div>
-            </div>
-            <div class="col-span-2 text-sm opacity-75">
-              Výber kategórie pod ktorú spadá požiadavka.
-            </div>
-          </div>
+                <template v-for="category in categories">
+                  <option v-if="Number(form.section) === category.section_id" :value="category.id">{{ category.title }}</option>
+                </template>
+              </template>
+            </SelectLabel>
+
+          </InputContainer>
         </panel-form>
 
         <panel-form>
-
           <div class="mb-5" v-if="showButtonSetAddress">
             <button type="button" @click="showModalAddress = !showModalAddress" class="form-secondary-button flex gap-2 items-center">
               <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -257,10 +241,9 @@ const errorInflection = (count: number) => {
               Nastaviť adresu
             </button>
           </div>
-
           <div>
             <div class="mb-1">Adresa</div>
-            <div :class="[ getError('address') ? 'border-red-200 dark:border-red-700/40' : 'border-gray-200 dark:border-gray-700/40', 'p-3 border rounded-md']">
+            <div :class="[ getError(errors, 'address') ? 'border-red-200 dark:border-red-700/40' : 'border-gray-200 dark:border-gray-700/40', 'p-3 border rounded-md']">
               <div v-if="form.address.length">
                 <span v-text="form.address" class="font-semibold"></span> - <button type="button" @click="showModalAddress = !showModalAddress" class="link text-sm">zmeniť</button>
               </div>
@@ -268,15 +251,14 @@ const errorInflection = (count: number) => {
                 Je potrebné nastaviť adresu
               </div>
             </div>
-            <div class="text-red-500 text-sm mt-1.5" v-if="getError('address')" v-text="getError('address')"></div>
+            <div class="text-red-500 text-sm mt-1.5" v-if="getError(errors, 'address')" v-text="getError(errors, 'address')"></div>
           </div>
-
         </panel-form>
 
         <panel-form>
           <div v-if="!form.time_range">
             <div class="mb-1">Dátum prác</div>
-            <button type="button" @click="setTimeRange" class="form-secondary-button">
+            <button type="button" @click="form.time_range = true" class="form-secondary-button">
               <i class="fa-regular fa-calendar me-1"></i> Zadať časový rozsah
             </button>
             <div class="mt-2 text-sm opacity-75">
@@ -284,31 +266,47 @@ const errorInflection = (count: number) => {
             </div>
           </div>
           <div v-if="form.time_range">
-            <div class="flex flex-col gap-5">
-              <div>
-                <label class="mb-1 block" for="start_at">Začiatok prác</label>
-                <input type="datetime-local" :class="[ getError('start_at') ? 'input-danger' : 'input', 'w-full']" v-model="form.start_at" @change="validStartAt" id="start_at">
-                <div class="text-red-500 text-sm mt-1.5" v-if="getError('start_at')" v-text="getError('start_at')"></div>
-              </div>
-              <div>
-                <label class="mb-1 block" for="end_at">Ukončenie prác</label>
-                <input type="datetime-local" :class="[ getError('end_at') ? 'input-danger' : 'input', 'w-full']" v-model="form.end_at" @change="validEndAt" id="end_at">
-                <div class="text-red-500 text-sm mt-1.5" v-if="getError('end_at')" v-text="getError('end_at')"></div>
-              </div>
+            <InputContainer>
+
+              <InputLabel
+                type="datetime-local"
+                label="Začiatok prác"
+                label-key="start_at"
+                v-model="form.start_at"
+                @change="clearError('start_at')"
+                :error="getError(errors, 'start_at')"
+              />
+
+              <InputLabel
+                type="datetime-local"
+                label="Ukončenie prác"
+                label-key="end_at"
+                v-model="form.end_at"
+                @change="clearError('end_at')"
+                :error="getError(errors, 'end_at')"
+              />
+
               <div class="text-sm text-end">
                 <button type="button" class="link" @click="closeTimeRange">zrušiť</button>
               </div>
-            </div>
+
+            </InputContainer>
           </div>
         </panel-form>
 
         <panel-form width="full">
-          <label class="mb-1 block" for="description">Informácie k požiadavke</label>
-          <textarea :class="[ getError('description') ? 'input-danger' : 'input', 'w-full']" rows="8" v-model="form.description" @change="validDescription" id="description"></textarea>
-          <div class="mt-1.5 text-sm flex justify-between gap-2">
-            <div class="text-red-500" v-text="getError('description')"></div>
-            <div class="font-light">{{ form.description.length }}/1000</div>
-          </div>
+
+          <TextareaLabel
+            label="Informácie k požiadavke"
+            label-key="description"
+            :rows="8"
+            counter
+            :max-count="1000"
+            v-model="form.description"
+            @change="clearError('description')"
+            :error="getError(errors, 'description')"
+          />
+
         </panel-form>
 
         <panel-form width="full">
@@ -330,19 +328,15 @@ const errorInflection = (count: number) => {
                 </li>
               </ul>
               <div class="flex gap-3 items-center">
-                <input type="checkbox" id="rules" v-model="form.rules" @change="validRules" class="input-checkbox"/>
-                <label for="rules" :class="[ getError('rules') ? 'text-red-500' : '' ]">Súhlasím s podmienkami požiadavky.</label>
+                <input type="checkbox" id="rules" v-model="form.rules" @change="clearError('rules')" class="input-checkbox"/>
+                <label for="rules" :class="[ getError(errors, 'rules') ? 'text-red-500' : '' ]">Súhlasím s podmienkami požiadavky.</label>
               </div>
             </div>
           </div>
         </panel-form>
 
         <panel-form-actions>
-          <template #left>
-            <div v-if="errors.length" class="text-red-500">
-              Máte {{ errors.length }} {{ errorInflection(errors.length) }}
-            </div>
-          </template>
+          <template #left></template>
           <template #right>
             <button type="submit" class="form-button" :disabled="loading">
               <template v-if="!loading">Vytvoriť</template>
@@ -353,12 +347,14 @@ const errorInflection = (count: number) => {
 
       </panel>
     </form>
+
     <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-address" role="dialog" aria-modal="true" v-if="showModalAddress">
       <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block">
         <div class="fixed inset-0 bg-white/20 dark:bg-black/30 backdrop-blur transition-opacity" @click="closeModalAddress"></div>
         <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform sm:my-8 sm:align-middle w-full sm:w-10/12 md:w-8/12 xl:w-4/12">
 
           <form @submit.prevent="setAddress" class="divide-y divide-gray-200 dark:divide-gray-700/40">
+
             <div class="grid grid-cols-2 bg-gradient-to-t from-gray-200 dark:from-gray-800 to-75% to-transparent -mx-4 xs:-mx-6 sm:-mx-0">
               <button type="button" @click="addressMode('address')" class="px-3 py-4" :class="{'text-blue-500 bg-blue-500/10': address_mode === 'address'}">
                 Miesto práce
@@ -370,39 +366,49 @@ const errorInflection = (count: number) => {
 
             <div class="p-6 md:p-10">
               <div v-if="address_mode === 'address'" class="p-1">
-                <div>
-                  <label class="mb-1 block" for="location">Miesto práce</label>
-                  <input type="text" list="addressData" :class="[ getAddressError('location') ? 'input-danger' : 'input', 'w-full']" v-model="location" id="location" placeholder="Mesto alebo PSČ">
-                  <div class="text-red-500 text-sm mt-1.5" v-if="getAddressError('location')" v-text="getAddressError('location')"></div>
-                </div>
+
+                <InputLabel
+                  label="Miesto práce"
+                  label-key="location"
+                  v-model="location"
+                  placeholder="Mesto alebo PSČ"
+                  :error="getAddressError('location')"
+                />
+
               </div>
               <div v-if="address_mode === 'route'" class="p-1">
                 <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label class="mb-1 block" for="location_from">Odkiaľ</label>
-                    <input type="text" list="addressData" :class="[ getAddressError('location_from') ? 'input-danger' : 'input', 'w-full']" v-model="location_from" id="location_from" placeholder="Bratislava">
-                    <div class="text-red-500 text-sm mt-1.5" v-if="getAddressError('location_from')" v-text="getAddressError('location_from')"></div>
-                  </div>
-                  <div>
-                    <label class="mb-1 block" for="location_to">Kam</label>
-                    <input type="text" list="addressData" :class="[ getAddressError('location_to') ? 'input-danger' : 'input', 'w-full']" v-model="location_to" id="location_to" placeholder="Košice">
-                    <div class="text-red-500 text-sm mt-1.5" v-if="getAddressError('location_to')" v-text="getAddressError('location_to')"></div>
-                  </div>
+
+                  <InputLabel
+                    label="Odkiaľ"
+                    label-key="location_from"
+                    v-model="location_from"
+                    placeholder="Bratislava"
+                    :error="getAddressError('location_from')"
+                  />
+
+                  <InputLabel
+                    label="Kam"
+                    label-key="location_to"
+                    v-model="location_to"
+                    placeholder="Košice"
+                    :error="getAddressError('location_to')"
+                  />
+
                 </div>
               </div>
-              <datalist id="addressData">
-                <option v-for="item in slovakData" :value="item.state+' '+item.place">{{ item.zipcode }}</option>
-              </datalist>
             </div>
 
             <div class="bg-gray-100 dark:bg-gray-900/40 flex items-center justify-between p-3">
               <button type="reset" @click="closeModalAddress" class="form-secondary-button"><i class="fa-solid fa-xmark fa-lg me-1"></i> Zatvoriť</button>
               <button type="submit" class="form-button">Nastaviť adresu</button>
             </div>
+
           </form>
 
         </div>
       </div>
     </div>
+
   </div>
 </template>

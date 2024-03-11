@@ -6,6 +6,8 @@ import router from '@/router'
 import PrimeVue from 'primevue/config'
 
 import ToastService from 'primevue/toastservice'
+import ConfirmationService from 'primevue/confirmationservice'
+import DialogService from 'primevue/dialogservice'
 
 import 'flowbite'
 import Tooltip from 'primevue/tooltip'
@@ -16,6 +18,8 @@ app.provide('auth', useAuth())
 
 app.directive('tooltip', Tooltip)
 app.use(ToastService)
+app.use(ConfirmationService)
+app.use(DialogService)
 app.use(router)
 app.use(PrimeVue)
 app.use(createMetaManager())

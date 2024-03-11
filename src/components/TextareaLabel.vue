@@ -6,7 +6,9 @@ defineProps({
   modelValue: String,
   placeholder: String,
   info: String,
-  rows: { type: Number, default: 4 }
+  rows: { type: Number, default: 4 },
+  counter: Boolean,
+  maxCount: Number,
 })
 </script>
 
@@ -22,6 +24,7 @@ defineProps({
       @input="$emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)"
       :placeholder="placeholder"
       :rows="rows"
+      :maxlength="maxCount"
     ></textarea>
 
     <div v-if="info?.length" class="text-sm mt-2 flex items-center gap-1.5">
@@ -31,7 +34,11 @@ defineProps({
       {{ info }}
     </div>
 
-    <div class="text-red-500 text-sm mt-2" v-if="error" v-text="error"></div>
+
+    <div v-if="counter || error" class="mt-1.5 text-sm flex justify-between gap-2">
+      <div v-if="error" class="text-red-500 text-sm mt-2" v-text="error"></div>
+      <div v-if="counter" class="font-light ms-auto">{{ modelValue?.length }}/{{ maxCount }}</div>
+    </div>
 
   </div>
 </template>
