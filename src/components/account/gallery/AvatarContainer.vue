@@ -22,45 +22,73 @@ const success = ref<boolean>(false)
 const errors = ref<any>([])
 
 const setData = () => {
+
   errors.value = []
   changed.value = false
-  imagePreview.value = `${import.meta.env.VITE_BACKEND}/cloud/${user.value.avatar}`
   inputText.value = ''
-}
 
+  if (user.value.avatar) {
+    imagePreview.value = `${import.meta.env.VITE_BACKEND}/cloud/${user.value.avatar}`
+  } else {
+    imagePreview.value = user.value.avatar
+  }
+
+}
 const createImage = (file: any) => {
 
-  let reader = new FileReader();
+  let reader = new FileReader()
 
   reader.onload = (e:any) => {
+
     if (e.target && e.target.result) {
-      let img = new Image();
+
+      let img = new Image()
+
       img.onload = () => {
         if (img.width > 800 || img.height > 800) {
-          toast.add({ severity: 'error', summary: 'Error', detail: 'Obrázok je príliš veľký! Maximálne rozmery sú 800x800px.', group: 'br', life: 8000 });
-          errors.value.push({ where: 'error', message: 'Obrázok je príliš veľký! Maximálne rozmery sú 800x800px.' });
-          changed.value = false;
-          inputText.value = '';
+
+          toast.add({
+            severity: 'warn',
+            summary: 'Error',
+            detail: 'Obrázok je príliš veľký! Maximálne rozmery sú 800x800px.',
+            group: 'br',
+            life: 8000
+          })
+
+          errors.value.push({ where: 'error', message: 'Obrázok je príliš veľký! Maximálne rozmery sú 800x800px.' })
+          changed.value = false
+          inputText.value = ''
+
         } else {
           imagePreview.value = e.target.result
         }
-      };
+      }
+
       img.onerror = () => {
-        toast.add({ severity: 'error', summary: 'Chyba', detail: 'Došlo k chybe pri validácii rozmerov obrázka.', group: 'br', life: 8000 });
-        errors.value.push({ where: 'error', message: 'Došlo k chybe pri validácii rozmerov obrázka.' });
-        changed.value = false;
-        inputText.value = '';
-      };
+
+        toast.add({
+          severity: 'error',
+          summary: 'Chyba',
+          detail: 'Došlo k chybe pri validácii rozmerov obrázka.',
+          group: 'br',
+          life: 8000
+        })
+
+        errors.value.push({ where: 'error', message: 'Došlo k chybe pri validácii rozmerov obrázka.' })
+        changed.value = false
+        inputText.value = ''
+
+      }
       if(e.target.result) {
-        img.src = e.target.result;
+        img.src = e.target.result
       }
     }
   }
-  reader.readAsDataURL(file);
-  inputText.value = file.name;
+  reader.readAsDataURL(file)
+  inputText.value = file.name
 }
-
 const onFileChange = (e: any) => {
+
   errors.value = []
   changed.value = true
 
@@ -73,23 +101,40 @@ const onFileChange = (e: any) => {
   const validImageTypes = ['image/jpeg', 'image/png', 'image/svg+xml', 'image/gif']
 
   if (!validImageTypes.includes(file.type)) {
-    toast.add({ severity: 'error', summary: 'Chyba', detail: 'Neplatný typ súboru! Súbor musí byť obrázok typu SVG, PNG, JPG alebo GIF.', group: 'br', life: 8000 });
-    errors.value.push({ where: 'error', message: 'Neplatný typ súboru! Súbor musí byť obrázok typu SVG, PNG, JPG alebo GIF.' });
-    changed.value = false;
-    return;
+
+    changed.value = false
+
+    toast.add({
+      severity: 'warn',
+      summary: 'Chyba',
+      detail: 'Neplatný typ súboru! Súbor musí byť obrázok typu SVG, PNG, JPG alebo GIF.',
+      group: 'br',
+      life: 8000
+    })
+
+    return errors.value.push({ where: 'error', message: 'Neplatný typ súboru! Súbor musí byť obrázok typu SVG, PNG, JPG alebo GIF.' })
+
   }
 
   if (file.size > 10 * 1024 * 1024) {
-    toast.add({ severity: 'error', summary: 'Chyba', detail: 'Súbor je príliš veľký! Veľkosť súboru musí byť menej ako 10 MB.', group: 'br', life: 8000 });
-    errors.value.push({ where: 'error', message: 'Súbor je príliš veľký! Veľkosť súboru musí byť menej ako 10 MB.' });
-    changed.value = false;
-    return;
+
+    changed.value = false
+
+    toast.add({
+      severity: 'error',
+      summary: 'Chyba',
+      detail: 'Súbor je príliš veľký! Veľkosť súboru musí byť menej ako 10 MB.',
+      group: 'br',
+      life: 8000
+    })
+
+    return errors.value.push({ where: 'error', message: 'Súbor je príliš veľký! Veľkosť súboru musí byť menej ako 10 MB.' })
+
   }
 
   createImage(file)
 
 }
-
 const upload = () => {
   loading.value = true
 
@@ -138,7 +183,11 @@ const upload = () => {
 }
 
 onMounted(() => {
-  imagePreview.value = `${import.meta.env.VITE_BACKEND}/cloud/${user.value.avatar}`
+  if (user.value.avatar) {
+    imagePreview.value = `${import.meta.env.VITE_BACKEND}/cloud/${user.value.avatar}`
+  } else {
+    imagePreview.value = user.value.avatar
+  }
 })
 
 </script>

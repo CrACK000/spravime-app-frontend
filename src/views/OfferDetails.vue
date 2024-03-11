@@ -1,27 +1,24 @@
 <script setup lang="ts">
-import {onBeforeMount, ref, watch} from "vue"
+import {watch} from "vue"
 import { useRoute } from 'vue-router'
 import offer from "@/plugins/offers"
+import counter from "@/plugins/counter"
 import TitleDescriptionPanel from "@/components/offer/TitleDescriptionPanel.vue"
 import CommentsPanel from "@/components/offer/CommentsPanel.vue"
 import InformationPanel from "@/components/offer/InformationPanel.vue"
 import SendMessagePanel from "@/components/offer/SendMessagePanel.vue"
 import Container from "@/components/Container.vue"
 
-watch(() => offer.data.offer, (newOfferValue) => {
-  if (newOfferValue && newOfferValue.title) {
-    document.title = newOfferValue.title
-  }
-}, { immediate: true })
-
 const route = useRoute()
-const id = ref<string>(String(route.params.id))
 
-onBeforeMount(() => {
-  if (offer.data.offer?._id !== id.value) {
-    offer.view(id.value)
-  }
-})
+watch(() => route.params.id, async (newId, oldId) => {
+  await offer.view(String(newId ?? oldId))
+  await counter.add('offers', String(newId ?? oldId))
+
+  const title = offer.data.offer?.title
+  document.title = `${title}`
+
+}, { immediate: true })
 </script>
 
 <template>

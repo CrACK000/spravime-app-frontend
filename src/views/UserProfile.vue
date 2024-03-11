@@ -2,6 +2,7 @@
 import user from "@/plugins/profile"
 import {watch} from "vue"
 import {useRoute} from "vue-router"
+import counter from "@/plugins/counter"
 import Avatar from "@/components/profile/AvatarProfile.vue"
 import Information from "@/components/profile/InformationProfile.vue"
 import TitleProfile from "@/components/profile/TitleProfile.vue"
@@ -14,8 +15,11 @@ const route = useRoute()
 
 watch(() => route.params.id, async (newId, oldId) => {
   await user.profile(String(newId ?? oldId))
+  await counter.add('users', String(newId ?? oldId))
+
   const title = user.data.user?.profile.name ? user.data.user?.profile.name : user.data.user?.username
   document.title = `Profil užívateľa ${title}`
+
 }, { immediate: true })
 </script>
 

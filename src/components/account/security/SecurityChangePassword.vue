@@ -104,6 +104,7 @@ const cancel = () => {
   dataPassword.value.reNewPass = ''
 }
 const changePass = () => {
+
   if (!checkForm()) return false
 
   loading.value = true
@@ -116,33 +117,52 @@ const changePass = () => {
   axios.post(`${import.meta.env.VITE_BACKEND}/auth/security/password`, data, { withCredentials: true })
     .then((response) => {
       if (response.data.success === true) {
-        toast.add({ severity: 'success', summary: 'Úspech', detail: response.data.message, group: 'br', life: 5000 })
-        success.value = true
-        changed.value = false
-        cancelShow.value = false
+
         dataPassword.value.currentPass = ''
         dataPassword.value.newPass = ''
         dataPassword.value.reNewPass = ''
-      } else {
-        errors.value = response.data.errors
-        errors.value.forEach((el: any) => {
-          toast.add({ severity: 'error', summary: 'Chyba', detail: el.message, group: 'br', life: 8000 })
+
+        success.value = true
+        changed.value = false
+        cancelShow.value = false
+
+        toast.add({
+          severity: 'success',
+          summary: 'Úspech',
+          detail: response.data.message,
+          group: 'br',
+          life: 5000
         })
+
+      } else {
+
+        errors.value = response.data.errors
+        toast.add({
+          severity: 'error',
+          summary: 'Chyba',
+          detail: response.data.message,
+          group: 'br',
+          life: 5000
+        })
+
       }
-      console.log(response)
     })
     .catch((error) => {
-      toast.add({ severity: 'error', summary: 'Chyba', detail: error, group: 'br', life: 8000 })
-      errors.value.push({ where: 'error', message: error })
-      console.log(error)
+      toast.add({
+        severity: 'error',
+        summary: 'Server',
+        detail: "Vyskytla sa systémová chyba. Skúste to neskôr.",
+        group: 'br',
+        life: 8000
+      })
     })
     .finally(() => {
+
       loading.value = false
-      console.log('finally')
+
     })
 
 }
-
 </script>
 
 <template>
@@ -212,7 +232,3 @@ const changePass = () => {
     </panel>
   </form>
 </template>
-
-<style scoped>
-
-</style>

@@ -233,7 +233,7 @@ onMounted(() => {
     <panel class="rework-element col-span-1 xxs:col-span-2 sm:col-span-1 p-2 md:p-4 flex justify-between relative">
       <div id="pie-chart"></div>
       <div class="absolute bottom-4 right-4">
-        <div class="leading-none text-5xl font-bold text-gray-900 dark:text-white pb-2 text-end">230</div>
+        <div class="leading-none text-5xl font-bold text-gray-900 dark:text-white pb-2 text-end">{{ user.views }}</div>
         <div class="font-normal text-gray-500 dark:text-gray-400 text-end">Zobrazenia profilu</div>
       </div>
     </panel>

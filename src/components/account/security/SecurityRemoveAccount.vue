@@ -1,23 +1,26 @@
 <script setup lang="ts">
-import {useToast} from "primevue/usetoast"
 import {useRouter} from "vue-router"
-import {ref} from "vue"
-import axios from "axios"
+import {useDialog} from "primevue/usedialog"
 import Panel from "@/components/Panel.vue"
+import RemoveAccount from "@/components/dialogs/RemoveAccount.vue"
 
-const toast = useToast()
 const router = useRouter()
+const dialog = useDialog()
 
-const check_password = ref<string>('')
 
-const removeAccount = () => {
-  axios.post(`${import.meta.env.VITE_BACKEND}/auth/security/remove-account`, { password: check_password.value, }, { withCredentials: true })
-    .then(response => {
-      if (response.data.success) {
-        toast.add({severity: 'warn', summary: 'Účet', detail: 'Váš účet a všetky data spojené účtom boli odstránené. !', group: 'br', life: 3000})
+const removeAccountModal = () => {
+  dialog.open(RemoveAccount, {
+    props: {
+      header: 'Odstrániť účet',
+      contentClass: 'max-w-sm',
+      modal: true,
+    },
+    onClose: (opt: any) => {
+      if (opt.data) {
         router.push({ name: 'index' })
       }
-    })
+    }
+  })
 }
 
 </script>
@@ -31,17 +34,10 @@ const removeAccount = () => {
       <p class="mb-3.5 opacity-70 text-sm">
         Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled.
       </p>
-      <p class="mb-5">
-        <input type="password" class="input" v-model="check_password" placeholder="heslo"/>
-      </p>
-      <button @click="removeAccount" type="button" class="form-danger-button">
+      <button @click="removeAccountModal" type="button" class="form-danger-button">
         <i class="fa-solid fa-ban me-1.5"></i>
         Odstrániť účet
       </button>
     </div>
   </panel>
 </template>
-
-<style scoped>
-
-</style>

@@ -61,7 +61,7 @@ const submitForm = () => {
         toast.add({
           severity: 'success',
           summary: 'Požiadavka',
-          detail: 'Vaša požiadavka úspešne vytvorená.',
+          detail: response.data.message,
           group: 'br',
           life: 4000
         })

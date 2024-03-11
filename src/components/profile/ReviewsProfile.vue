@@ -14,8 +14,8 @@ import SkeletonProfileReviews from "@/components/skeletons/SkeletonProfileReview
 import Avatar from "@/components/app/Avatar.vue"
 import ReviewRecommendation from "@/components/profile/reviews/ReviewRecommendation.vue"
 import ReviewRating from "@/components/profile/reviews/ReviewRating.vue"
-import ReviewCreateModal from "@/components/profile/reviews/ReviewCreateModal.vue"
-import ReportModal from "@/components/app/ReportModal.vue"
+import ReviewCreateModal from "@/components/dialogs/ReviewCreateModal.vue"
+import ReportModal from "@/components/dialogs/ReportModal.vue"
 
 const toast = useToast()
 const confirm = useConfirm()
