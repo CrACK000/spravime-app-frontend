@@ -20,4 +20,4 @@ RUN npm run build
 RUN npm install -g http-server
 
 # Spustite server na porte 8080
-CMD http-server dist -p 8080
+CMD http-server dist -p ${PORT:-8080}
