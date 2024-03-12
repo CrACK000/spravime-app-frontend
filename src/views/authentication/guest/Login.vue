@@ -34,7 +34,7 @@ const login = () => {
           auth.loggedIn.value = response.data.loggedIn
         }
         toast.add({severity: 'info', summary: 'Účet', detail: 'Si prihlásený !', group: 'br', life: 3000})
-        router.push({ name: 'index' })
+        router.back()
       } else {
         errors.value = response.data.errors
       }

@@ -84,16 +84,6 @@ router.beforeEach(async (to, from, next) => {
   const auth = inject<Auth>('auth')
   await auth?.checkAuth()
 
-  const maintenance = true
-
-  if (!auth?.loggedIn.value){
-    if (maintenance) {
-      if (to.name !== 'login') {
-        await router.push({name: 'login'})
-      }
-    }
-  }
-
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   const requiresUnAuth = to.matched.some(record => record.meta.requiresAuth === false)
 
