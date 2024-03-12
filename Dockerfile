@@ -1,23 +1,18 @@
-# Definujte základný kontajnerový obraz na Node.js 20
-FROM node:20
-
-# Nastavte pracovný adresár v kontajnere
+# Stage 1 - the build process
+FROM node:20 as build-deps
 WORKDIR /app
-
-# Kopírujte súbory package.json a package-lock.json (alebo yarn.lock) do rovnakého adresára
 COPY package*.json ./
-
-# Nainštalujte závislosti projektu
 RUN npm install
-
-# Kopírujte všetky ostatné súbory projektu do toho istého adresára
 COPY . .
-
-# Postavte aplikáciu
+ENV VITE_BACKEND=${VITE_BACKEND}
 RUN npm run build
 
-# Nainštalujte http server
+# Stage 2 - the production environment
+FROM node:20
+WORKDIR /app
+# Copy build from Stage 1
+COPY --from=build-deps /app/dist ./dist
+# Install http server
 RUN npm install -g http-server
-
-# Spustite server na porte 8080
+# Run the server with defined or default port
 CMD http-server dist -p ${PORT:-8080}
