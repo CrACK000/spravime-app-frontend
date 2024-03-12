@@ -15,4 +15,4 @@ COPY --from=build-deps /app/dist ./dist
 # Install http server
 RUN npm install -g http-server
 # Run the server with defined or default port
-CMD http-server dist -p ${PORT:-8080}
+CMD http-server dist -p ${PORT:-8080} -s
