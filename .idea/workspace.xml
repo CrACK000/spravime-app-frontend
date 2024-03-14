@@ -7,34 +7,7 @@
     <list default="true" id="b1d8e0a7-c378-409e-9b1f-24e9261b35fe" name="Changes" comment="v1.1 Testing Dockerfile">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Caddyfile" beforeDir="false" afterPath="$PROJECT_DIR$/Caddyfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/account/gallery/AvatarContainer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/account/gallery/AvatarContainer.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/account/gallery/GalleryContainer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/account/gallery/GalleryContainer.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/account/messages/MessagesBox.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/account/messages/MessagesBox.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/account/profile/ProfileAdvancedData.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/account/profile/ProfileAdvancedData.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/account/profile/ProfileLoginData.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/account/profile/ProfileLoginData.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/account/profile/ProfileSocialData.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/account/profile/ProfileSocialData.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/account/security/SecurityChangePassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/account/security/SecurityChangePassword.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/app/Avatar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/app/Avatar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dialogs/EditMyOffer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dialogs/EditMyOffer.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dialogs/RemoveAccount.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dialogs/RemoveAccount.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dialogs/ReportModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dialogs/ReportModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dialogs/ReviewCreateModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dialogs/ReviewCreateModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/offer/SendMessagePanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/offer/SendMessagePanel.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/GalleryProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/GalleryProfile.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/ReviewsProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/ReviewsProfile.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/plugins/account.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugins/account.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/plugins/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugins/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/plugins/auth/my-offers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugins/auth/my-offers.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/plugins/counter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugins/counter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/plugins/logout.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugins/logout.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/plugins/messages.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugins/messages.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/plugins/offers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugins/offers.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/plugins/profile.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugins/profile.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/authentication/guest/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/guest/Login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/authentication/guest/Register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/guest/Register.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/authentication/user/CreateOfferPanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/user/CreateOfferPanel.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/authentication/user/OffersPanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/user/OffersPanel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -317,7 +290,7 @@
       <workItem from="1710281162499" duration="2756000" />
       <workItem from="1710354396321" duration="371000" />
       <workItem from="1710357614796" duration="163000" />
-      <workItem from="1710358031156" duration="18632000" />
+      <workItem from="1710358031156" duration="19137000" />
     </task>
     <task id="LOCAL-00001" summary="Start">
       <option name="closed" value="true" />
@@ -495,7 +468,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710379083370</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="v1.1 Testing Dockerfile">
+      <option name="closed" value="true" />
+      <created>1710379786320</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1710379786320</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

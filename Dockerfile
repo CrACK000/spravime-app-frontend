@@ -9,8 +9,6 @@ RUN npm install
 
 COPY . .
 
-ENV VITE_BACKEND=${VITE_BACKEND}
-
 RUN npm run build
 
 # Stage 2 - the production environment
