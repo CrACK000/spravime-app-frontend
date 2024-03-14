@@ -55,7 +55,7 @@ withDefaults(defineProps<AvatarComponent>(), {
   resolution: '150x150',
 })
 
-const Prefix = `${process.env.VITE_BACKEND}/cloud/`
+const Prefix = `${import.meta.env.VITE_BACKEND}/cloud/`
 </script>
 
 <template>

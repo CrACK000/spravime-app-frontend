@@ -6,7 +6,7 @@ import SkeletonProfileGallery from "@/components/skeletons/SkeletonProfileGaller
 const gallery = ref<Gallery[]>(Object(user.data.user?.gallery))
 const activeIndex = ref<any>(0)
 const showModal = ref<boolean>(false)
-const backend = process.env.VITE_BACKEND
+const backend = import.meta.env.VITE_BACKEND
 
 const showRight = ref<boolean>(true)
 const showLeft = ref<boolean>(false)

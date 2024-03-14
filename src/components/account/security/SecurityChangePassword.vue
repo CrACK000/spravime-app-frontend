@@ -114,7 +114,7 @@ const changePass = () => {
     newPass: dataPassword.value.newPass,
   }
 
-  axios.post(`${process.env.VITE_BACKEND}/auth/security/password`, data, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/auth/security/password`, data, { withCredentials: true })
     .then((response) => {
       if (response.data.success === true) {
 

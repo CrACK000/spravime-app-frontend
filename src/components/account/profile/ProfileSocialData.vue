@@ -49,7 +49,7 @@ const updateSocialData = () => {
 
   loading.value = true
 
-  axios.post(`${process.env.VITE_BACKEND}/auth/profile/update/social-data`, socialData.value, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/auth/profile/update/social-data`, socialData.value, { withCredentials: true })
     .then((response) => {
 
       if (response.data.success) {

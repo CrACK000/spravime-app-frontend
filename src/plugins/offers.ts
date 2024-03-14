@@ -19,14 +19,14 @@ const data: OfferStore = reactive({
 
 async function all(): Promise<void> {
     data.offers_loading = true
-    const response = await axios.get(`${process.env.VITE_BACKEND}/offers`, { withCredentials: true })
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND}/offers`, { withCredentials: true })
     data.offers = response.data
     data.offers_loading = false
 }
 
 async function view(id: string): Promise<void> {
     data.offer_loading = true
-    const response = await axios.get(`${process.env.VITE_BACKEND}/offers/${id}`, { withCredentials: true })
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND}/offers/${id}`, { withCredentials: true })
     data.offer = response.data
     data.offer_loading = false
 }

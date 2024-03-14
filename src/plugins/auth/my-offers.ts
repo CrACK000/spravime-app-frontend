@@ -13,7 +13,7 @@ const data: OfferStore = reactive({
 
 async function all(): Promise<void> {
     data.offers_loading = true
-    const response = await axios.post(`${process.env.VITE_BACKEND}/auth/offers`, {}, { withCredentials: true })
+    const response = await axios.post(`${import.meta.env.VITE_BACKEND}/auth/offers`, {}, { withCredentials: true })
     data.offers = response.data
     data.offers_loading = false
 }

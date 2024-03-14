@@ -43,7 +43,7 @@ function addMessage() {
     container: props.containerId
   }
 
-  axios.post(`${process.env.VITE_BACKEND}/auth/messages/add`, data, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/auth/messages/add`, data, { withCredentials: true })
     .then((response) => {
       if (response.data.success === true) {
 

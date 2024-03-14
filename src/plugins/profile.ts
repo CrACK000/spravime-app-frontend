@@ -19,14 +19,14 @@ const data: UserStore = reactive({
 
 async function profile(id: string): Promise<void> {
     data.user_loading = true
-    const response = await axios.get(`${process.env.VITE_BACKEND}/profile/${id}`, { withCredentials: true })
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND}/profile/${id}`, { withCredentials: true })
     data.user = response.data
     data.user_loading = false
 }
 
 async function profileReviews(key: string): Promise<void> {
     data.reviews_loading = true
-    const response = await axios.get(`${process.env.VITE_BACKEND}/reviews/${key}/all`, { withCredentials: true })
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND}/reviews/${key}/all`, { withCredentials: true })
     data.reviews = response.data
     data.reviews_loading = false
 }
@@ -38,7 +38,7 @@ async function profileEditReview(key: string, options: string): Promise<void> {
         description: options,
     }
 
-    return axios.post(`${process.env.VITE_BACKEND}/reviews/edit`, form, { withCredentials: true })
+    return axios.post(`${import.meta.env.VITE_BACKEND}/reviews/edit`, form, { withCredentials: true })
         .then(response => {
             return response.data
         })

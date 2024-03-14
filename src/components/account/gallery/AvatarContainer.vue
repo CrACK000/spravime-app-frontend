@@ -28,7 +28,7 @@ const setData = () => {
   inputText.value = ''
 
   if (user.value.avatar) {
-    imagePreview.value = `${process.env.VITE_BACKEND}/cloud/${user.value.avatar}`
+    imagePreview.value = `${import.meta.env.VITE_BACKEND}/cloud/${user.value.avatar}`
   } else {
     imagePreview.value = user.value.avatar
   }
@@ -150,7 +150,7 @@ const upload = () => {
 
   FileData.append('avatar', fileInput.files[0])
 
-  axios.post(`${process.env.VITE_BACKEND}/auth/avatar/update`, FileData, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/auth/avatar/update`, FileData, { withCredentials: true })
     .then((response) => {
       if (response.data.success === true) {
         toast.add({ severity: 'success', summary: 'Úspech', detail: response.data.message, group: 'br', life: 5000 })
@@ -179,7 +179,7 @@ const upload = () => {
 
 onMounted(() => {
   if (user.value.avatar) {
-    imagePreview.value = `${process.env.VITE_BACKEND}/cloud/${user.value.avatar}`
+    imagePreview.value = `${import.meta.env.VITE_BACKEND}/cloud/${user.value.avatar}`
   } else {
     imagePreview.value = user.value.avatar
   }

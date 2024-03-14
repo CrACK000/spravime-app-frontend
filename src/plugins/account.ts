@@ -13,7 +13,7 @@ const data: AccountStore = reactive({
 
 async function all(): Promise<void> {
     data.accounts_loading = true
-    const response = await axios.get(`${process.env.VITE_BACKEND}/accounts`, { withCredentials: true })
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND}/accounts`, { withCredentials: true })
     data.accounts = response.data
     data.accounts_loading = false
 }

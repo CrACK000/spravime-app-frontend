@@ -11,7 +11,7 @@ useMeta({ title: 'Galéria' })
 
 const toast = useToast()
 const auth = inject<Auth>('auth')
-const backend = process.env.VITE_BACKEND
+const backend = import.meta.env.VITE_BACKEND
 
 const loading = ref<boolean>(false)
 const gallery = ref<Gallery[]>(auth?.userData.value.gallery)

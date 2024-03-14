@@ -26,7 +26,7 @@ const checkAlreadyWrittenMessages = async () => {
 
   loadingMsg.value = true
 
-  await axios.post(`${process.env.VITE_BACKEND}/messages/check`, { offerId: route.params.id }, { withCredentials: true })
+  await axios.post(`${import.meta.env.VITE_BACKEND}/messages/check`, { offerId: route.params.id }, { withCredentials: true })
     .then((response: ResponseAlready) => {
       checkMsg.value = response.data.isAlready
     })
@@ -44,7 +44,7 @@ const sendMsg = () => {
 
   loadingPost.value = true
 
-  axios.post(`${process.env.VITE_BACKEND}/messages/send`, { offerId: route.params.id, msg: message.value }, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/messages/send`, { offerId: route.params.id, msg: message.value }, { withCredentials: true })
     .then(response => {
       if (response.data.success) {
         checkAlreadyWrittenMessages()

@@ -37,7 +37,7 @@ const removeAccount = () => {
 
   loading.value = true
 
-  axios.post(`${process.env.VITE_BACKEND}/auth/security/remove-account`, { password: check_password.value, }, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/auth/security/remove-account`, { password: check_password.value, }, { withCredentials: true })
     .then(response => {
       if (response.data.success) {
 

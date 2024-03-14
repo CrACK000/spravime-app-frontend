@@ -74,7 +74,7 @@ const updateAdvancedData = () => {
     advancedData.value.description = ''
   }
 
-  axios.post(`${process.env.VITE_BACKEND}/auth/profile/update/advanced-data`, advancedData.value, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/auth/profile/update/advanced-data`, advancedData.value, { withCredentials: true })
     .then((response) => {
 
       if (response.data.success === true) {

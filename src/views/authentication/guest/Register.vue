@@ -38,7 +38,7 @@ const register = () => {
 
   if (!registerValid()) return false
 
-  axios.post(`${process.env.VITE_BACKEND}/auth/create-account`, registerData.value, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/auth/create-account`, registerData.value, { withCredentials: true })
     .then((res) => {
       if (res.data.success) {
         toast.add({severity: 'success', summary: 'Účet', detail: 'Tvoj účet bol úspešne vytvorený !', group: 'br', life: 3000})
