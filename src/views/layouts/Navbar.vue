@@ -4,6 +4,11 @@ import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue"
 import {useRouter} from "vue-router"
 import Nickname from "@/components/app/Nickname.vue"
 import Avatar from "@/components/app/Avatar.vue"
+import Sidebar from "primevue/sidebar"
+import Button from "primevue/button"
+import SidebarList from "@/components/sidebar/SidebarList.vue";
+import SidebarListItem from "@/components/sidebar/SidebarListItem.vue";
+import SidebarListHead from "@/components/sidebar/SidebarListHead.vue";
 
 const router = useRouter()
 const auth = inject<Auth>('auth')
@@ -40,6 +45,8 @@ const navigateTo = async (routeName: any, close: () => void) => {
   close()
 }
 
+const visible = ref(false)
+
 </script>
 
 <template>
@@ -48,6 +55,7 @@ const navigateTo = async (routeName: any, close: () => void) => {
       <router-link :to="{ name: 'index' }" class="text-2xl md:text-4xl lg:text-5xl select-none cursor-pointer">
         <img src="/logo.png" alt="Spravime Logo"/>
       </router-link>
+
       <div class="lg:flex items-center gap-6 hidden">
 
         <router-link :to="{ name: 'offers' }" class="px-3 py-2 rounded-xl text-gray-500 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-700 transition font-medium">
@@ -123,13 +131,76 @@ const navigateTo = async (routeName: any, close: () => void) => {
         </router-link>
 
       </div>
+
       <div class="flex items-center gap-3 lg:hidden">
-        <button class="lg:hidden inline-block bg-gradient-to-l from-gray-800/50 hover:from-gray-700/50 to-gray-700/50 hover:to-gray-600/50 text-white dark:text-gray-100/50 hover:text-gray-100/80 p-2 rounded-md shadow-xl" type="button">
+
+        <Sidebar v-model:visible="visible">
+          <template #container="{ closeCallback }">
+            <div class="flex flex-col h-full">
+              <div class="flex items-center justify-between px-4 py-3 flex-shrink-0">
+                <span class="inline-flex items-center gap-2">
+                  <img src="/logo.png" alt="Spravime Logo" class="max-w-full w-32"/>
+                </span>
+                <span>
+                  <Button type="button" @click="closeCallback" icon="fa-solid fa-xmark fa-lg" rounded outlined class="h-8 w-8"></Button>
+                </span>
+              </div>
+              <div class="overflow-y-auto">
+
+                <div class="p-3 m-0">
+                  <SidebarList>
+                    <SidebarListItem @click="closeCallback" :to="{ name: 'index' }" title="Domov"/>
+                    <SidebarListItem @click="closeCallback" :to="{ name: 'offers' }" title="Požiadavky"/>
+                    <SidebarListItem @click="closeCallback" :to="{ name: 'workers' }" title="Firmy & Živnostníci"/>
+                    <SidebarListItem @click="closeCallback" v-if="loggedIn" :to="{ name: 'offerAdd' }" title="Vytvoriť požiadavku"/>
+                    <SidebarListItem @click="closeCallback" v-if="!loggedIn" :to="{ name: 'login' }" title="Prihlásiť sa"/>
+                    <SidebarListItem @click="closeCallback" v-if="!loggedIn" :to="{ name: 'register' }" title="Vytvoriť účet"/>
+                  </SidebarList>
+                </div>
+
+                <ul v-if="loggedIn" class="list-none p-3 m-0">
+                  <li>
+                    <SidebarListHead title="CrACKy" v-styleclass="{ selector: '@next', enterClass: 'hidden', enterActiveClass: 'slidedown', leaveToClass: 'hidden', leaveActiveClass: 'slideup' }">
+                      <template #icon>
+                        <Avatar size="xs" rounded="full" class="mb-2"/>
+                      </template>
+                    </SidebarListHead>
+                    <SidebarList>
+                      <SidebarListItem @click="closeCallback" :to="{ name: 'dashboard' }" title="Centrum" icon="fa-solid fa-gauge"/>
+                      <SidebarListItem @click="closeCallback" :to="{ name: 'my-account' }" title="Upraviť profil" icon="fa-regular fa-pen-to-square"/>
+                      <SidebarListItem @click="closeCallback" :to="{ name: 'user-gallery' }" title="Galéria" icon="fa-regular fa-images"/>
+                      <SidebarListItem @click="closeCallback" :to="{ name: 'user-security' }" title="Zabezpečenie" icon="fa-solid fa-lock"/>
+                      <SidebarListItem @click="closeCallback" :to="{ name: 'messages' }" title="Správy" icon="fa-regular fa-comment"/>
+                      <div>
+                        <SidebarListHead title="Moje požiadavky" v-styleclass="{ selector: '@next', enterClass: 'hidden', enterActiveClass: 'slidedown', leaveToClass: 'hidden', leaveActiveClass: 'slideup' }">
+                          <template #icon>
+                            <i class="fa-solid fa-briefcase"></i>
+                          </template>
+                        </SidebarListHead>
+                        <SidebarList class="hidden">
+                          <SidebarListItem @click="closeCallback" :to="{ name: 'offers-all' }" title="Všetky"/>
+                          <SidebarListItem @click="closeCallback" :to="{ name: 'offers-waiting' }" title="Čakajú na schválenie"/>
+                        </SidebarList>
+                      </div>
+                      <SidebarListItem @click="closeCallback" :to="{ name: 'user-plus' }" title="Plus +" icon="fa-regular fa-star"/>
+                      <SidebarListItem @click="closeCallback" :to="{ name: 'user-stats' }" title="Štatistika" icon="fa-solid fa-chart-line"/>
+                      <SidebarListItem @click="closeCallback" :to="{ name: 'logout' }" title="Odhlásiť sa" icon="fa-solid fa-arrow-right-from-bracket"/>
+                    </SidebarList>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </template>
+        </Sidebar>
+
+        <button @click="visible = true" type="button" class="p-3 bg-white text-gray-700 dark:bg-gray-800 dark:text-gray-300 rounded-xl shadow-md">
           <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
           </svg>
         </button>
+
       </div>
+
     </div>
   </div>
 </template>

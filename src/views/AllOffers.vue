@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, onBeforeMount, onMounted, ref} from 'vue';
+import {computed, onBeforeMount, ref} from 'vue';
 import {useMeta} from 'vue-meta';
 import Panel from "@/components/Panel.vue";
 import Status from "@/components/app/OfferStatus.vue";
@@ -77,7 +77,7 @@ onBeforeMount(async () => {
 
 <template>
   <Container>
-    <div class="grid grid-cols-12 gap-12">
+    <div class="grid grid-cols-12 gap-y-6 lg:gap-x-8 xl:gap-x-12">
 
       <div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
         <PanelFilter :submit="submitFilter" :keyup="submitFilter">
@@ -178,6 +178,7 @@ onBeforeMount(async () => {
         </panel>
 
       </div>
+
     </div>
   </Container>
 </template>

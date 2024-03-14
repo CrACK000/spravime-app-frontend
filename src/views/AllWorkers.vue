@@ -10,6 +10,7 @@ import Nickname from "@/components/app/Nickname.vue"
 import AverageRating from "@/components/app/AverageRating.vue"
 import PanelFilter from "@/components/PanelFilter.vue"
 import Avatar from "@/components/app/Avatar.vue"
+import Container from "@/components/Container.vue";
 
 useMeta({ title: 'Vyhľadať si firmu alebo spoľahlivého majstra' })
 
@@ -69,8 +70,9 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div class="w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-9/12 mx-auto">
-    <div class="grid grid-cols-12 gap-12">
+  <Container>
+    <div class="grid grid-cols-12 gap-y-6 lg:gap-x-8 xl:gap-x-12">
+
       <div class="col-span-12 lg:col-span-4 flex flex-col gap-8">
 
         <PanelFilter :submit="submitFilter" :keyup="submitFilter">
@@ -120,6 +122,7 @@ onBeforeMount(async () => {
         </PanelFilter>
 
       </div>
+
       <div class="col-span-12 lg:col-span-8">
 
         <div class="bg-gradient-to-bl from-blue-200/10 to-blue-200/40 dark:to-blue-500/20 dark:from-blue-500/5 text-blue-600 dark:text-blue-400 md:rounded-2xl p-6 mb-6">
@@ -141,8 +144,8 @@ onBeforeMount(async () => {
 
           <router-link v-else-if="filteredWorkers.length" v-for="user in filteredWorkers" :to="{ name: 'profile', params: { id: user._id } }">
             <div class="panel-item p-4 grid grid-cols-10 gap-3.5 items-center text-sm sm:text-lg">
-              <div class="col-span-2 sm:col-span-1">
-                <Avatar :img="user.avatar" :alt="user.profile.name ?? user.username" class="mx-auto" rounded="xxl" />
+              <div class="col-span-2 sm:col-span-1 text-center">
+                <Avatar :img="user.avatar" :alt="user.profile.name ?? user.username" class="mx-auto" size="sm" rounded="xxl" />
               </div>
               <div :class="[user.reviews.count_reviews ? 'col-span-6 sm:col-span-5' : 'col-span-8 sm:col-span-7']">
                 <nickname :nickname="user.profile.name ?? user.username" :verify="user.verify" class="mb-0.5 sm:mb-1 font-medium" />
@@ -180,6 +183,7 @@ onBeforeMount(async () => {
         </panel>
 
       </div>
+
     </div>
-  </div>
+  </Container>
 </template>

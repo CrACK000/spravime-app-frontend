@@ -53,7 +53,7 @@ const router = createRouter({
           component: { template: '' },
           beforeEnter(to, from, next) {
             logout()
-            next({ name: 'home' })
+            next({ name: 'index' })
           } },
       ]
     },
@@ -83,6 +83,8 @@ router.beforeEach(async (to, from, next) => {
 
   const auth = inject<Auth>('auth')
   await auth?.checkAuth()
+
+  console.log(import.meta.env.VITE_BACKEND)
 
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   const requiresUnAuth = to.matched.some(record => record.meta.requiresAuth === false)

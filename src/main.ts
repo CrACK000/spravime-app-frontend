@@ -8,6 +8,7 @@ import PrimeVue from 'primevue/config'
 import ToastService from 'primevue/toastservice'
 import ConfirmationService from 'primevue/confirmationservice'
 import DialogService from 'primevue/dialogservice'
+import StyleClass from 'primevue/styleclass'
 
 import 'flowbite'
 import Tooltip from 'primevue/tooltip'
@@ -17,6 +18,7 @@ const app = createApp(App)
 app.provide('auth', useAuth())
 
 app.directive('tooltip', Tooltip)
+app.directive('styleclass', StyleClass)
 app.use(ToastService)
 app.use(ConfirmationService)
 app.use(DialogService)

@@ -12,7 +12,7 @@ useMeta({ title: 'Nestrácajte čas s hľadaním' })
 
 <template>
   <Container>
-    <div class="grid grid-cols-11 items-center gap-x-12 lg:gap-x-16 xl:gap-x-20 gap-y-12 lg:gap-y-20 xl:gap-y-44 my-10">
+    <div class="grid grid-cols-11 items-center md:gap-x-12 lg:gap-x-16 xl:gap-x-20 gap-y-12 lg:gap-y-20 xl:gap-y-44 my-10">
       <div class="col-span-11">
         <Banner/>
       </div>

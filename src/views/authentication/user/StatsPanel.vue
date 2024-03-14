@@ -228,7 +228,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="grid grid-cols-2 gap-0.5 md:gap-10 -mx-4 md:-mx-0">
+  <div class="grid grid-cols-2 gap-0.5 md:gap-10 md:-mx-0">
 
     <panel class="rework-element col-span-1 xxs:col-span-2 sm:col-span-1 p-2 md:p-4 flex justify-between relative">
       <div id="pie-chart"></div>

@@ -4,7 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1d8e0a7-c378-409e-9b1f-24e9261b35fe" name="Changes" comment="add Dockerfile" />
+    <list default="true" id="b1d8e0a7-c378-409e-9b1f-24e9261b35fe" name="Changes" comment="v1.1 Testing Dockerfile">
+      <change afterPath="$PROJECT_DIR$/src/components/sidebar/SidebarList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/sidebar/SidebarListHead.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/sidebar/SidebarListItem.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/primevue-theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/primevue-theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Container.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Container.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/home/Banner.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/Banner.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/home/Rating.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/Rating.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/home/Stats.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/Stats.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/AllOffers.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/AllOffers.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/AllWorkers.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/AllWorkers.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/authentication/user/DashboardPanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/user/DashboardPanel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/authentication/user/StatsPanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/user/StatsPanel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/layouts/Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/layouts/Navbar.vue" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,9 +36,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="Vue Composition API Component" />
         <option value="TypeScript File" />
         <option value="Dockerfile" />
+        <option value="Vue Composition API Component" />
       </list>
     </option>
   </component>
@@ -30,6 +49,20 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;CrACK000&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="357cf56f-771b-4c70-9e3e-4e0c6f08b45f" />
+        <option name="url" value="git@github.com:/CrACK000/spravime-frontend.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="KubernetesApiProvider">{
   &quot;contexts&quot;: [
@@ -57,50 +90,51 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Docker.Dockerfile.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.index.js.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.main.js.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.laravel-idea.search-composer-json&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/patri/PhpstormProjects/spravime-frontend&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.Backend DEV.executor&quot;: &quot;Run&quot;,
-    &quot;npm.build.executor&quot;: &quot;Run&quot;,
-    &quot;npm.dev (1).executor&quot;: &quot;Run&quot;,
-    &quot;npm.dev Backend.executor&quot;: &quot;Run&quot;,
-    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\patri\\PhpstormProjects\\spravime-frontend\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Docker.Dockerfile.executor": "Run",
+    "Node.js.index.js.executor": "Run",
+    "Node.js.main.js.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.laravel-idea.search-composer-json": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/patri/PhpstormProjects/spravime-frontend/src/components/sidebar",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.Backend DEV.executor": "Run",
+    "npm.Frontend DEV.executor": "Run",
+    "npm.build.executor": "Run",
+    "npm.dev (1).executor": "Run",
+    "npm.dev Backend.executor": "Run",
+    "npm.dev.executor": "Run",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "C:\\Users\\patri\\PhpstormProjects\\spravime-frontend\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ],
-    &quot;vue.recent.templates&quot;: [
-      &quot;Vue Composition API Component&quot;
+    "vue.recent.templates": [
+      "Vue Composition API Component"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\patri\PhpstormProjects\spravime-frontend\src\components\sidebar" />
       <recent name="C:\Users\patri\PhpstormProjects\spravime-frontend" />
       <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\components\dialogs" />
       <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\components" />
       <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\views\auth" />
-      <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\components\dialogs" />
@@ -110,7 +144,7 @@
       <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\views\authentication" />
     </key>
   </component>
-  <component name="RunManager" selected="Docker.Dockerfile">
+  <component name="RunManager" selected="npm.Frontend DEV">
     <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
       <deployment type="dockerfile">
         <settings>
@@ -152,9 +186,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Docker.Dockerfile" />
-        <item itemvalue="npm.Backend DEV" />
         <item itemvalue="npm.Frontend DEV" />
+        <item itemvalue="npm.Backend DEV" />
+        <item itemvalue="Docker.Dockerfile" />
       </list>
     </recent_temporary>
   </component>
@@ -268,7 +302,10 @@
       <workItem from="1710278605517" duration="1442000" />
       <workItem from="1710280064607" duration="18000" />
       <workItem from="1710280425759" duration="405000" />
-      <workItem from="1710281162499" duration="2145000" />
+      <workItem from="1710281162499" duration="2756000" />
+      <workItem from="1710354396321" duration="371000" />
+      <workItem from="1710357614796" duration="163000" />
+      <workItem from="1710358031156" duration="14642000" />
     </task>
     <task id="LOCAL-00001" summary="Start">
       <option name="closed" value="true" />
@@ -406,7 +443,23 @@
       <option name="project" value="LOCAL" />
       <updated>1710285313987</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="v1.0">
+      <option name="closed" value="true" />
+      <created>1710285623221</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1710285623221</updated>
+    </task>
+    <task id="LOCAL-00019" summary="v1.0 Testing Dockerfile">
+      <option name="closed" value="true" />
+      <created>1710358978509</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1710358978509</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -433,6 +486,9 @@
     <MESSAGE value="v0.6.0" />
     <MESSAGE value="v0.7.0 Beta" />
     <MESSAGE value="add Dockerfile" />
-    <option name="LAST_COMMIT_MESSAGE" value="add Dockerfile" />
+    <MESSAGE value="v1.0" />
+    <MESSAGE value="v1.0 Testing Dockerfile" />
+    <MESSAGE value="v1.1 Testing Dockerfile" />
+    <option name="LAST_COMMIT_MESSAGE" value="v1.1 Testing Dockerfile" />
   </component>
 </project>
