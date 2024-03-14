@@ -5,24 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b1d8e0a7-c378-409e-9b1f-24e9261b35fe" name="Changes" comment="v1.1 Testing Dockerfile">
-      <change afterPath="$PROJECT_DIR$/src/components/sidebar/SidebarList.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/sidebar/SidebarListHead.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/sidebar/SidebarListItem.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/primevue-theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/primevue-theme.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Container.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Container.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/home/Banner.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/Banner.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/home/Rating.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/Rating.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/home/Stats.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/Stats.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/AllOffers.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/AllOffers.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/AllWorkers.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/AllWorkers.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Home.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/authentication/user/DashboardPanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/user/DashboardPanel.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/authentication/user/StatsPanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/user/StatsPanel.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/layouts/Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/layouts/Navbar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -305,7 +289,7 @@
       <workItem from="1710281162499" duration="2756000" />
       <workItem from="1710354396321" duration="371000" />
       <workItem from="1710357614796" duration="163000" />
-      <workItem from="1710358031156" duration="14642000" />
+      <workItem from="1710358031156" duration="15442000" />
     </task>
     <task id="LOCAL-00001" summary="Start">
       <option name="closed" value="true" />
@@ -459,7 +443,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710358978509</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="v1.1 Testing Dockerfile">
+      <option name="closed" value="true" />
+      <created>1710375607934</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1710375607934</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -21,8 +21,8 @@ WORKDIR /app
 # Copy build from Stage 1
 COPY --from=build-deps /app/dist ./dist
 
-# Nainštalujte serve http server
-RUN npm install -g serve
+# Nainštalujte http-server
+RUN npm install -g http-server
 
-# Spustite server na porte 8080 bez použitia schránky
-CMD serve -s dist -l ${PORT:-8080} --no-clipboard
+# Spustite server na porte 8080 s podporou SPA
+CMD http-server dist -p ${PORT:-8080} -s
