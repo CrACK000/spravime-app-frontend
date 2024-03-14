@@ -45,7 +45,7 @@ const submitReview = () => {
 
   loading.value = true
 
-  axios.post(`${import.meta.env.VITE_BACKEND}/reviews/create`, data.value, { withCredentials: true })
+  axios.post(`${process.env.VITE_BACKEND}/reviews/create`, data.value, { withCredentials: true })
     .then(response => {
 
       if (response.data.success) {

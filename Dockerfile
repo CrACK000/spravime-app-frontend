@@ -25,4 +25,4 @@ COPY --from=build-deps /app/dist ./dist
 RUN npm install -g http-server
 
 # Spustite server na porte 8080 s podporou SPA
-CMD http-server dist -p ${PORT:-8080} -s
+CMD http-server dist -p ${PORT:-8080} -P / -s

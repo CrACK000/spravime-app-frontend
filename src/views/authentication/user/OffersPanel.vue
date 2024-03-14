@@ -52,7 +52,7 @@ const removeOffer = (ids: string) => {
     acceptLabel: 'Odstrániť',
     rejectLabel: 'Zrušiť',
     accept: () => {
-      axios.post(`${import.meta.env.VITE_BACKEND}/auth/offers/remove`, { ids }, { withCredentials: true })
+      axios.post(`${process.env.VITE_BACKEND}/auth/offers/remove`, { ids }, { withCredentials: true })
         .then(response => {
 
           if (response.data.success) {

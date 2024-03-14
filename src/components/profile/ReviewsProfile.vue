@@ -123,7 +123,7 @@ const removeReview = (_id: string) => {
     acceptLabel: 'Odstrániť',
     rejectLabel: 'Zrušiť',
     accept: () => {
-      axios.post(`${import.meta.env.VITE_BACKEND}/reviews/remove`, { review_id: _id }, { withCredentials: true })
+      axios.post(`${process.env.VITE_BACKEND}/reviews/remove`, { review_id: _id }, { withCredentials: true })
         .then(response => {
 
           if (response.data.success) {

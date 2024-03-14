@@ -7,6 +7,7 @@
     <list default="true" id="b1d8e0a7-c378-409e-9b1f-24e9261b35fe" name="Changes" comment="v1.1 Testing Dockerfile">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/account/gallery/AvatarContainer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/account/gallery/AvatarContainer.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +129,7 @@
       <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\views\authentication" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.Frontend DEV">
+  <component name="RunManager" selected="Docker.Dockerfile">
     <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
       <deployment type="dockerfile">
         <settings>
@@ -170,9 +171,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.Dockerfile" />
         <item itemvalue="npm.Frontend DEV" />
         <item itemvalue="npm.Backend DEV" />
-        <item itemvalue="Docker.Dockerfile" />
       </list>
     </recent_temporary>
   </component>
@@ -289,7 +290,7 @@
       <workItem from="1710281162499" duration="2756000" />
       <workItem from="1710354396321" duration="371000" />
       <workItem from="1710357614796" duration="163000" />
-      <workItem from="1710358031156" duration="15442000" />
+      <workItem from="1710358031156" duration="17702000" />
     </task>
     <task id="LOCAL-00001" summary="Start">
       <option name="closed" value="true" />
@@ -451,7 +452,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710375607934</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="v1.1 Testing Dockerfile">
+      <option name="closed" value="true" />
+      <created>1710376396969</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1710376396969</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

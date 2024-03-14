@@ -8,7 +8,7 @@ export async function logout() {
     const auth = inject<Auth>('auth')
     const toast = useToast()
 
-    await axios.get(`${import.meta.env.VITE_BACKEND}/auth/logout`, { withCredentials: true })
+    await axios.get(`${process.env.VITE_BACKEND}/auth/logout`, { withCredentials: true })
         .then(response => {
             if (response.data.success) {
 

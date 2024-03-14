@@ -8,7 +8,7 @@ async function add(collection: string, id: string): Promise<void> {
     let get = Cookies.get(String(id))
 
     if (!get) {
-        await axios.post(`${import.meta.env.VITE_BACKEND}/counter/views`, formData, { withCredentials: true })
+        await axios.post(`${process.env.VITE_BACKEND}/counter/views`, formData, { withCredentials: true })
             .then(response => {
                 Cookies.set(String(id), 'seen', { expires: 10/1440 }) // 10 min.
             })

@@ -19,7 +19,7 @@ async function fetchAccounts(): Promise<void> {
 
     data.containers_loading = true
 
-    await axios.post(`${import.meta.env.VITE_BACKEND}/auth/messages/accounts`, {}, { withCredentials: true })
+    await axios.post(`${process.env.VITE_BACKEND}/auth/messages/accounts`, {}, { withCredentials: true })
         .then(response => {
             data.containers = response.data
         })
@@ -30,7 +30,7 @@ async function fetchAccounts(): Promise<void> {
 
 async function isRead(container: string) {
 
-    await axios.post(`${import.meta.env.VITE_BACKEND}/auth/messages/read`, { container: container }, { withCredentials: true })
+    await axios.post(`${process.env.VITE_BACKEND}/auth/messages/read`, { container: container }, { withCredentials: true })
         .then(response => {
             return !!response.data.success
         }).catch(error => {
@@ -42,7 +42,7 @@ async function selectContainer(container: string): Promise<void> {
 
     data.container_loading = true
 
-    await axios.post(`${import.meta.env.VITE_BACKEND}/auth/messages`, { container: container }, { withCredentials: true })
+    await axios.post(`${process.env.VITE_BACKEND}/auth/messages`, { container: container }, { withCredentials: true })
         .then(response => {
             data.container = response.data
         })

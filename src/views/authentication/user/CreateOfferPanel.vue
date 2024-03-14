@@ -53,7 +53,7 @@ const submitForm = () => {
 
   loading.value = true
 
-  axios.post(`${import.meta.env.VITE_BACKEND}/auth/offers/create`, form.value, { withCredentials: true })
+  axios.post(`${process.env.VITE_BACKEND}/auth/offers/create`, form.value, { withCredentials: true })
     .then(response => {
 
       if (response.data.success) {
