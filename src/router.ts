@@ -11,6 +11,11 @@ const router = createRouter({
       component: () => import('@/views/Home.vue'),
     },
     {
+      path: '/maintenance',
+      name: 'maintenance',
+      component: () => import('@/views/Maintenance.vue'),
+    },
+    {
       path: '/search',
       name: 'workers',
       component: () => import('@/views/AllWorkers.vue'),
@@ -84,7 +89,11 @@ router.beforeEach(async (to, from, next) => {
   const auth = inject<Auth>('auth')
   await auth?.checkAuth()
 
-  console.log(import.meta.env.VITE_BACKEND)
+  if (!auth?.loggedIn.value) {
+    if (to.name !== 'maintenance') {
+      next({ name: 'maintenance' })
+    }
+  }
 
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   const requiresUnAuth = to.matched.some(record => record.meta.requiresAuth === false)
