@@ -58,7 +58,7 @@ const router = createRouter({
           component: { template: '' },
           beforeEnter(to, from, next) {
             logout()
-            next({ name: 'index' })
+            next({ name: 'home' })
           } },
       ]
     },

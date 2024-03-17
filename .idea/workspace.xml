@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b1d8e0a7-c378-409e-9b1f-24e9261b35fe" name="Changes" comment="v1.1 Debug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Maintenance.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Maintenance.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +128,7 @@
       <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\views\authentication" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.Backend DEV">
+  <component name="RunManager" selected="npm.Frontend DEV">
     <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
       <deployment type="dockerfile">
         <settings />
@@ -161,8 +161,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.Backend DEV" />
         <item itemvalue="npm.Frontend DEV" />
+        <item itemvalue="npm.Backend DEV" />
       </list>
     </recent_temporary>
   </component>
