@@ -1,4 +1,4 @@
-import {createRouter, createWebHistory} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import { logout } from "@/plugins/logout"
 import {inject} from "vue"
 
@@ -9,6 +9,11 @@ const router = createRouter({
       path: '/',
       name: 'index',
       component: () => import('@/views/Home.vue'),
+    },
+    {
+      path: '/maintenance',
+      name: 'maintenance',
+      component: () => import('@/views/Maintenance.vue'),
     },
     {
       path: '/search',
@@ -84,13 +89,9 @@ router.beforeEach(async (to, from, next) => {
   const auth = inject<Auth>('auth')
   await auth?.checkAuth()
 
-  const maintenance = true
-
-  if (!auth?.loggedIn.value){
-    if (maintenance) {
-      if (to.name !== 'login') {
-        await router.push({name: 'login'})
-      }
+  if (!auth?.loggedIn.value) {
+    if (to.name !== 'maintenance') {
+      next({ name: 'maintenance' })
     }
   }
 

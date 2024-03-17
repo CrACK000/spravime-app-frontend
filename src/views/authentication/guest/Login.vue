@@ -15,7 +15,6 @@ const toast = useToast()
 
 const errors = ref<any>([])
 const loading = ref<boolean>(false)
-const changed = ref<boolean>(false)
 
 const loginData = ref<any>({
   username: '',
@@ -29,21 +28,49 @@ const login = () => {
   axios.post(`${import.meta.env.VITE_BACKEND}/auth/login`, loginData.value, { withCredentials: true })
     .then((response) => {
       if (response.data.success) {
+
         if (auth) {
           auth.userData.value = response.data.user
           auth.loggedIn.value = response.data.loggedIn
         }
-        toast.add({severity: 'info', summary: 'Účet', detail: 'Si prihlásený !', group: 'br', life: 3000})
+
+        toast.add({
+          severity: 'info',
+          summary: 'Účet',
+          detail: response.data.message,
+          group: 'br',
+          life: 3000
+        })
+
         router.back()
+
       } else {
+
         errors.value = response.data.errors
+        toast.add({
+          severity: 'error',
+          summary: 'Chyba',
+          detail: response.data.message,
+          group: 'br',
+          life: 5000
+        })
+
       }
     })
     .catch((error) => {
-      errors.value.push({ where: 'error', message: 'Nesprávne meno alebo heslo.' })
+      toast.add({
+        severity: 'error',
+        summary: 'Server',
+        detail: "Vyskytla sa systémová chyba. Skúste to neskôr.",
+        group: 'br',
+        life: 8000
+      })
     })
     .finally(() => {
+
       loading.value = false
+      loginData.value.password = ''
+
     })
 }
 
@@ -52,7 +79,7 @@ const login = () => {
 <template>
 
   <div class="w-full md:w-11/12 lg:w-6/12 xl:w-5/12 2xl:w-3/12 mx-auto">
-    <form method="post" @submit.prevent="login" @change="changed = true">
+    <form method="post" @submit.prevent="login">
       <panel divide="y">
         <div class="py-4 px-6 font-medium uppercase">Prihlásiť sa</div>
         <div class="p-8 md:p-14">

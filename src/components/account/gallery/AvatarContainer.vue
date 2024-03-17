@@ -150,12 +150,7 @@ const upload = () => {
 
   FileData.append('avatar', fileInput.files[0])
 
-  axios.post(`${import.meta.env.VITE_BACKEND}/auth/avatar/update`, FileData, {
-    withCredentials: true,
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  })
+  axios.post(`${import.meta.env.VITE_BACKEND}/auth/avatar/update`, FileData, { withCredentials: true })
     .then((response) => {
       if (response.data.success === true) {
         toast.add({ severity: 'success', summary: 'Úspech', detail: response.data.message, group: 'br', life: 5000 })

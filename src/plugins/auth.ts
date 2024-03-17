@@ -10,7 +10,7 @@ export function useAuth() {
 
     const checkAuth = async () => {
         loading.value = true
-        await axios.get(`${import.meta.env.VITE_BACKEND}/auth/check-auth`, { withCredentials: true })
+        await axios.get(`${import.meta.env.VITE_BACKEND}/auth/check-auth`,{ withCredentials: true })
             .then(response => {
                 loggedIn.value = response.data.loggedIn
                 userData.value = response.data.user
