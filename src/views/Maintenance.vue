@@ -4,7 +4,7 @@ import {inject, ref} from "vue"
 import {useToast} from "primevue/usetoast"
 import axios from "axios"
 import router from "@/router"
-import {FwbSpinner} from "flowbite-vue";
+import {FwbSpinner} from "flowbite-vue"
 
 useMeta({ title: 'Údržba' })
 

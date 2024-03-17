@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1d8e0a7-c378-409e-9b1f-24e9261b35fe" name="Changes" comment="v1.1 Testing Dockerfile">
-      <change afterPath="$PROJECT_DIR$/src/views/Maintenance.vue" afterDir="false" />
+    <list default="true" id="b1d8e0a7-c378-409e-9b1f-24e9261b35fe" name="Changes" comment="v1.1 Debug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/plugins/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugins/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/authentication/guest/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/guest/Login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Maintenance.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Maintenance.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -291,7 +286,9 @@
       <workItem from="1710507359679" duration="3120000" />
       <workItem from="1710513474050" duration="67000" />
       <workItem from="1710515957022" duration="12000" />
-      <workItem from="1710620019090" duration="3377000" />
+      <workItem from="1710620019090" duration="5282000" />
+      <workItem from="1710687702296" duration="325000" />
+      <workItem from="1710694357510" duration="226000" />
     </task>
     <task id="LOCAL-00001" summary="Start">
       <option name="closed" value="true" />
@@ -493,7 +490,23 @@
       <option name="project" value="LOCAL" />
       <updated>1710380509152</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="v1.1 Debug">
+      <option name="closed" value="true" />
+      <created>1710623522408</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1710623522408</updated>
+    </task>
+    <task id="LOCAL-00027" summary="v1.1 Debug">
+      <option name="closed" value="true" />
+      <created>1710687775432</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1710687775432</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -523,6 +536,7 @@
     <MESSAGE value="v1.0" />
     <MESSAGE value="v1.0 Testing Dockerfile" />
     <MESSAGE value="v1.1 Testing Dockerfile" />
-    <option name="LAST_COMMIT_MESSAGE" value="v1.1 Testing Dockerfile" />
+    <MESSAGE value="v1.1 Debug" />
+    <option name="LAST_COMMIT_MESSAGE" value="v1.1 Debug" />
   </component>
 </project>
