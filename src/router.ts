@@ -86,25 +86,31 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
 
-  const auth = inject<Auth>('auth')
-  await auth?.checkAuth()
+  const auth = inject<Auth>('auth');
 
-  if (!auth?.loggedIn.value) {
-    if (to.name !== 'maintenance') {
-      next({ name: 'maintenance' })
+  if (auth) {
+    await auth.checkAuth()
+
+    if (!auth?.loggedIn.value) {
+      if (to.name !== 'maintenance') {
+        return next({ name: 'maintenance' })
+      }
     }
   }
 
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  const requiresUnAuth = to.matched.some(record => record.meta.requiresAuth === false)
-
-  if (requiresAuth && !auth?.loggedIn.value) {
-    next({ name: 'login' })
-  } else if (requiresUnAuth && auth?.loggedIn.value) {
-    next({ name: 'index' })
-  } else {
-    next()
+  const isUserLoggedIn = () => {
+    const token = localStorage.getItem('token')
+    return !!token
   }
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!isUserLoggedIn()) {
+      return next({ name: 'login' })
+    }
+  }
+
+  return next() // Make sure to always call next().
+
 })
 
 export default router

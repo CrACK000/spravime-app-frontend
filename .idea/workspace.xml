@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="b1d8e0a7-c378-409e-9b1f-24e9261b35fe" name="Changes" comment="v1.1 Debug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/plugins/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugins/auth.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Maintenance.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Maintenance.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/layouts/Footer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/layouts/Footer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/layouts/Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/layouts/Navbar.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +89,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.laravel-idea.search-composer-json&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/patri/PhpstormProjects/starter/TypeScript-Node-Starter&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
@@ -128,7 +133,7 @@
       <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\views\authentication" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.Frontend DEV">
+  <component name="RunManager" selected="npm.Backend DEV">
     <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
       <deployment type="dockerfile">
         <settings />
@@ -161,8 +166,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.Frontend DEV" />
         <item itemvalue="npm.Backend DEV" />
+        <item itemvalue="npm.Frontend DEV" />
       </list>
     </recent_temporary>
   </component>
@@ -289,6 +294,8 @@
       <workItem from="1710620019090" duration="5282000" />
       <workItem from="1710687702296" duration="325000" />
       <workItem from="1710694357510" duration="226000" />
+      <workItem from="1710695506273" duration="23000" />
+      <workItem from="1710857716584" duration="593000" />
     </task>
     <task id="LOCAL-00001" summary="Start">
       <option name="closed" value="true" />

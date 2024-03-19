@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import { createMetaManager } from "vue-meta"
 import { useAuth } from '@/plugins/auth'
+import axios from 'axios'
 import App from '@/views/layouts/App.vue'
 import router from '@/router'
 import PrimeVue from 'primevue/config'
@@ -12,6 +13,9 @@ import StyleClass from 'primevue/styleclass'
 
 import 'flowbite'
 import Tooltip from 'primevue/tooltip'
+
+let token = localStorage.getItem('token')
+axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
 const app = createApp(App)
 

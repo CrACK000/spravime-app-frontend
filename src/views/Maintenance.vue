@@ -24,12 +24,12 @@ const login = () => {
     .then((response) => {
       if (response.data.success) {
 
-        console.log(response.data)
-
         if (auth) {
           auth.userData.value = response.data.user
           auth.loggedIn.value = response.data.loggedIn
         }
+
+        localStorage.setItem('token', response.data.token)
 
         toast.add({
           severity: 'info',
