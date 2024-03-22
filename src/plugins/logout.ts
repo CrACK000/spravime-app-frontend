@@ -12,6 +12,8 @@ export async function logout() {
         .then(response => {
             if (response.data.success) {
 
+                localStorage.removeItem('token')
+
                 if (auth) {
                     auth.loggedIn.value = false
                     auth.userData.value = null
