@@ -6,11 +6,11 @@ import {useToast} from "primevue/usetoast"
 import {timeSince} from "@/plugins/functions"
 import Avatar from "@/components/app/Avatar.vue"
 import SkeletonMessagesContainer from "@/components/skeletons/SkeletonMessagesContainer.vue"
-import MessagesBackButton from "@/components/MessagesBackButton.vue";
-import MessagesContainerHead from "@/components/MessagesContainerHead.vue";
-import MessagesContainerMsg from "@/components/MessagesContainerMsg.vue";
-import MessagesContainerBody from "@/components/MessagesContainerBody.vue";
-import MessagesContainerFooter from "@/components/MessagesContainerFooter.vue";
+import MessagesBackButton from "@/components/template/MessagesBackButton.vue"
+import MessagesContainerHead from "@/components/template/MessagesContainerHead.vue"
+import MessagesContainerMsg from "@/components/template/MessagesContainerMsg.vue"
+import MessagesContainerBody from "@/components/template/MessagesContainerBody.vue"
+import MessagesContainerFooter from "@/components/template/MessagesContainerFooter.vue"
 
 interface TemplateMessage {
   _id: string,

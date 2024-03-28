@@ -3,11 +3,12 @@ import {useToast} from "primevue/usetoast"
 import {inject, onMounted, ref} from "vue"
 import {checkError, getError, validURL} from "@/plugins/validation"
 import axios from "axios"
-import PanelForm from "@/components/PanelForm.vue"
-import PanelFormActions from "@/components/PanelFormActions.vue"
-import Panel from "@/components/Panel.vue"
-import InputContainer from "@/components/InputContainer.vue"
-import InputLabel from "@/components/InputLabel.vue"
+import PanelForm from "@/components/template/PanelForm.vue"
+import PanelFormActions from "@/components/template/PanelFormActions.vue"
+import Panel from "@/components/template/Panel.vue"
+import InputContainer from "@/components/template/InputContainer.vue"
+import InputLabel from "@/components/template/InputLabel.vue"
+import PanelPlus from "@/components/template/PanelPlus.vue";
 
 const toast = useToast()
 
@@ -106,7 +107,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <form @submit.prevent="updateSocialData" @keyup="checkForm">
+  <form v-if="user.verify" @submit.prevent="updateSocialData" @keyup="checkForm">
     <panel divide="y">
       <panel-form>
         <InputContainer>
@@ -163,4 +164,14 @@ onMounted(() => {
       </panel-form-actions>
     </panel>
   </form>
+
+  <PanelPlus v-else class="flex items-center justify-between">
+    <div>
+      Aktivujte si našu službu <span class="font-medium text-blue-500">Plus +</span> a pridajte do svojho profilu sociálne siete.
+    </div>
+    <router-link :to="{ name: 'user-plus' }" class="form-button-sm">
+      Aktivovať
+    </router-link>
+  </PanelPlus>
+
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useMeta} from "vue-meta";
-import PanelGrid from "@/components/PanelGrid.vue";
+import PanelGrid from "@/components/template/PanelGrid.vue";
 import SecurityRemoveAccount from "@/components/account/security/SecurityRemoveAccount.vue";
 import SecurityChangePassword from "@/components/account/security/SecurityChangePassword.vue";
 

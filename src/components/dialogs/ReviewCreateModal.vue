@@ -3,8 +3,8 @@ import {inject, ref} from "vue"
 import axios from "axios"
 import {useToast} from "primevue/usetoast"
 import {checkError, getError, validDescription, validRating, validRecommendation} from "@/plugins/validation"
-import TextareaLabel from "@/components/TextareaLabel.vue"
-import PanelFormActions from "@/components/PanelFormActions.vue"
+import TextareaLabel from "@/components/template/TextareaLabel.vue"
+import PanelFormActions from "@/components/template/PanelFormActions.vue"
 
 type DialogRefType = {
   data: any,

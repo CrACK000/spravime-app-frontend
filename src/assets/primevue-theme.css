@@ -616,10 +616,7 @@
     }
     .p-datepicker.p-datepicker-multiple-month .p-datepicker-group {
         border-left: 1px solid #f3f4f6;
-        padding-right: 0.5rem;
-        padding-left: 0.5rem;
-        padding-top: 0;
-        padding-bottom: 0;
+        padding: 0 0.5rem;
     }
     .p-datepicker.p-datepicker-multiple-month .p-datepicker-group:first-child {
         padding-left: 0;
@@ -861,19 +858,8 @@
     }
 
     .p-dropdown {
-        background: #ffffff;
-        border: 1px solid #d4d4d8;
-        transition: none;
-        border-radius: 0.375rem;
-    }
-    .p-dropdown:not(.p-disabled):hover {
-        border-color: #d4d4d8;
-    }
-    .p-dropdown:not(.p-disabled).p-focus {
-        outline: 0 none;
-        outline-offset: 0;
-        box-shadow: 0 0 0 1px #6366F1;
-        border-color: #4F46E5;
+        @apply
+        bg-gray-900/25
     }
     .p-dropdown.p-dropdown-clearable .p-dropdown-label {
         padding-right: 1.75rem;
@@ -3094,8 +3080,7 @@
     .p-paginator {
         background: #ffffff;
         color: #71717A;
-        border: solid #f4f4f5;
-        border-width: 0;
+        border: 0 solid #f4f4f5;
         padding: 0.75rem 1.5rem;
         border-radius: 0.375rem;
     }
@@ -3804,9 +3789,8 @@
         margin-right: 0;
     }
     .p-tabview .p-tabview-nav li .p-tabview-nav-link {
-        border: solid #e5e7eb;
-        border-width: 0 0 2px 0;
-        border-color: transparent transparent #e5e7eb transparent;
+        border: 0 solid transparent;
+        border-bottom: 2px #e5e7eb;
         background: #ffffff;
         color: #71717A;
         padding: 1.25rem;
@@ -3964,7 +3948,7 @@
         padding: 0 1.5rem 1.5rem 1.5rem;
         text-align: right;
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
         gap: 1rem;
         border-bottom-right-radius: 0.375rem;
         border-bottom-left-radius: 0.375rem;
@@ -4952,9 +4936,8 @@
         margin-right: 0;
     }
     .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
-        border: solid #e5e7eb;
-        border-width: 0 0 2px 0;
-        border-color: transparent transparent #e5e7eb transparent;
+        border: 0 solid transparent;
+        border-bottom: 2px #e5e7eb;
         background: #ffffff;
         color: #71717A;
         padding: 1.25rem;
@@ -5077,8 +5060,7 @@
     }
     .p-inline-message.p-inline-message-info {
         background: #EFF6FF;
-        border: none;
-        border-width: 0px;
+        border: 0 none;
         color: #2563EB;
     }
     .p-inline-message.p-inline-message-info .p-inline-message-icon {
@@ -5086,8 +5068,7 @@
     }
     .p-inline-message.p-inline-message-success {
         background: #ECFDF5;
-        border: none;
-        border-width: 0px;
+        border: 0 none;
         color: #059669;
     }
     .p-inline-message.p-inline-message-success .p-inline-message-icon {
@@ -5095,8 +5076,7 @@
     }
     .p-inline-message.p-inline-message-warn {
         background: #FEF3C7;
-        border: none;
-        border-width: 0px;
+        border: 0 none;
         color: #D97706;
     }
     .p-inline-message.p-inline-message-warn .p-inline-message-icon {
@@ -5104,8 +5084,7 @@
     }
     .p-inline-message.p-inline-message-error {
         background: #FEF3C7;
-        border: none;
-        border-width: 0px;
+        border: 0 none;
         color: #DC2626;
     }
     .p-inline-message.p-inline-message-error .p-inline-message-icon {

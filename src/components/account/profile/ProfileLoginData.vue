@@ -3,11 +3,11 @@ import {inject, onMounted, ref} from "vue"
 import {useToast} from "primevue/usetoast"
 import axios from "axios"
 import {checkError, getError, validEmail, validPhone, validUsername} from "@/plugins/validation"
-import PanelForm from "@/components/PanelForm.vue"
-import PanelFormActions from "@/components/PanelFormActions.vue"
-import Panel from "@/components/Panel.vue"
-import InputContainer from "@/components/InputContainer.vue"
-import InputLabel from "@/components/InputLabel.vue"
+import PanelForm from "@/components/template/PanelForm.vue"
+import PanelFormActions from "@/components/template/PanelFormActions.vue"
+import Panel from "@/components/template/Panel.vue"
+import InputContainer from "@/components/template/InputContainer.vue"
+import InputLabel from "@/components/template/InputLabel.vue"
 
 
 const toast = useToast()

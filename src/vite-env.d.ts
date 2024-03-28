@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-interface Offer {
+interface Request {
     _id: string,
     title: string,
     address: string,
@@ -11,6 +11,7 @@ interface Offer {
     status: boolean,
     disabled: boolean,
     approved: boolean,
+    top: boolean,
     time_range: null | TimeRange,
     views: number,
     closed_at: string,
@@ -116,7 +117,7 @@ interface Auth {
 
 interface MessagesContainer {
     _id: string,
-    key: Offer,
+    key: Request,
     container: Container,
     created_at: string,
     updated_at: string,

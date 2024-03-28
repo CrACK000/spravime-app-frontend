@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useRouter} from "vue-router"
 import {useDialog} from "primevue/usedialog"
-import Panel from "@/components/Panel.vue"
+import Panel from "@/components/template/Panel.vue"
 import RemoveAccount from "@/components/dialogs/RemoveAccount.vue"
 
 const router = useRouter()
@@ -31,8 +31,14 @@ const removeAccountModal = () => {
       <div class="mb-2 text-lg">
         Odstrániť účet
       </div>
+      <p class="mb-1 opacity-70 text-sm">
+        Tým, že odstránite tento účet, vymažete všetky s ním spojené údaje natrvalo.
+        Toto zahrňuje požiadavky, ponuky, data obrázkov, recenzie, galériu a všetky ostatné údaje.
+      </p>
       <p class="mb-3.5 opacity-70 text-sm">
-        Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled.
+        Prosím, mali by ste vedieť, že ak sa rozhodnete pokračovať, údaje nebudú možné obnoviť.
+        Ak sa chystáte na tento krok, kliknite na tlačidlo nižšie a potvrďte odstránenie v ďalšom dialógu.
+        Čo i len najmenšie pochybnosti by mali byť dôvodom prehodnotiť tento krok.
       </p>
       <button @click="removeAccountModal" type="button" class="form-danger-button">
         <i class="fa-solid fa-ban me-1.5"></i>

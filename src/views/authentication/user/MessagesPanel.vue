@@ -8,10 +8,10 @@ import MessagesBox from "@/components/account/messages/MessagesBox.vue"
 import Avatar from "@/components/app/Avatar.vue"
 import SkeletonMessagesContainers from "@/components/skeletons/SkeletonMessagesContainers.vue"
 import SkeletonMessagesContainer from "@/components/skeletons/SkeletonMessagesContainer.vue"
-import ContainerMessages from "@/components/ContainerMessages.vue"
-import MessagesSearchContainers from "@/components/MessagesSearchContainers.vue"
-import MessagesAccounts from "@/components/MessagesAccounts.vue"
-import MessagesAccountsContainer from "@/components/MessagesAccountsContainer.vue"
+import ContainerMessages from "@/components/template/ContainerMessages.vue"
+import MessagesSearchContainers from "@/components/template/MessagesSearchContainers.vue"
+import MessagesAccounts from "@/components/template/MessagesAccounts.vue"
+import MessagesAccountsContainer from "@/components/template/MessagesAccountsContainer.vue"
 
 useMeta({ title: 'Správy' })
 
@@ -51,8 +51,10 @@ onBeforeMount(async () => {
   if (!containers.value.length){
     await msg.fetchAccounts()
     containers.value = msg.data.containers
-    selectedContainer.value = containers.value[0]._id
-    loadContainer.value = true
+    if (containers.value.length) {
+      selectedContainer.value = containers.value[0]._id
+      loadContainer.value = true
+    }
   }
 })
 </script>
@@ -70,6 +72,9 @@ onBeforeMount(async () => {
         </fwb-input>
       </MessagesSearchContainers>
       <MessagesAccountsContainer>
+        <div v-if="!containers.length" class="text-center">
+          Žiadne správy
+        </div>
         <MessagesAccounts v-if="!msg.data.containers_loading" v-for="(container, key) in containers" :key="key" @click="selectContainer(container._id)" :selected="selectedContainer === container._id">
           <template #avatar>
             <Avatar

@@ -1,26 +1,30 @@
 <script setup lang="ts">
 import user from "@/plugins/profile"
-import {watch} from "vue"
+import {onMounted, watch} from "vue"
 import {useRoute} from "vue-router"
 import counter from "@/plugins/counter"
-import Avatar from "@/components/profile/AvatarProfile.vue"
-import Information from "@/components/profile/InformationProfile.vue"
-import TitleProfile from "@/components/profile/TitleProfile.vue"
-import DescriptionProfile from "@/components/profile/DescriptionProfile.vue"
-import GalleryProfile from "@/components/profile/GalleryProfile.vue"
-import RatingProfile from "@/components/profile/RatingProfile.vue"
-import ReviewsProfile from "@/components/profile/ReviewsProfile.vue"
+import Avatar from "@/components/views/profile/AvatarProfile.vue"
+import Information from "@/components/views/profile/InformationProfile.vue"
+import TitleProfile from "@/components/views/profile/TitleProfile.vue"
+import DescriptionProfile from "@/components/views/profile/DescriptionProfile.vue"
+import GalleryProfile from "@/components/views/profile/GalleryProfile.vue"
+import RatingProfile from "@/components/views/profile/RatingProfile.vue"
+import ReviewsProfile from "@/components/views/profile/ReviewsProfile.vue"
 
 const route = useRoute()
 
-watch(() => route.params.id, async (newId, oldId) => {
-  await user.profile(String(newId ?? oldId))
-  await counter.add('users', String(newId ?? oldId))
+onMounted(() => {
+  watch(() => route.params.userId, async (newId, oldId) => {
+    if (!newId) return
 
-  const title = user.data.user?.profile.name ? user.data.user?.profile.name : user.data.user?.username
-  document.title = `Profil užívateľa ${title}`
+    await user.profile(String(newId ?? oldId))
+    await counter.add('users', String(newId ?? oldId))
 
-}, { immediate: true })
+    const title = user.data.user?.profile.name ? user.data.user?.profile.name : user.data.user?.username
+    document.title = `Profil užívateľa ${title}`
+
+  }, { immediate: true })
+})
 </script>
 
 <template>

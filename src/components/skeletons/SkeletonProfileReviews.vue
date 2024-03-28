@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Panel from "@/components/Panel.vue";
+import Panel from "@/components/template/Panel.vue";
 
 const props = defineProps({
   rows: {

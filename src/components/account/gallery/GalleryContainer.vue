@@ -4,13 +4,15 @@ import {useMeta} from "vue-meta"
 import {useToast} from "primevue/usetoast"
 import axios from "axios"
 import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue"
-import Panel from "@/components/Panel.vue"
-import PanelFormActions from "@/components/PanelFormActions.vue"
+import Panel from "@/components/template/Panel.vue"
+import PanelFormActions from "@/components/template/PanelFormActions.vue"
+import PanelPlus from "@/components/template/PanelPlus.vue";
 
 useMeta({ title: 'Galéria' })
 
 const toast = useToast()
 const auth = inject<Auth>('auth')
+const user = ref(auth?.userData as User)
 const backend = import.meta.env.VITE_BACKEND
 
 const loading = ref<boolean>(false)
@@ -215,7 +217,8 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <panel divide="y">
+
+  <panel v-if="user.verify" divide="y">
     <div class="p-2 xxs:p-2.5 xs:p-3 sm:p-4 md:p-5">
       <div class="grid grid-cols-1 xxs:grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 gap-2 xxs:gap-2.5 xs:gap-3 sm:gap-4 md:gap-5">
 
@@ -298,4 +301,14 @@ onBeforeMount(() => {
       </template>
     </panel-form-actions>
   </panel>
+
+  <PanelPlus v-else class="flex items-center justify-between">
+    <div>
+      Aktivujte si našu službu <span class="font-medium text-blue-500">Plus +</span> a pridajte do svojho profilu galériu obrázkov.
+    </div>
+    <router-link :to="{ name: 'user-plus' }" class="form-button-sm">
+      Aktivovať
+    </router-link>
+  </PanelPlus>
+
 </template>

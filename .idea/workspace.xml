@@ -4,14 +4,117 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1d8e0a7-c378-409e-9b1f-24e9261b35fe" name="Changes" comment="v1.1 Debug">
+    <list default="true" id="b1d8e0a7-c378-409e-9b1f-24e9261b35fe" name="Changes" comment="v1.3 Debug">
+      <change afterPath="$PROJECT_DIR$/src/components/account/stats/StatsHead.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/account/stats/StatsItemOffer.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/account/stats/StatsItemRequest.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/account/stats/StatsNoVerifyProfile.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/account/stats/StatsOffers.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/account/stats/StatsProfile.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/account/stats/StatsRequests.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/dialogs/SetAddress.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/skeletons/SkeletonUserRequests.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/template/AccountMenu.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/template/AccountMenuItem.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/template/AccountPanelHead.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/template/PanelFilter.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/template/PanelGrid.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/template/PanelPlus.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/RequestsList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/authentication/user/RequestsPanel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/primevue-theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/primevue-theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Container.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/template/Container.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ContainerMessages.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/template/ContainerMessages.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/InputContainer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/template/InputContainer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/InputLabel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/template/InputLabel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MessagesAccounts.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/template/MessagesAccounts.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MessagesAccountsContainer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/template/MessagesAccountsContainer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MessagesBackButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/template/MessagesBackButton.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MessagesContainerBody.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/template/MessagesContainerBody.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MessagesContainerFooter.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/template/MessagesContainerFooter.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MessagesContainerHead.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/template/MessagesContainerHead.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MessagesContainerMsg.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/template/MessagesContainerMsg.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MessagesSearchContainers.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/template/MessagesSearchContainers.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Panel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/template/Panel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PanelFilter.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PanelForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/template/PanelForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PanelFormActions.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/template/PanelFormActions.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PanelGrid.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SelectLabel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/template/SelectLabel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SideMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/template/SideMenu.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TextareaLabel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/template/TextareaLabel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/account/gallery/AvatarContainer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/account/gallery/AvatarContainer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/account/gallery/GalleryContainer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/account/gallery/GalleryContainer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/account/messages/MessagesBox.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/account/messages/MessagesBox.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/account/profile/ProfileAdvancedData.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/account/profile/ProfileAdvancedData.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/account/profile/ProfileLoginData.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/account/profile/ProfileLoginData.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/account/profile/ProfileSocialData.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/account/profile/ProfileSocialData.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/account/security/SecurityChangePassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/account/security/SecurityChangePassword.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/account/security/SecurityRemoveAccount.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/account/security/SecurityRemoveAccount.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/app/AverageRating.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/app/AverageRating.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/app/OfferStatus.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/app/RequestStatus.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dialogs/EditMyOffer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dialogs/EditRequest.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dialogs/RemoveAccount.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dialogs/RemoveAccount.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dialogs/ReviewCreateModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dialogs/ReviewCreateModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/home/Banner.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/home/Banner.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/home/LatestOffers.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/home/LatestRequests.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/home/Rating.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/home/Rating.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/home/Stats.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/home/Stats.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/home/TopProfiles.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/home/TopProfiles.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/offer/CommentsPanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/request/CommentsPanel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/offer/InformationPanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/request/InformationPanel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/offer/SendMessagePanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/request/SendMessagePanel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/offer/TitleDescriptionPanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/request/TitleDescriptionPanel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/AvatarProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/profile/AvatarProfile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/DescriptionProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/profile/DescriptionProfile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/GalleryProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/profile/GalleryProfile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/InformationProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/profile/InformationProfile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/RatingProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/profile/RatingProfile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/ReviewsProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/profile/ReviewsProfile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/TitleProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/profile/TitleProfile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/reviews/ReviewRating.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/profile/reviews/ReviewRating.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/reviews/ReviewRecommendation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/profile/reviews/ReviewRecommendation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/sidebar/SidebarListItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sidebar/SidebarListItem.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/skeletons/SkeletonOfferComments.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/skeletons/SkeletonRequestComments.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/skeletons/SkeletonOfferInformation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/skeletons/SkeletonRequestInformation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/skeletons/SkeletonOfferMessage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/skeletons/SkeletonRequestMessage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/skeletons/SkeletonOfferTitleDescription.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/skeletons/SkeletonRequestTitleDescription.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/skeletons/SkeletonOffers.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/skeletons/SkeletonRequests.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/skeletons/SkeletonProfileDescription.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/skeletons/SkeletonProfileDescription.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/skeletons/SkeletonProfileInformation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/skeletons/SkeletonProfileInformation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/skeletons/SkeletonProfileRating.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/skeletons/SkeletonProfileRating.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/skeletons/SkeletonProfileReviews.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/skeletons/SkeletonProfileReviews.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/plugins/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugins/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/plugins/auth/my-offers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugins/auth/user-requests.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/plugins/counter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugins/counter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/plugins/offers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugins/requests.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Maintenance.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Maintenance.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/AllOffers.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/AllWorkers.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/WorkersList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/OfferDetails.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/RequestDetails.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/UserProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/UserProfile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/authentication/guest/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/guest/Login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/authentication/guest/Register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/guest/Register.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/authentication/user/Account.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/user/Account.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/authentication/user/CreateOfferPanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/user/CreateRequestPanel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/authentication/user/DashboardPanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/user/DashboardPanel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/authentication/user/GalleryPanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/user/GalleryPanel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/authentication/user/MessagesPanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/user/MessagesPanel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/authentication/user/OffersPanel.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/authentication/user/PlusPanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/user/PlusPanel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/authentication/user/ProfilePanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/user/ProfilePanel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/authentication/user/SecurityPanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/user/SecurityPanel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/authentication/user/StatsPanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/authentication/user/StatsPanel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/layouts/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/layouts/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/layouts/Footer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/layouts/Footer.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/layouts/Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/layouts/Navbar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/vite-env.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/vite-env.d.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,8 +129,9 @@
       <list>
         <option value="CSS File" />
         <option value="Dockerfile" />
-        <option value="Vue Composition API Component" />
         <option value="TypeScript File" />
+        <option value="UML Sequence" />
+        <option value="Vue Composition API Component" />
       </list>
     </option>
   </component>
@@ -83,6 +187,7 @@
   &quot;keyToString&quot;: {
     &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
     &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;DefaultPlantUmlFileTemplate&quot;: &quot;UML Sequence&quot;,
     &quot;Docker.Dockerfile.executor&quot;: &quot;Run&quot;,
     &quot;Node.js.index.js.executor&quot;: &quot;Run&quot;,
     &quot;Node.js.main.js.executor&quot;: &quot;Run&quot;,
@@ -91,7 +196,7 @@
     &quot;RunOnceActivity.laravel-idea.search-composer-json&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/patri/PhpstormProjects/starter/TypeScript-Node-Starter&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/patri/PhpstormProjects/spravime-frontend/src/components/skeletons&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -119,21 +224,21 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\patri\PhpstormProjects\spravime-frontend\src\components\skeletons" />
+      <recent name="C:\Users\patri\PhpstormProjects\spravime-frontend\src\components\template" />
+      <recent name="C:\Users\patri\PhpstormProjects\spravime-frontend\src\components\views" />
+      <recent name="C:\Users\patri\PhpstormProjects\spravime-frontend\src\components\account\stats" />
       <recent name="C:\Users\patri\PhpstormProjects\spravime-frontend\src\components\sidebar" />
-      <recent name="C:\Users\patri\PhpstormProjects\spravime-frontend" />
-      <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\components\dialogs" />
-      <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\components" />
-      <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\views\auth" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\patri\PhpstormProjects\spravime-frontend\src\components\template" />
+      <recent name="C:\Users\patri\PhpstormProjects\spravime-frontend\src\components\views" />
       <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\components\dialogs" />
       <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\components\account\messages" />
       <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\views\authentication\user" />
-      <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\views\authentication\guest" />
-      <recent name="C:\Users\patri\PhpstormProjects\spravime-app-frontend\src\views\authentication" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.Backend DEV">
+  <component name="RunManager" selected="npm.build">
     <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
       <deployment type="dockerfile">
         <settings />
@@ -160,12 +265,24 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <list>
+      <item itemvalue="npm.build" />
       <item itemvalue="npm.Backend DEV" />
       <item itemvalue="npm.Frontend DEV" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.build" />
         <item itemvalue="npm.Backend DEV" />
         <item itemvalue="npm.Frontend DEV" />
       </list>
@@ -177,7 +294,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.14808.18" />
+        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.15026.12" />
       </set>
     </attachedChunks>
   </component>
@@ -295,7 +412,16 @@
       <workItem from="1710687702296" duration="325000" />
       <workItem from="1710694357510" duration="226000" />
       <workItem from="1710695506273" duration="23000" />
-      <workItem from="1710857716584" duration="593000" />
+      <workItem from="1710857716584" duration="1238000" />
+      <workItem from="1711117618693" duration="432000" />
+      <workItem from="1711128146085" duration="17886000" />
+      <workItem from="1711184231625" duration="44165000" />
+      <workItem from="1711360793670" duration="19450000" />
+      <workItem from="1711479544248" duration="10492000" />
+      <workItem from="1711529129265" duration="53000" />
+      <workItem from="1711530437373" duration="26178000" />
+      <workItem from="1711618951775" duration="13840000" />
+      <workItem from="1711641748815" duration="112000" />
     </task>
     <task id="LOCAL-00001" summary="Start">
       <option name="closed" value="true" />
@@ -513,7 +639,23 @@
       <option name="project" value="LOCAL" />
       <updated>1710687775432</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="v1.2 Debug">
+      <option name="closed" value="true" />
+      <created>1710858344224</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1710858344224</updated>
+    </task>
+    <task id="LOCAL-00029" summary="v1.2 Debug">
+      <option name="closed" value="true" />
+      <created>1711118046882</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1711118046882</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -544,6 +686,8 @@
     <MESSAGE value="v1.0 Testing Dockerfile" />
     <MESSAGE value="v1.1 Testing Dockerfile" />
     <MESSAGE value="v1.1 Debug" />
-    <option name="LAST_COMMIT_MESSAGE" value="v1.1 Debug" />
+    <MESSAGE value="v1.2 Debug" />
+    <MESSAGE value="v1.3 Debug" />
+    <option name="LAST_COMMIT_MESSAGE" value="v1.3 Debug" />
   </component>
 </project>

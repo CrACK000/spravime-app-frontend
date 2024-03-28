@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useMeta} from "vue-meta"
-import PanelGrid from "@/components/PanelGrid.vue"
+import PanelGrid from "@/components/template/PanelGrid.vue"
 import AvatarContainer from "@/components/account/gallery/AvatarContainer.vue"
 import GalleryContainer from "@/components/account/gallery/GalleryContainer.vue"
 

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import {useMeta} from 'vue-meta'
-import Container from "@/components/Container.vue"
-import Banner from "@/components/home/Banner.vue"
-import Stats from "@/components/home/Stats.vue"
-import LatestOffers from "@/components/home/LatestOffers.vue"
-import TopProfiles from "@/components/home/TopProfiles.vue"
-import Rating from "@/components/home/Rating.vue"
+import Container from "@/components/template/Container.vue"
+import Banner from "@/components/views/home/Banner.vue"
+import Stats from "@/components/views/home/Stats.vue"
+import LatestRequests from "@/components/views/home/LatestRequests.vue"
+import TopProfiles from "@/components/views/home/TopProfiles.vue"
+import Rating from "@/components/views/home/Rating.vue"
 
 useMeta({ title: 'Nestrácajte čas s hľadaním' })
 </script>
@@ -26,7 +26,7 @@ useMeta({ title: 'Nestrácajte čas s hľadaním' })
         <TopProfiles/>
       </div>
       <div class="col-span-11">
-        <LatestOffers/>
+        <LatestRequests/>
       </div>
     </div>
   </Container>

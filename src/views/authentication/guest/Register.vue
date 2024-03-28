@@ -3,10 +3,10 @@ import { useMeta } from "vue-meta";
 import axios from 'axios';
 import {ref} from "vue";
 import router from "@/router";
-import Panel from "@/components/Panel.vue";
-import PanelFormActions from "@/components/PanelFormActions.vue";
+import Panel from "@/components/template/Panel.vue";
+import PanelFormActions from "@/components/template/PanelFormActions.vue";
 import {useToast} from "primevue/usetoast";
-import PanelForm from "@/components/PanelForm.vue";
+import PanelForm from "@/components/template/PanelForm.vue";
 
 useMeta({ title: 'Vytvoriť účet' })
 

@@ -3,8 +3,8 @@ import {useMeta} from "vue-meta"
 import axios from 'axios'
 import {inject, ref} from "vue"
 import router from "@/router"
-import Panel from "@/components/Panel.vue"
-import PanelFormActions from "@/components/PanelFormActions.vue"
+import Panel from "@/components/template/Panel.vue"
+import PanelFormActions from "@/components/template/PanelFormActions.vue"
 import {useToast} from "primevue/usetoast"
 
 useMeta({ title: 'Prihlásiť sa' })

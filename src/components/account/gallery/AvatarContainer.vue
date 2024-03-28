@@ -3,9 +3,9 @@ import {inject, onMounted, ref} from "vue"
 import {useMeta} from "vue-meta"
 import axios from "axios"
 import { useToast } from "primevue/usetoast"
-import Panel from "@/components/Panel.vue"
-import PanelForm from "@/components/PanelForm.vue"
-import PanelFormActions from "@/components/PanelFormActions.vue"
+import Panel from "@/components/template/Panel.vue"
+import PanelForm from "@/components/template/PanelForm.vue"
+import PanelFormActions from "@/components/template/PanelFormActions.vue"
 import Avatar from "@/components/app/Avatar.vue"
 
 useMeta({ title: 'Vzhľad profilu' })

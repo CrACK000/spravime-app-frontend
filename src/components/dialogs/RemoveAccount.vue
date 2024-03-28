@@ -2,7 +2,7 @@
 import {inject, ref} from "vue"
 import axios from "axios"
 import {useToast} from "primevue/usetoast"
-import InputLabel from "@/components/InputLabel.vue"
+import InputLabel from "@/components/template/InputLabel.vue"
 import {getError} from "@/plugins/validation"
 
 type DialogRefType = {
@@ -16,9 +16,7 @@ const dialogRef = inject('dialogRef') as { value: DialogRefType }
 const check_password = ref<string>('')
 
 const closeDialog = (callback: any) => {
-
   dialogRef.value.close(callback)
-
 }
 const checkForm = () => {
 
@@ -40,7 +38,6 @@ const removeAccount = () => {
   axios.post(`${import.meta.env.VITE_BACKEND}/auth/security/remove-account`, { password: check_password.value, }, { withCredentials: true })
     .then(response => {
       if (response.data.success) {
-
         toast.add({
           severity: 'warn',
           summary: 'Účet',
@@ -48,11 +45,8 @@ const removeAccount = () => {
           group: 'br',
           life: 5000
         })
-
         closeDialog(true)
-
       } else {
-
         toast.add({
           severity: 'error',
           summary: 'Chyba',
@@ -60,12 +54,11 @@ const removeAccount = () => {
           group: 'br',
           life: 5000
         })
-
         closeDialog(false)
-
       }
     })
     .catch(error => {
+      console.error('[RemoveAccountError]', error)
       toast.add({
         severity: 'error',
         summary: 'Server',
@@ -75,9 +68,7 @@ const removeAccount = () => {
       })
     })
     .finally(() => {
-
       loading.value = false
-
     })
 }
 </script>
@@ -87,9 +78,11 @@ const removeAccount = () => {
 
     <div>
 
-      <p class="mb-6">
-        Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.
-        The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled.
+      <p class="mb-6 text-sm font-medium text-red-500">
+        <b>Upozornenie:</b> Chystáte sa odstrániť svoj účet. Tento proces <b>odstráni všetky vaše údaje</b> vrátane požiadaviek,
+        ponúk, dát o obrázkoch, recenzií a galérii - všetko to, čo je spojené s vaším účtom. Táto akcia je
+        <b>neodvolateľná</b> a všetky odstránené údaje <b>nebude možné obnoviť</b>. Prosím, preverte a uistite sa, že skutočne
+        chcete pokračovať, pretože tieto zmeny sú <b>natrvalo a nezvratne</b>.
       </p>
 
       <InputLabel

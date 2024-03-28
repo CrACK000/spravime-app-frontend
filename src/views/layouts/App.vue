@@ -18,7 +18,9 @@ import Footer from "@/views/layouts/Footer.vue"
       leave-active-class="animate__animated animate__fadeOut"
       mode="out-in"
     >
-      <component :is="Component"/>
+      <KeepAlive include="WorkersList, RequestsList">
+        <component :is="Component"/>
+      </KeepAlive>
     </transition>
   </RouterView>
   <DynamicDialog />

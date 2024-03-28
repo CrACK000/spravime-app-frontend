@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { inject } from 'vue'
 import { logout } from "@/plugins/logout"
-import {inject} from "vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,20 +18,20 @@ const router = createRouter({
     {
       path: '/search',
       name: 'workers',
-      component: () => import('@/views/AllWorkers.vue'),
+      component: () => import('@/views/WorkersList.vue'),
     },
     {
-      path: '/offers',
-      name: 'offers',
-      component: () => import('@/views/AllOffers.vue'),
+      path: '/requests',
+      name: 'requests',
+      component: () => import('@/views/RequestsList.vue'),
     },
     {
-      path: '/offers/:id',
-      name: 'offerDetail',
-      component: () => import('@/views/OfferDetails.vue'),
+      path: '/request/:requestId',
+      name: 'request',
+      component: () => import('@/views/RequestDetails.vue'),
     },
     {
-      path: '/profile/:id',
+      path: '/profile/:userId',
       name: 'profile',
       component: () => import('@/views/UserProfile.vue'),
     },
@@ -41,23 +41,21 @@ const router = createRouter({
       meta: { requiresAuth: true },
       children: [
         { path: '', redirect: '/account/dashboard' },
-        { path: 'create-offer',     name: 'offerAdd',         component: () => import('@/views/authentication/user/CreateOfferPanel.vue') },
-        { path: 'dashboard',        name: 'dashboard',        component: () => import('@/views/authentication/user/DashboardPanel.vue') },
-        { path: 'messages',         name: 'messages',         component: () => import('@/views/authentication/user/MessagesPanel.vue') },
-        { path: 'offers',           name: 'my-offers',        component: () => import('@/views/authentication/user/OffersPanel.vue') },
-        { path: 'offers/all',       name: 'offers-all',       component: () => import('@/views/authentication/user/OffersPanel.vue') },
-        { path: 'offers/waiting',   name: 'offers-waiting',   component: () => import('@/views/authentication/user/OffersPanel.vue') },
-        { path: 'profile',          name: 'my-account',       component: () => import('@/views/authentication/user/ProfilePanel.vue') },
-        { path: 'gallery',          name: 'user-gallery',     component: () => import('@/views/authentication/user/GalleryPanel.vue') },
-        { path: 'security',         name: 'user-security',    component: () => import('@/views/authentication/user/SecurityPanel.vue') },
-        { path: 'stats',            name: 'user-stats',       component: () => import('@/views/authentication/user/StatsPanel.vue') },
-        { path: 'plus',             name: 'user-plus',        component: () => import('@/views/authentication/user/PlusPanel.vue') },
+        { path: 'create-request',     name: 'create-request',      component: () => import('@/views/authentication/user/CreateRequestPanel.vue') },
+        { path: 'dashboard',          name: 'dashboard',           component: () => import('@/views/authentication/user/DashboardPanel.vue') },
+        { path: 'messages',           name: 'messages',            component: () => import('@/views/authentication/user/MessagesPanel.vue') },
+        { path: 'requests',           name: 'user-requests',       component: () => import('@/views/authentication/user/RequestsPanel.vue') },
+        { path: 'profile',            name: 'user-account',        component: () => import('@/views/authentication/user/ProfilePanel.vue') },
+        { path: 'gallery',            name: 'user-gallery',        component: () => import('@/views/authentication/user/GalleryPanel.vue') },
+        { path: 'security',           name: 'user-security',       component: () => import('@/views/authentication/user/SecurityPanel.vue') },
+        { path: 'stats',              name: 'user-stats',          component: () => import('@/views/authentication/user/StatsPanel.vue') },
+        { path: 'plus',               name: 'user-plus',           component: () => import('@/views/authentication/user/PlusPanel.vue') },
         {
           path: 'logout',
           name: 'logout',
           component: { template: '' },
-          beforeEnter(to, from, next) {
-            logout()
+          async beforeEnter(to, from, next) {
+            await logout()
             next({ name: 'home' })
           } },
       ]
@@ -109,7 +107,7 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 
-  return next() // Make sure to always call next().
+  return next()
 
 })
 

@@ -2,9 +2,9 @@
 import {useToast} from "primevue/usetoast"
 import {ref} from "vue"
 import axios from "axios"
-import PanelForm from "@/components/PanelForm.vue"
-import PanelFormActions from "@/components/PanelFormActions.vue"
-import Panel from "@/components/Panel.vue"
+import PanelForm from "@/components/template/PanelForm.vue"
+import PanelFormActions from "@/components/template/PanelFormActions.vue"
+import Panel from "@/components/template/Panel.vue"
 
 const toast = useToast()
 
