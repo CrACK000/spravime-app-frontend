@@ -19,6 +19,7 @@ const newMsg = ref<number>(auth?.newMsgCount)
           <AccountMenuItem :to="{ name: 'user-gallery' }" title="Galéria" icon="fa-regular fa-images"/>
           <AccountMenuItem :to="{ name: 'messages' }" title="Správy" icon="fa-regular fa-message" :badge="newMsg"/>
           <AccountMenuItem :to="{ name: 'user-requests' }" title="Moje požiadavky" icon="fa-solid fa-briefcase"/>
+          <AccountMenuItem :to="{ name: 'user-offers' }" title="Moje ponuky" icon="fa-regular fa-handshake"/>
           <AccountMenuItem :to="{ name: 'user-stats' }" title="Štatistika" icon="fa-solid fa-chart-line"/>
           <AccountMenuItem :to="{ name: 'user-plus' }" title="Plus +" icon="fa-regular fa-circle-check"/>
           <AccountMenuItem :to="{ name: 'user-security' }" title="Zabezpečenie" icon="fa-solid fa-lock"/>
@@ -26,16 +27,14 @@ const newMsg = ref<number>(auth?.newMsgCount)
         </AccountMenu>
       </div>
 
-      <div class="lg:w-9/12 mt-4">
+      <div class="lg:w-9/12 mt-4 px-2 xs:px-4">
         <router-view v-slot="{ Component, route }">
           <transition
             enter-active-class="animate__animated animate__fadeIn"
             leave-active-class="animate__animated animate__fadeOut"
             mode="out-in"
           >
-            <KeepAlive>
-              <component :is="Component" :key="route.path"/>
-            </KeepAlive>
+            <component :is="Component" :key="route.path"/>
           </transition>
         </router-view>
       </div>

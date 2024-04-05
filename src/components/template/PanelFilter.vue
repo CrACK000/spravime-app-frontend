@@ -4,17 +4,14 @@ import Panel from "@/components/template/Panel.vue"
 
 interface Props {
   submit: () => void,
-  keyup: (e: KeyboardEvent) => void
 }
 
-withDefaults(defineProps<Props>(), {
-  keyup: () => {}
-})
+withDefaults(defineProps<Props>(), {})
 </script>
 
 <template>
-  <form @submit.prevent="submit" @keyup="keyup">
-    <panel class="p-4">
+  <form @submit.prevent="submit">
+    <panel class="p-2 md:p-4">
       <slot/>
     </panel>
   </form>

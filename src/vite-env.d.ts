@@ -151,3 +151,11 @@ interface ReportData {
     created_at: string,
     updated_at: string,
 }
+
+interface Product {
+    //_id: string,
+    title: string,
+    price: string,
+    image: string,
+    description: string,
+}

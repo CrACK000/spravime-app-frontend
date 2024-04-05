@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref, inject} from 'vue'
+import {ref, inject, onBeforeUpdate} from 'vue'
 import {useMeta} from "vue-meta"
 import axios from "axios"
 import router from "@/router"
@@ -18,27 +18,28 @@ import SelectLabel from "@/components/template/SelectLabel.vue"
 import TextareaLabel from "@/components/template/TextareaLabel.vue"
 import SetAddress from "@/components/dialogs/SetAddress.vue"
 import AccountPanelHead from "@/components/template/AccountPanelHead.vue";
+import {onBeforeRouteLeave} from "vue-router";
+import {useConfirm} from "primevue/useconfirm";
+import ProductManagementDialog from "@/components/dialogs/ProductManagementDialog.vue";
 
 const auth      = inject<Auth>('auth')
+const user      = ref(auth?.userData as User)
 const loggedIn  = ref(auth?.loggedIn as boolean)
 const dialog    = useDialog()
+const confirm   = useConfirm()
 const toast     = useToast()
 
-useMeta({ title: 'Vytvoriť požiadavku' })
+useMeta({ title: 'Vytvoriť ponuku' })
 
-const loading = ref<boolean>(false)
-const errors  = ref<any>([])
-const form    = ref<any>({
-  title: 'Požiadavka na ' as string,
+const loading   = ref<boolean>(false)
+const errors    = ref<any>([])
+const form      = ref<any>({
+  title: '' as string,
   section: 0 as number,
   category: 0 as number,
-  address: '' as string,
-  time_range: false as boolean,
-  start_at: null,
-  end_at: null,
   description: '' as string,
-  rules: false as boolean,
 })
+const products  = ref<Product[]>([])
 
 const sections    = ref<Sections[]>(categoriesData.sections)
 const categories  = ref<Categories[]>(categoriesData.categories)
@@ -49,17 +50,17 @@ const submitForm = () => {
 
   loading.value = true
 
-  axios.post(`${import.meta.env.VITE_BACKEND}/auth/requests/create`, form.value, { withCredentials: true })
+  axios.post(`${import.meta.env.VITE_BACKEND}/auth/offers/create`, form.value, { withCredentials: true })
     .then(response => {
       if (response.data.success) {
         toast.add({
           severity: 'success',
-          summary: 'Požiadavka',
+          summary: 'Ponuka',
           detail: response.data.message,
           group: 'br',
           life: 4000
         })
-        router.push({ name: 'request', params: { requestId: response.data.last_id } })
+        router.push({ name: 'offer', params: { offerId: response.data.last_id } })
       } else {
         errors.value = response.data.errors
         toast.add({
@@ -72,7 +73,7 @@ const submitForm = () => {
       }
     })
     .catch(error => {
-      console.error('[CreateRequestError]', error)
+      console.error('[CreateOfferError]', error)
       toast.add({
         severity: 'error',
         summary: 'Server',
@@ -105,60 +106,100 @@ const checkForm = () => {
   return !errors.value.length
 
 }
-const closeTimeRange = () => {
-
-  form.value.start_at = null
-  form.value.end_at = null
-  form.value.time_range = false
-
-}
 const clearError = (where: string) => {
   return errors.value = errors.value.filter((error: any) => error.where !== where)
 }
 
-const openAddressDialog = () => {
-  dialog.open(SetAddress, {
+const addProduct = () => {
+  dialog.open(ProductManagementDialog, {
     props: {
-      header: 'Nastaviť adresu',
+      header: 'Pridať produkt',
       contentClass: 'p-0 md:p-6',
       modal: true,
+    },
+    data: {
+      productData: null
     },
     onClose: (opt: any) => {
       if (opt.data) {
         if (!opt.data.cancelable) {
-          form.value.address = opt.data
-          clearError('address')
+          console.log(opt.data)
+          products.value.push(opt.data)
         }
       }
     }
   })
 }
+const editProduct = (key: number) => {
+  dialog.open(ProductManagementDialog, {
+    props: {
+      header: 'Upraviť produkt',
+      contentClass: 'p-0 md:p-6',
+      modal: true,
+    },
+    data: {
+      productData: products.value[key]
+    },
+    onClose: (opt: any) => {
+      if (opt.data) {
+        if (!opt.data.cancelable) {
+          products.value[key] = opt.data
+        }
+      }
+    }
+  })
+}
+const removeProduct = (key: number) => {
+  products.value.splice(key, 1)
+}
 
+onBeforeRouteLeave((to, from, next) => {
+  if (products.value.length) {
+    confirm.require({
+      header: 'Opustiť stránku',
+      message: 'Naozaj chcete opustiť stránku? Všetky data budu stratené a nebudete sa k nim môcť vrátiť.',
+      icon: 'fa-solid fa-triangle-exclamation',
+      rejectIcon: 'fa-regular fa-circle-xmark',
+      acceptIcon: 'fa-solid fa-arrow-right-from-bracket',
+      rejectClass: 'form-secondary-button-sm',
+      acceptClass: 'form-button-sm',
+      acceptLabel: 'Opustiť',
+      rejectLabel: 'Zrušiť',
+      accept: () => {
+        next()
+      },
+      reject: () => {
+        //
+      }
+    })
+  } else {
+    next()
+  }
+})
 </script>
 
 <template>
   <div>
 
     <AccountPanelHead>
-      Vytvoriť novú požiadavku
+      Vytvoriť novú ponuku
     </AccountPanelHead>
 
     <form @submit.prevent="submitForm" v-if="loggedIn">
       <panel divide="y">
+
         <panel-form>
           <InputContainer>
-
             <InputLabel
               type="text"
-              label="Stručný názov požiadavky"
+              label="Názov ponuky"
               label-key="title"
-              placeholder="Požiadavka na..."
+              placeholder="Ponuka na..."
               v-model="form.title"
               @change="clearError('title')"
               :error="getError(errors, 'title')"
-              info="Príklad „Požiadavka na výstavbu štvorizbového bungalovu na kľúč”"
+              info="Príklad „Ponuka na výrobu železných konštrukcii”"
             />
-
             <SelectLabel
               label="Sekcia"
               label-key="section"
@@ -172,7 +213,6 @@ const openAddressDialog = () => {
                 <option v-for="section in sections" :value="section.id">{{ section.title }}</option>
               </template>
             </SelectLabel>
-
             <SelectLabel
               label="Kategórie"
               label-key="category"
@@ -189,112 +229,69 @@ const openAddressDialog = () => {
                 </template>
               </template>
             </SelectLabel>
-
           </InputContainer>
         </panel-form>
 
-        <panel-form>
-          <div class="mb-5">
-            <button type="button" @click="openAddressDialog" class="form-secondary-button flex gap-2 items-center">
-              <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.8 14h0a7 7 0 1 0-11.5 0h0l.1.3.3.3L12 21l5.1-6.2.6-.7.1-.2Z"/>
-              </svg>
-              Nastaviť adresu
-            </button>
-          </div>
-          <div>
-            <div class="mb-1">Adresa</div>
-            <div :class="[ getError(errors, 'address') ? 'border-red-200 dark:border-red-700/40' : 'border-gray-200 dark:border-gray-700/40', 'p-3 border rounded-md']">
-              <div v-if="form.address.length">
-                <span v-text="form.address" class="font-semibold"></span> - <button type="button" @click="openAddressDialog" class="link text-sm">zmeniť</button>
-              </div>
-              <div v-else>
-                Je potrebné nastaviť adresu
-              </div>
+        <panel-form width="full">
+          <div class="mb-6 md:px-4 flex items-center justify-between">
+            <div class="text-lg">Produkty</div>
+            <div v-if="products.length < 6">
+              <button v-if="user.verify" type="button" @click="addProduct" class="form-button-sm">Pridať produkt</button>
             </div>
-            <div class="text-red-500 text-sm mt-1.5" v-if="getError(errors, 'address')" v-text="getError(errors, 'address')"></div>
-          </div>
-        </panel-form>
-
-        <panel-form>
-          <div v-if="!form.time_range">
-            <div class="mb-1">Dátum prác</div>
-            <button type="button" @click="form.time_range = true" class="form-secondary-button">
-              <i class="fa-regular fa-calendar me-1"></i> Zadať časový rozsah
-            </button>
-            <div class="mt-2 text-sm opacity-75">
-              Ak je potrebné požiadavku vykonať v určitom čase.
+            <div v-else class="text-sm">
+              Maximálny počet produktov
             </div>
           </div>
-          <div v-if="form.time_range">
-            <InputContainer>
 
-              <InputLabel
-                type="datetime-local"
-                label="Začiatok prác"
-                label-key="start_at"
-                v-model="form.start_at"
-                @change="clearError('start_at')"
-                :error="getError(errors, 'start_at')"
-              />
+          <div v-if="!user.verify" class="bg-blue-500/10 border border-blue-600 rounded-xl p-4 text-blue-500 flex flex-wrap items-center gap-x-2 gap-y-1">
+            <span>Pridávanie produktov do ponuky je iba pre členov <b>Plus+</b>.</span>
+            <router-link :to="{ name: 'user-plus' }" class="form-button-sm ms-auto">Aktivovať Plus+</router-link>
+          </div>
 
-              <InputLabel
-                type="datetime-local"
-                label="Ukončenie prác"
-                label-key="end_at"
-                v-model="form.end_at"
-                @change="clearError('end_at')"
-                :error="getError(errors, 'end_at')"
-              />
-
-              <div class="text-sm text-end">
-                <button type="button" class="link" @click="closeTimeRange">zrušiť</button>
+          <div v-if="user.verify" class="grid grid-cols-3 gap-6">
+            <div v-for="(product, key) in products" class="p-4 bg-white dark:bg-gray-800 shadow-lg shadow-black/10 rounded-3xl">
+              <div class="aspect-[4/3] mb-4 relative rounded-2xl overflow-hidden flex items-center justify-center">
+                <img :src="product.image" alt="Produkt 1">
+                <div class="absolute top-2 left-2 bg-blue-500 text-white px-1.5 py-1 rounded-lg shadow-lg">{{ product.price }}€</div>
+                <div class="absolute top-2 right-2">
+                  <div class="flex items-center gap-x-1">
+                    <button type="button" @click="editProduct(key)" class="bg-blue-500 text-white p-1 rounded-lg shadow-lg">
+                      <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
+                      </svg>
+                    </button>
+                    <button type="button" @click="removeProduct(key)" class="bg-red-500 text-white p-1 rounded-lg shadow-lg">
+                      <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
               </div>
-
-            </InputContainer>
+              <div class="mb-1">
+                {{ product.title }}
+              </div>
+              <div class="text-xs line-clamp-3 opacity-75">
+                {{ product.description }}
+              </div>
+            </div>
+            <div v-if="!products.length" class="col-span-3 text-center">
+              Zatiaľ neboli pridané žiadne produkty
+            </div>
           </div>
         </panel-form>
 
         <panel-form width="full">
-
           <TextareaLabel
-            label="Informácie k požiadavke"
+            label="Informácie o ponuke"
             label-key="description"
-            :rows="8"
+            :rows="10"
             counter
-            :max-count="1000"
+            :max-count="5000"
             v-model="form.description"
             @change="clearError('description')"
             :error="getError(errors, 'description')"
           />
-
-        </panel-form>
-
-        <panel-form width="full">
-          <div>
-            <div>
-              <div class="mb-1">Podmienky požiadavky.</div>
-              <ul class="mb-10 list-decimal list-inside bg-gray-100 dark:bg-gray-700/25 shadow text-gray-600 dark:text-gray-300/75 rounded-md divide-y divide-gray-200 dark:divide-gray-700/40">
-                <li class="flex gap-5 items-start p-5">
-                  <div class="w-5 h-5 flex justify-center items-center bg-blue-500/75 rounded-full font-extrabold text-white text-xs mt-0.5">1</div>
-                  <div class="w-full">
-                    Každá požiadavka bude viditeľná iba 2 mesiace, ak ju neobnovíte po uplynutí 3 mesiacov sa požiadavka automaticky odstráni zo systému a nebude ju možne obnoviť.
-                  </div>
-                </li>
-                <li class="flex gap-5 items-start p-5">
-                  <div class="w-5 h-5 flex justify-center items-center bg-blue-500/75 rounded-full font-extrabold text-white text-xs mt-0.5">2</div>
-                  <div class="w-full">
-                    Dalšia podmienka
-                  </div>
-                </li>
-              </ul>
-              <div class="flex gap-3 items-center">
-                <input type="checkbox" id="rules" v-model="form.rules" @change="clearError('rules')" class="input-checkbox"/>
-                <label for="rules" :class="[ getError(errors, 'rules') ? 'text-red-500' : '' ]">Súhlasím s podmienkami požiadavky.</label>
-              </div>
-            </div>
-          </div>
         </panel-form>
 
         <panel-form-actions>

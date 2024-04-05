@@ -175,7 +175,11 @@ const showModalCreateReview = () => {
       profileId: route.params.userId
     },
     onClose: (opt: any) => {
-      reviews.value.push(opt.data)
+      if (opt.data) {
+        if (!opt.data.cancelable) {
+          reviews.value.push(opt.data)
+        }
+      }
     }
   })
 }

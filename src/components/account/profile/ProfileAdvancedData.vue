@@ -182,7 +182,7 @@ onMounted(() => {
           />
 
           <div>
-            <label class="mb-1 block" for="sections">Sekcie</label>
+            <label class="mb-1 block text-sm xs:text-base" for="sections">Sekcie</label>
             <select :class="[ getError(errors ,'sections') ? 'input-danger' : 'input', 'w-full h-44']" id="sections" v-model="advancedData.sections" @change="checkForm" multiple>
               <option v-for="section in allSections" :value="section.id">{{ section.title }}</option>
             </select>

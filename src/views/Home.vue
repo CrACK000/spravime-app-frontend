@@ -3,31 +3,28 @@ import {useMeta} from 'vue-meta'
 import Container from "@/components/template/Container.vue"
 import Banner from "@/components/views/home/Banner.vue"
 import Stats from "@/components/views/home/Stats.vue"
-import LatestRequests from "@/components/views/home/LatestRequests.vue"
-import TopProfiles from "@/components/views/home/TopProfiles.vue"
-import Rating from "@/components/views/home/Rating.vue"
+import Requests from "@/components/views/home/Requests.vue"
+import Products from "@/components/views/home/Products.vue"
+import AdPlus from "@/components/views/home/AdPlus.vue"
+import AdRating from "@/components/views/home/AdRating.vue"
+import AdOffers from "@/components/views/home/AdOffers.vue"
 
 useMeta({ title: 'Nestrácajte čas s hľadaním' })
 </script>
 
 <template>
-  <Container>
-    <div class="grid grid-cols-11 items-center md:gap-x-12 lg:gap-x-16 xl:gap-x-20 gap-y-12 lg:gap-y-20 xl:gap-y-44 my-10">
-      <div class="col-span-11">
-        <Banner/>
+  <div class="sp-bg">
+    <Banner/>
+    <Requests/>
+    <Products/>
+    <Stats/>
+
+    <Container>
+      <div class="grid xl:grid-cols-3 gap-10 mt-32">
+        <AdRating/>
+        <AdPlus/>
+        <AdOffers/>
       </div>
-      <div class="col-span-11">
-        <Stats/>
-      </div>
-      <div class="col-span-11 md:col-span-7">
-        <Rating/>
-      </div>
-      <div class="col-span-11 md:col-span-4">
-        <TopProfiles/>
-      </div>
-      <div class="col-span-11">
-        <LatestRequests/>
-      </div>
-    </div>
-  </Container>
+    </Container>
+  </div>
 </template>

@@ -13,7 +13,7 @@ defineProps({
 <template>
   <div>
 
-    <label class="mb-1 block" :for="labelKey">{{ label }}</label>
+    <label class="mb-1 block text-sm xs:text-base" :for="labelKey">{{ label }}</label>
 
     <input
       :type="type"

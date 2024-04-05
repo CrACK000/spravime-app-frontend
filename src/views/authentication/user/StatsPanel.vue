@@ -17,7 +17,7 @@ const user = ref(auth?.userData as User)
 <template>
   <PanelGrid grid="12">
 
-    <template v-if="!user.verify">
+    <template v-if="user.verify">
       <StatsProfile/>
       <StatsRequests/>
       <StatsOffers/>

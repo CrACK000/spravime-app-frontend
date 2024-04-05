@@ -15,30 +15,30 @@ const typePay = ref<'month' | 'year'>('month')
 <template>
   <PanelPlus class="relative">
 
-    <div class="absolute top-0 right-0 m-10">
+    <div class="absolute top-0 right-0 m-5 md:m-10">
       <div v-if="verifyPlus">
-        <button type="button" class="border bg-blue-500/5 hover:bg-blue-500/20 dark:hover:bg-blue-500/10 border-blue-500 dark:border-blue-600 text-blue-700 dark:text-blue-500 px-2.5 py-1.5 text-sm rounded-lg transition">
+        <button type="button" class="border bg-blue-500/5 hover:bg-blue-500/20 dark:hover:bg-blue-500/10 border-blue-500 dark:border-blue-600 text-blue-700 dark:text-blue-500 px-2.5 py-1.5 text-xs md:text-sm rounded-lg transition">
           Zrušiť odber
         </button>
       </div>
       <div v-else class="flex items-center">
-        <button type="button" v-on:click="typePay = 'month'" class="border bg-blue-500/5 hover:bg-blue-500/20 dark:hover:bg-blue-500/10 border-blue-500 dark:border-blue-600 text-blue-700 dark:text-blue-500 px-2.5 py-1.5 text-sm rounded-l-lg transition" :class="[typePay === 'month' ? 'opacity-100' : 'opacity-50']">
+        <button type="button" v-on:click="typePay = 'month'" class="border bg-blue-500/5 hover:bg-blue-500/20 dark:hover:bg-blue-500/10 border-blue-500 dark:border-blue-600 text-blue-700 dark:text-blue-500 px-2.5 py-1.5 text-xs md:text-sm rounded-l-lg transition" :class="[typePay === 'month' ? 'opacity-100' : 'opacity-50']">
           Mesiac
         </button>
-        <button type="button" v-on:click="typePay = 'year'" class="border bg-blue-500/5 hover:bg-blue-500/20 dark:hover:bg-blue-500/10 border-blue-500 dark:border-blue-600 text-blue-700 dark:text-blue-500 px-2.5 py-1.5 text-sm rounded-r-lg transition" :class="[typePay === 'year' ? 'opacity-100]' : 'opacity-50']">
+        <button type="button" v-on:click="typePay = 'year'" class="border bg-blue-500/5 hover:bg-blue-500/20 dark:hover:bg-blue-500/10 border-blue-500 dark:border-blue-600 text-blue-700 dark:text-blue-500 px-2.5 py-1.5 text-xs md:text-sm rounded-r-lg transition" :class="[typePay === 'year' ? 'opacity-100]' : 'opacity-50']">
           Rok
         </button>
       </div>
     </div>
 
-    <div class="text-center mb-14">
+    <div class="text-center mb-14 mt-6 md:mt-0">
       <Avatar :img="user.avatar" size="xl" rounded="full"/>
 
       <div class="mt-10">
         <div v-if="verifyPlus">
-          <div class="text-blue-600 dark:text-blue-500 text-2xl font-bold flex items-center justify-center gap-x-2">
-            <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2c-.791 0-1.55.314-2.11.874l-.893.893a.985.985 0 0 1-.696.288H7.04A2.984 2.984 0 0 0 4.055 7.04v1.262a.986.986 0 0 1-.288.696l-.893.893a2.984 2.984 0 0 0 0 4.22l.893.893a.985.985 0 0 1 .288.696v1.262a2.984 2.984 0 0 0 2.984 2.984h1.262c.261 0 .512.104.696.288l.893.893a2.984 2.984 0 0 0 4.22 0l.893-.893a.985.985 0 0 1 .696-.288h1.262a2.984 2.984 0 0 0 2.984-2.984V15.7c0-.261.104-.512.288-.696l.893-.893a2.984 2.984 0 0 0 0-4.22l-.893-.893a.985.985 0 0 1-.288-.696V7.04a2.984 2.984 0 0 0-2.984-2.984h-1.262a.985.985 0 0 1-.696-.288l-.893-.893A2.984 2.984 0 0 0 12 2Zm3.683 7.73a1 1 0 1 0-1.414-1.413l-4.253 4.253-1.277-1.277a1 1 0 0 0-1.415 1.414l1.985 1.984a1 1 0 0 0 1.414 0l4.96-4.96Z" clip-rule="evenodd"/></svg>
-            Plus + je aktivované
+          <div class="text-blue-600 dark:text-blue-500 text-lg md:text-2xl font-bold flex items-center justify-center gap-x-2">
+            <svg class="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2c-.791 0-1.55.314-2.11.874l-.893.893a.985.985 0 0 1-.696.288H7.04A2.984 2.984 0 0 0 4.055 7.04v1.262a.986.986 0 0 1-.288.696l-.893.893a2.984 2.984 0 0 0 0 4.22l.893.893a.985.985 0 0 1 .288.696v1.262a2.984 2.984 0 0 0 2.984 2.984h1.262c.261 0 .512.104.696.288l.893.893a2.984 2.984 0 0 0 4.22 0l.893-.893a.985.985 0 0 1 .696-.288h1.262a2.984 2.984 0 0 0 2.984-2.984V15.7c0-.261.104-.512.288-.696l.893-.893a2.984 2.984 0 0 0 0-4.22l-.893-.893a.985.985 0 0 1-.288-.696V7.04a2.984 2.984 0 0 0-2.984-2.984h-1.262a.985.985 0 0 1-.696-.288l-.893-.893A2.984 2.984 0 0 0 12 2Zm3.683 7.73a1 1 0 1 0-1.414-1.413l-4.253 4.253-1.277-1.277a1 1 0 0 0-1.415 1.414l1.985 1.984a1 1 0 0 0 1.414 0l4.96-4.96Z" clip-rule="evenodd"/></svg>
+            Plus+ je aktivované
           </div>
           <div class="mt-2 text-sm">
             Ďakujeme, že ste sa prihlásili na odber.
@@ -57,7 +57,7 @@ const typePay = ref<'month' | 'year'>('month')
     <div class="mb-4 text-blue-500">
       Výhody služby Plus +
     </div>
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 -mx-5 md:mx-0">
       <div class="plus-item">
         <svg v-if="verifyPlus" class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
         <svg v-else class="w-6 h-6 opacity-40" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 1 0-18c1.052 0 2.062.18 3 .512M7 9.577l3.923 3.923 8.5-8.5M17 14v6m-3-3h6"/></svg>

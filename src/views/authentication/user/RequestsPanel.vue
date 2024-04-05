@@ -7,9 +7,12 @@ import {timeUntil} from "@/plugins/functions"
 import {useDialog} from "primevue/usedialog"
 import {useConfirm} from "primevue/useconfirm"
 import userRequests from "@/plugins/auth/user-requests"
+import {FwbDropdown} from "flowbite-vue"
+import Panel from "@/components/template/Panel.vue"
 import EditRequest from "@/components/dialogs/EditRequest.vue"
 import SkeletonUserRequests from "@/components/skeletons/SkeletonUserRequests.vue"
-import AccountPanelHead from "@/components/template/AccountPanelHead.vue";
+import AccountPanelHead from "@/components/template/AccountPanelHead.vue"
+import TopRequest from "@/components/dialogs/TopRequest.vue"
 
 useMeta({ title: 'Moje požiadavky' })
 
@@ -84,6 +87,23 @@ const showEditModal = (_id: string, data: any) => {
     }
   })
 }
+const showTopModal = (_id: string, data: any) => {
+  dialog.open(TopRequest, {
+    props: {
+      header: 'Topovať požiadavku',
+      contentClass: 'px-0 pb-0 md:px-6 md:pb-6',
+      modal: true,
+    },
+    data: {
+      reviewData: data
+    },
+    onClose: (opt: any) => {
+      if (opt.data) {
+        console.log(opt.data)
+      }
+    }
+  })
+}
 
 onMounted(async () => {
   if (!requests.value.length) {
@@ -99,18 +119,18 @@ onMounted(async () => {
     <AccountPanelHead>
       Moje požiadavky
       <template #right>
-        <router-link :to="{ name: 'create-request' }" class="flex items-center text-sm py-1.5 px-2.5 bg-gradient-to-bl from-blue-600 to-indigo-500 rounded-lg text-blue-100 hover:text-white transition">
+        <router-link :to="{ name: 'create-request' }" class="form-button-sm">
           Vytvoriť novú
         </router-link>
       </template>
     </AccountPanelHead>
 
-    <div class="shadow-md shadow-blue-700/5 dark:shadow-black/10 rounded-none md:rounded-lg overflow-hidden flex flex-col divide-y divide-gray-200 dark:divide-gray-700/40">
+    <panel divide="y">
 
       <template v-if="!loading">
         <!-- Všetky -->
         <template v-if="requests.length" v-for="request in requests" :key="request.id">
-          <div class="flex flex-wrap gap-5 items-start p-5 bg-white/75 dark:bg-gray-800/50 dark:hover:bg-gray-800 hover:bg-white transition">
+          <div class="flex flex-wrap gap-5 items-center p-5 hover:bg-white dark:hover:bg-gray-900/5 transition first:md:rounded-t-2xl last:md:rounded-b-2xl">
             <div>
               <div class="md:text-lg text-gray-900 dark:text-gray-300">
                 {{ request.title }}
@@ -124,30 +144,40 @@ onMounted(async () => {
                   <i class="fa-solid fa-spinner fa-spin me-1"></i>
                   Čaká na schválenie
                 </div>
-                <div class="text-gray-400 bg-gray-400/10 px-1 rounded">
-                  Platnosť {{ timeUntil(request.closed_at) }}
+                <div class="text-gray-500 bg-gray-200 dark:text-gray-400 dark:bg-gray-400/10 px-1 rounded">
+                  Aktívne ešte {{ timeUntil(request.closed_at) }}
                 </div>
               </div>
             </div>
-            <div class="ms-auto flex justify-end items-center gap-2">
-              <!-- Top button -->
-              <button class="text-blue-700 border border-blue-700 hover:bg-blue-800/10 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:bg-blue-500/20 dark:focus:ring-blue-800" type="button" @click="showEditModal(request._id, request)">
-                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-width="2" d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"/>
-                </svg>
-              </button>
-              <!-- Edit button -->
-              <button class="text-blue-700 border border-blue-700 hover:bg-blue-800/10 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:bg-blue-500/20 dark:focus:ring-blue-800" type="button" @click="showEditModal(request._id, request)">
-                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
-                </svg>
-              </button>
-              <!-- Remove button -->
-              <button type="button" class="text-red-700 border border-red-700 hover:bg-red-800/10 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm p-1 text-center dark:border-red-500 dark:text-red-500 dark:hover:bg-red-600/20 dark:focus:ring-red-900" @click="removeRequest(request._id)">
-                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
-                </svg>
-              </button>
+            <div class="ms-auto">
+              <fwb-dropdown placement="left">
+                <template #trigger>
+                  <button type="button" class="bg-white dark:bg-gray-800 dark:hover:bg-gray-700/50 hover:bg-gray-100 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-400 rounded-lg p-2">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
+                      <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
+                    </svg>
+                  </button>
+                </template>
+                <div class="z-10 bg-white divide-y divide-gray-100 dark:divide-gray-600 rounded-lg shadow dark:bg-gray-700 overflow-hidden">
+                  <ul class="text-gray-700 dark:text-gray-200">
+                    <li>
+                      <button type="button" @click="showEditModal(request._id, request)" class="block w-full px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                        Upraviť
+                      </button>
+                    </li>
+                    <li>
+                      <button type="button" @click="showTopModal(request._id, request)" class="block w-full px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                        Topovať
+                      </button>
+                    </li>
+                    <li>
+                      <button type="button" @click="removeRequest(request._id)" class="block w-full px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-red-500">
+                        Odstrániť
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </fwb-dropdown>
             </div>
           </div>
         </template>
@@ -159,6 +189,6 @@ onMounted(async () => {
       <!-- loading my requests -->
       <SkeletonUserRequests v-else/>
 
-    </div>
+    </panel>
   </div>
 </template>

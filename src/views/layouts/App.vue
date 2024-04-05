@@ -25,6 +25,6 @@ import Footer from "@/views/layouts/Footer.vue"
   </RouterView>
   <DynamicDialog />
   <ConfirmDialog></ConfirmDialog>
-  <Toast position="bottom-right" group="br" />
+  <Toast position="bottom-right" class="w-full md:w-[380px] -me-[20px] md:-me-0" group="br" />
   <Footer/>
 </template>

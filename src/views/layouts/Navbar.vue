@@ -21,10 +21,11 @@ const visible = ref(false)
 </script>
 
 <template>
-  <div>
-    <div class="w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-9/12 mx-auto px-4 md:px-0 py-5 md:pt-14 md:pb-16 flex justify-between items-center">
+  <div class="z-50">
+    <div class="w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-9/12 mx-auto px-4 md:px-0 py-3 md:pt-14 md:pb-16 flex justify-between items-center">
+
       <router-link :to="{ name: 'index' }" class="text-2xl md:text-4xl lg:text-5xl select-none cursor-pointer">
-        <img src="/logo.png" alt="Spravime Logo"/>
+        <img src="/logo.png" alt="Spravime Logo" class="w-28"/>
       </router-link>
 
       <div class="lg:flex items-center gap-6 hidden">
@@ -132,6 +133,7 @@ const visible = ref(false)
                       <SidebarListItem @click="closeCallback" :to="{ name: 'user-gallery' }" title="Galéria" icon="fa-regular fa-images"/>
                       <SidebarListItem @click="closeCallback" :to="{ name: 'messages' }" title="Správy" icon="fa-regular fa-message" :badge="newMsg"/>
                       <SidebarListItem @click="closeCallback" :to="{ name: 'user-requests' }" title="Moje požiadavky" icon="fa-solid fa-briefcase"/>
+                      <SidebarListItem @click="closeCallback" :to="{ name: 'user-offers' }" title="Moje ponuky" icon="fa-regular fa-handshake"/>
                       <SidebarListItem @click="closeCallback" :to="{ name: 'user-stats' }" title="Štatistika" icon="fa-solid fa-chart-line"/>
                       <SidebarListItem @click="closeCallback" :to="{ name: 'user-plus' }" title="Plus +" icon="fa-regular fa-circle-check"/>
                       <SidebarListItem @click="closeCallback" :to="{ name: 'user-security' }" title="Zabezpečenie" icon="fa-solid fa-lock"/>
@@ -144,8 +146,8 @@ const visible = ref(false)
           </template>
         </Sidebar>
 
-        <button @click="visible = true" type="button" class="p-3 bg-white text-gray-700 dark:bg-gray-800 dark:text-gray-300 rounded-xl shadow-md">
-          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+        <button @click="visible = true" type="button" class="p-3 text-black dark:text-gray-300">
+          <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
           </svg>
         </button>

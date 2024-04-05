@@ -66,6 +66,7 @@ onMounted(async () => {
   <Container>
     <div class="grid grid-cols-12 gap-y-6 lg:gap-y-8">
 
+      <!--
       <div class="col-span-12 bg-gradient-to-bl from-blue-200/10 to-blue-200/40 dark:to-blue-500/20 dark:from-blue-500/5 text-blue-600 dark:text-blue-400/75 md:rounded-2xl p-6">
         <div class="font-medium text-lg mb-3 flex items-center gap-x-2">
           <svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -77,7 +78,7 @@ onMounted(async () => {
           V našom zozname požiadaviek nájdete svoj ideálny projekt. S filtrovaním môžete nájsť prácu presne
           podľa vašich predstáv, bez ohľadu na oblasť. Objavujte nové možnosti ešte dnes!
         </p>
-      </div>
+      </div>-->
 
       <div class="col-span-12 flex flex-col gap-12">
         <PanelFilter :submit="submitFilter" :keyup="submitFilter">
@@ -147,11 +148,11 @@ onMounted(async () => {
             v-for="request in filteredRequests"
             :to="{ name: 'request', params: { requestId: request._id } }"
           >
-            <div class="panel-item py-4 px-4 group">
+            <div class="hover:bg-white dark:hover:bg-gray-900/10 p-5 group">
               <div class="flex flex-wrap gap-3 items-center mb-1">
                 <div class="md:text-lg">{{ request.title }} <Status :status="Boolean(request.status)" class="inline-block align-middle ms-1.5"/></div>
               </div>
-              <div class="opacity-60 group-hover:opacity-100 transition flex flex-wrap items-center gap-x-6 gap-y-2">
+              <div class="opacity-60 group-hover:opacity-100 flex flex-wrap items-center gap-x-6 gap-y-2">
                 <div class="flex items-center gap-x-0.5 text-xs font-medium">
                   <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>
                   {{ request.author.profile.name ?? request.author.username }}

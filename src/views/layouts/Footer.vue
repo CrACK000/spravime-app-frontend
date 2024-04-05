@@ -1,42 +1,61 @@
 <script setup lang="ts">
-import Panel from "@/components/template/Panel.vue"
-import Button from "primevue/button"
+import Container from "@/components/template/Container.vue"
+import FooterMenuHead from "@/components/template/FooterMenuHead.vue"
+import FooterMenuItem from "@/components/template/FooterMenuItem.vue"
+import FooterMenu from "@/components/template/FooterMenu.vue"
+import FooterMenuItemExt from "@/components/template/FooterMenuItemExt.vue"
 </script>
 
 <template>
-  <div class="w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-9/12 mx-auto mt-auto">
-    <panel class="mb-4 p-4">
-      <div class="w-full mx-auto md:flex md:items-center md:justify-between">
-        <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">2024 Spravime. All Rights Reserved.</span>
-        <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
-          <li>
-            <router-link :to="{ name: 'login' }" class="link hover:underline me-4 md:me-6">About</router-link>
-          </li>
-          <li>
-            <a href="#" class="link hover:underline me-4 md:me-6">Privacy Policy</a>
-          </li>
-          <li>
-            <a href="#" class="link hover:underline me-4 md:me-6">Licensing</a>
-          </li>
-          <li>
-            <a href="#" class="link hover:underline">Contact</a>
-          </li>
-        </ul>
-        <button id="theme-toggle" type="button" class="text-sm link">
-          <span id="theme-toggle-dark-icon" class="hidden">
-            <span class="flex gap-x-1 items-center">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+  <div class="sp-footer">
+    <Container>
+      <div class="grid xl:grid-cols-6 gap-8 md:mb-10 md:mt-28">
 
-            </span>
-          </span>
-          <span id="theme-toggle-light-icon" class="hidden">
-            <span class="flex gap-x-1 items-center">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+        <div class="col-span-full xl:col-span-2 order-2 xl:order-1">
+          <div class="flex flex-col md:flex-row xl:flex-col justify-between items-center gap-y-8 p-6 h-full">
+            <div>
+              <img src="/logo.png" alt="Logo" class="w-24 md:w-32">
+            </div>
+            <div class="xl:mt-auto text-sm dark:text-gray-400 text-center md:text-start">Copyright © {{ new Date().getFullYear() }} Spravime.<br> All rights reserved.</div>
+          </div>
+        </div>
 
-            </span>
-          </span>
-        </button>
+        <div class="col-span-full xl:col-span-4 order-1 xl:order-2 grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-6 lg:gap-8 items-start text-sm md:text-base">
+          <FooterMenu>
+            <FooterMenuHead title="Pomoc"/>
+            <FooterMenuItem title="Časté otázky" :to="{ name: 'index' }"/>
+            <FooterMenuItem title="Zoznam zmien" :to="{ name: 'index' }"/>
+            <FooterMenuItem title="Spätná väzba" :to="{ name: 'index' }"/>
+            <FooterMenuItem title="Plus+" :to="{ name: 'index' }"/>
+            <li>
+              <button id="theme-toggle" type="button" class="link hover:underline">
+                <span id="theme-toggle-dark-icon" class="hidden">Tmavý režim</span>
+                <span id="theme-toggle-light-icon" class="hidden">Svetlý režim</span>
+              </button>
+            </li>
+          </FooterMenu>
+
+          <FooterMenu>
+            <FooterMenuHead title="Firma"/>
+            <FooterMenuItem title="O nás" :to="{ name: 'index' }"/>
+            <FooterMenuItem title="Shop" :to="{ name: 'index' }"/>
+          </FooterMenu>
+
+          <FooterMenu>
+            <FooterMenuHead title="Kontakt"/>
+            <FooterMenuItemExt title="Facebook" href="#"/>
+            <FooterMenuItemExt title="Instagram" href="#"/>
+            <FooterMenuItemExt title="Email" href="#"/>
+          </FooterMenu>
+
+          <FooterMenu>
+            <FooterMenuHead title="Práva & Podmienky"/>
+            <FooterMenuItem title="Zásady ochrany osobných údajov" :to="{ name: 'index' }"/>
+            <FooterMenuItem title="Podmienky služby" :to="{ name: 'index' }"/>
+          </FooterMenu>
+        </div>
+
       </div>
-    </panel>
+    </Container>
   </div>
 </template>
