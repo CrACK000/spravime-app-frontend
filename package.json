@@ -6,6 +6,7 @@
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
+    "serve": "vite preview --host 192.168.88.251",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
   },
@@ -22,6 +23,7 @@
     "flowbite-vue": "^0.1.2",
     "js-cookie": "^3.0.5",
     "primevue": "^3.43.0",
+    "swiper": "^11.1.0",
     "vue": "^3.3.4",
     "vue-meta": "^3.0.0-alpha.10",
     "vue-router": "^4.2.5",

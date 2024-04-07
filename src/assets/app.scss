@@ -50,6 +50,10 @@ body {
   min-height: 100vh;
 }
 
+.sp-baloo {
+  font-family: $font-baloo;
+}
+
 .sp-bg:after {
   content: '';
   z-index: -100;

@@ -1,6 +1,15 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted, ref} from "vue"
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Autoplay, Scrollbar } from 'swiper/modules'
 import Panel from "@/components/template/Panel.vue"
 import Container from "@/components/template/Container.vue"
+import Avatar from "@/components/app/Avatar.vue"
+import 'swiper/css'
+import 'swiper/css/scrollbar'
+
+const slidesPerView   = ref<number>(5)
+const modules         = [Scrollbar, Autoplay]
 
 const images = [
   'https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg',
@@ -9,6 +18,28 @@ const images = [
   'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-11.jpg',
   'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-10.jpg',
 ]
+
+const updateSlidesPerView = () => {
+  if (window.innerWidth <= 375) {           // Mobile S
+    slidesPerView.value = 1
+  } else if (window.innerWidth <= 425) {    // Mobile L
+    slidesPerView.value = 2
+  } else if (window.innerWidth <= 768) {    // Tablet
+    slidesPerView.value = 3
+  } else if (window.innerWidth <= 1024) {   // Laptop
+    slidesPerView.value = 4
+  } else {                                  // Desktop
+    slidesPerView.value = 5
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('resize', updateSlidesPerView)
+  updateSlidesPerView()
+})
+onUnmounted(() => {
+  window.removeEventListener('resize', updateSlidesPerView)
+})
 </script>
 
 <template>
@@ -31,28 +62,30 @@ const images = [
       <div class="px-5 text-gray-600 dark:text-gray-400 mb-16 text-center">
         Naši overený členovia môžu k svojim ponukám pridať rôzne produkty a prezentovať ich prácu.
       </div>
-      <Container class="pt-8 md:pt-16 lg:pt-24">
-        <div class="-mx-4 lg:-mx-8">
-          <div class="flex gap-x-6 overflow-x-auto hide-scrollbar snap-x pt-24 pb-4 px-6 scroll-px-6">
-            <Panel v-for="(product, key) in 8" :key="key" class="group snap-center lg:snap-start lg:scale-100 lg:hover:scale-105 lg:transition">
-              <router-link :to="{ name: 'index' }">
-                <div class="px-6 pb-4">
-                  <div class="-mt-20 aspect-[4/3] w-44 lg:w-56 mb-4">
-                    <img :src="images[key]" :alt="String(key)" class="rounded-3xl max-w-full max-h-full lg:scale-100 lg:group-hover:scale-105 lg:transition"/>
-                  </div>
-                  <div class="mb-4 line-clamp-2">
-                    Tailwind CSS Indicators - Flowbite
-                  </div>
-                  <div class="flex items-end justify-between gap-x-2 text-xs opacity-75 lg:group-hover:opacity-100 lg:transition">
-                    <div class="truncate">
-                      <i class="fa-regular fa-user"></i> CrACKy Company
+      <Container>
+        <div class="-mx-2 xs:-mx-4 md:mx-0">
+          <swiper :slidesPerView="slidesPerView" :modules="modules" :scrollbar="{ hide: true }" :autoplay="{ delay: 2500, disableOnInteraction: false }">
+            <swiper-slide v-for="(product, key) in 8" :key="key" class="py-5 px-4 xs:px-2 md:px-4">
+              <Panel class="group snap-center lg:snap-start lg:scale-100 lg:hover:scale-105 lg:transition">
+                <router-link :to="{ name: 'index' }">
+                  <div class="px-6 py-4">
+                    <div class="aspect-[4/3] mb-4">
+                      <img :src="images[key]" :alt="String(key)" class="rounded-3xl w-full lg:scale-100 lg:group-hover:scale-105 lg:transition"/>
                     </div>
-                    <div>30€</div>
+                    <div class="mb-4 line-clamp-2">
+                      Tailwind CSS Indicators - Flowbite
+                    </div>
+                    <div class="flex items-end justify-between gap-x-2 text-xs opacity-75 lg:group-hover:opacity-100 lg:transition">
+                      <div class="truncate flex items-center gap-x-1.5">
+                        <Avatar size="xxs" rounded="full"/> CrACKy Company
+                      </div>
+                      <div>30€</div>
+                    </div>
                   </div>
-                </div>
-              </router-link>
-            </Panel>
-          </div>
+                </router-link>
+              </Panel>
+            </swiper-slide>
+          </swiper>
         </div>
       </Container>
     </div>

@@ -10,6 +10,7 @@ import categoriesData from "@/plugins/data/categories.json"
 import SkeletonRequests from "@/components/skeletons/SkeletonRequests.vue"
 import Container from "@/components/template/Container.vue"
 import PanelFilter from "@/components/template/PanelFilter.vue"
+import Avatar from "@/components/app/Avatar.vue"
 
 useMeta({ title: 'Dostupné požiadavky' })
 
@@ -65,20 +66,6 @@ onMounted(async () => {
 <template>
   <Container>
     <div class="grid grid-cols-12 gap-y-6 lg:gap-y-8">
-
-      <!--
-      <div class="col-span-12 bg-gradient-to-bl from-blue-200/10 to-blue-200/40 dark:to-blue-500/20 dark:from-blue-500/5 text-blue-600 dark:text-blue-400/75 md:rounded-2xl p-6">
-        <div class="font-medium text-lg mb-3 flex items-center gap-x-2">
-          <svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8H5m12 0a1 1 0 0 1 1 1v2.6M17 8l-4-4M5 8a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.6M5 8l4-4 4 4m6 4h-4a2 2 0 1 0 0 4h4a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1Z"/>
-          </svg>
-          Pracovné príležitosti na mieru!
-        </div>
-        <p>
-          V našom zozname požiadaviek nájdete svoj ideálny projekt. S filtrovaním môžete nájsť prácu presne
-          podľa vašich predstáv, bez ohľadu na oblasť. Objavujte nové možnosti ešte dnes!
-        </p>
-      </div>-->
 
       <div class="col-span-12 flex flex-col gap-12">
         <PanelFilter :submit="submitFilter" :keyup="submitFilter">
@@ -148,18 +135,18 @@ onMounted(async () => {
             v-for="request in filteredRequests"
             :to="{ name: 'request', params: { requestId: request._id } }"
           >
-            <div class="hover:bg-white dark:hover:bg-gray-900/10 p-5 group">
-              <div class="flex flex-wrap gap-3 items-center mb-1">
-                <div class="md:text-lg">{{ request.title }} <Status :status="Boolean(request.status)" class="inline-block align-middle ms-1.5"/></div>
-              </div>
-              <div class="opacity-60 group-hover:opacity-100 flex flex-wrap items-center gap-x-6 gap-y-2">
-                <div class="flex items-center gap-x-0.5 text-xs font-medium">
-                  <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>
-                  {{ request.author.profile.name ?? request.author.username }}
+            <div class="hover:bg-white dark:hover:bg-gray-900/5 p-5 transition group">
+              <div class="flex flex-wrap gap-3 items-center mb-2">
+                <div class="md:text-lg font-medium" :class="{ 'line-through': !request.status }">
+                  {{ request.title }} <Status :status="Boolean(request.status)" class="inline-block align-middle ms-1.5"/>
                 </div>
-                <div class="flex items-center gap-x-1 text-xs font-medium">
-                  <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"/></svg>
-                  {{ timeSince(request.created_at) }}
+              </div>
+              <div class="opacity-50 group-hover:opacity-75 flex flex-wrap items-center gap-x-6 gap-y-2 transition">
+                <div class="flex items-center gap-x-1 text-xs font-medium w-36">
+                  <Avatar :img="request.author.avatar" size="xxs" rounded="full"/>
+                  <div class="truncate">
+                    {{ request.author.profile.name ?? request.author.username }}
+                  </div>
                 </div>
                 <div class="flex items-center gap-x-1 text-xs font-medium">
                   <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11H4m15.5 5a.5.5 0 0 0 .5-.5V8a1 1 0 0 0-1-1h-3.75a1 1 0 0 1-.829-.44l-1.436-2.12a1 1 0 0 0-.828-.44H8a1 1 0 0 0-1 1M4 9v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1h-3.75a1 1 0 0 1-.829-.44L9.985 8.44A1 1 0 0 0 9.157 8H5a1 1 0 0 0-1 1Z"/></svg>

@@ -4,7 +4,7 @@ import Container from "@/components/template/Container.vue"
 
 <template>
   <Container>
-    <div class="w-full flex flex-col gap-y-6 md:gap-y-12 h-screen justify-center -mt-10 md:-mt-36 z-10">
+    <div class="w-full flex flex-col gap-y-6 md:gap-y-12 h-screen justify-center -mt-10 md:-mt-36 px-2 z-10">
       <div class="drop-shadow font-semibold md:font-bold text-3xl md:text-5xl lg:text-6xl">
         Spravime to spoločne!
       </div>

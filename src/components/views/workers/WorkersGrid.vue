@@ -14,7 +14,7 @@ defineProps({
 
 <template>
   <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 xs:gap-4 md:gap-6">
-    <Panel v-for="user in workers" class="overflow-hidden">
+    <Panel v-for="user in workers" class="overflow-hidden lg:scale-100 lg:hover:scale-105 lg:transition">
       <router-link :to="{ name: 'profile', params: { userId: user._id } }">
         <div class="p-4 group flex flex-col h-52 sm:h-72 transition" :class="[ user.verify ? 'bg-blue-500/20 dark:bg-blue-500/10 hover:bg-blue-500/25 dark:hover:bg-blue-600/10' : 'hover:bg-white dark:hover:bg-gray-900/5' ]">
           <div class="text-center mb-5 sm:mb-3">

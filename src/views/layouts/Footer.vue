@@ -9,7 +9,7 @@ import FooterMenuItemExt from "@/components/template/FooterMenuItemExt.vue"
 <template>
   <div class="sp-footer">
     <Container>
-      <div class="grid xl:grid-cols-6 gap-8 md:mb-10 md:mt-28">
+      <div class="grid xl:grid-cols-6 gap-8 md:mb-10 md:mt-28 px-4">
 
         <div class="col-span-full xl:col-span-2 order-2 xl:order-1">
           <div class="flex flex-col md:flex-row xl:flex-col justify-between items-center gap-y-8 p-6 h-full">
@@ -27,6 +27,7 @@ import FooterMenuItemExt from "@/components/template/FooterMenuItemExt.vue"
             <FooterMenuItem title="Zoznam zmien" :to="{ name: 'index' }"/>
             <FooterMenuItem title="Spätná väzba" :to="{ name: 'index' }"/>
             <FooterMenuItem title="Plus+" :to="{ name: 'index' }"/>
+            <FooterMenuItem title="Topovanie" :to="{ name: 'index' }"/>
             <li>
               <button id="theme-toggle" type="button" class="link hover:underline">
                 <span id="theme-toggle-dark-icon" class="hidden">Tmavý režim</span>

@@ -59,7 +59,7 @@ const Prefix = `${import.meta.env.VITE_BACKEND}/cloud/`
 </script>
 
 <template>
-  <div class="relative inline-block">
+  <div class="relative inline-block" :class="`${Size[size]}`">
     <div :class="`relative overflow-hidden -mb-2 ${Rounded[rounded]}`">
       <div v-if="!img?.length" :class="`bg-gray-200 dark:bg-gray-600 ${Size[size]}`">
         <svg :class="`absolute ${SizeIcon[size]} text-gray-400 inset-x-1/2 -translate-x-1/2`" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>

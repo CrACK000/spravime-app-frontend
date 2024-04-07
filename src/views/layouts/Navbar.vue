@@ -24,22 +24,23 @@ const visible = ref(false)
   <div class="z-50">
     <div class="w-full md:w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-9/12 mx-auto px-4 md:px-0 py-3 md:pt-14 md:pb-16 flex justify-between items-center">
 
-      <router-link :to="{ name: 'index' }" class="text-2xl md:text-4xl lg:text-5xl select-none cursor-pointer">
-        <img src="/logo.png" alt="Spravime Logo" class="w-28"/>
+      <router-link :to="{ name: 'index' }" class="text-2xl md:text-3xl lg:text-4xl select-none cursor-pointer">
+        <div class="sp-baloo">Spravime</div>
+        <div class="text-xs opacity-75 dark:opacity-30 -mt-2 ms-6 md:ms-8">Pre ľudí</div>
       </router-link>
 
       <div class="lg:flex items-center gap-6 hidden">
 
-        <router-link :to="{ name: 'requests' }" class="px-3 py-2 rounded-xl text-gray-500 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-700 transition font-medium">
+        <router-link :to="{ name: 'requests' }" class="px-3 py-2 rounded-xl text-gray-800 hover:text-black dark:text-gray-300 dark:hover:text-white hover:bg-white/50 dark:hover:bg-blue-600/10 transition font-medium">
           Požiadavky
         </router-link>
 
-        <router-link :to="{ name: 'workers' }" class="px-3 py-2 rounded-xl text-gray-500 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-700 transition font-medium">
+        <router-link :to="{ name: 'workers' }" class="px-3 py-2 rounded-xl text-gray-800 hover:text-black dark:text-gray-300 dark:hover:text-white hover:bg-white/50 dark:hover:bg-blue-600/10 transition font-medium">
           Firmy & Živnostníci
         </router-link>
 
-        <router-link v-if="loggedIn" :to="{ name: 'create-request' }" class="px-3 py-2 rounded-xl text-gray-500 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-700 transition font-medium">
-          Pridať požiadavku
+        <router-link :to="{ name: 'create-request' }" class="px-3 py-2 rounded-xl text-gray-800 hover:text-black dark:text-gray-300 dark:hover:text-white hover:bg-white/50 dark:hover:bg-blue-600/10 transition font-medium">
+          Ponuky
         </router-link>
 
         <fwb-dropdown v-if="loggedIn" placement="left">
@@ -87,7 +88,7 @@ const visible = ref(false)
           </div>
         </fwb-dropdown>
 
-        <router-link v-else :to="{ name: 'login' }" class="bg-gradient-to-r from-blue-600 hover:from-blue-500 to-indigo-500 hover:to-indigo-400 text-white/80 hover:text-white px-4 py-2 rounded-lg shadow-xl">
+        <router-link v-else :to="{ name: 'login' }" class="form-button">
           <i class="fa-regular fa-user me-2"></i>
           Prihlásiť sa
         </router-link>

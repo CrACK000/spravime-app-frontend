@@ -13,6 +13,10 @@ import WorkersList from "@/components/views/workers/WorkersList.vue"
 import WorkersListContainer from "@/components/views/workers/WorkersListContainer.vue"
 import WorkerFilter from "@/components/dialogs/WorkerFilter.vue"
 import Panel from "@/components/template/Panel.vue"
+import PaginationContainer from "@/components/pagination/PaginationContainer.vue";
+import PaginationArrow from "@/components/pagination/PaginationArrow.vue";
+import PaginationPages from "@/components/pagination/PaginationPages.vue";
+import PaginationButton from "@/components/pagination/PaginationButton.vue";
 
 useMeta({ title: 'Vyhľadať si firmu alebo spoľahlivého majstra' })
 
@@ -28,6 +32,10 @@ const filterData = ref<FilterWorkersData>({
 })
 const workerSortByText = ref<string>('')
 
+const perPage = ref(30) // Počet príspevkov na stránku
+const currentPage = ref(1) // Aktuálna stránka
+const totalPages = ref(0) // Celkový počet strán
+
 const loadList = async () => {
   await account.all()
   filteredWorkers.value = account.data.accounts
@@ -40,6 +48,10 @@ const setSortList = (key: 'grid' | 'list') => {
 const setOrderBy = () => {
   filterData.value.orderBy = (filterData.value.orderBy === 'asc') ? 'desc' : 'asc'
   const setQuery = { ...route.query, orderBy: filterData.value.orderBy }
+
+  perPage.value = 30
+  currentPage.value = 1
+  totalPages.value = 0
 
   // zoradenia podľa hodnoty route.query.sortBy
   filteredWorkers.value.sort((a, b) => {
@@ -61,6 +73,10 @@ const setSortBy = (key: string, text: string) => {
   const setQuery = { ...route.query, sortBy: filterData.value.sortBy };
   workerSortByText.value = `Zoradené podľa ${text}`;
 
+  perPage.value = 30
+  currentPage.value = 1
+  totalPages.value = 0
+
   // Zoradenie pracovníkov podľa sortBy hodnôt
   if (filterData.value.sortBy) {
     filteredWorkers.value.sort((a, b) => {
@@ -72,7 +88,7 @@ const setSortBy = (key: string, text: string) => {
       } else {
         return aValue.toString().localeCompare(bValue.toString());  // Zoradenie reťazcov od A po Z
       }
-    });
+    })
   }
 
   if (route.name !== null) {
@@ -100,6 +116,10 @@ const resetFilter = () => {
     orderBy: 'asc',
     list: String(localStorage.getItem('workerList'))
   }
+
+  perPage.value = 30
+  currentPage.value = 1
+  totalPages.value = 0
 
   workerSortByText.value = ''
   loadList()
@@ -133,6 +153,10 @@ const removeDiacritics = (str: any) => {
 }
 const submitFilter = (data: any) => {
   const { search, type, section, address, verify } = data
+
+  perPage.value = 30
+  currentPage.value = 1
+  totalPages.value = 0
 
   let query: any = {}
 
@@ -181,6 +205,11 @@ const submitFilter = (data: any) => {
   })
 }
 
+const paginate = (items: any) => {
+  totalPages.value = Math.ceil(items.length / perPage.value);
+  return items.slice((currentPage.value - 1) * perPage.value, currentPage.value * perPage.value);
+}
+
 onActivated(async () => {
   if (!Object.keys(route.query).length) {
     await resetFilter()
@@ -227,33 +256,33 @@ onMounted(async () => {
             <div class="flex items-center divide-x divide-gray-200 dark:divide-gray-700/40">
               <div class="md:p-1" v-if="Object.keys(route.query).length">
                 <button type="button" @click.prevent="resetFilter" v-tooltip.top="'Zrušiť všetky filtre'" class="py-1.5 md:py-2.5 px-2 md:px-3.5 text-gray-900 dark:text-gray-300">
-                  <svg class="w-4 h-4 md:w-6 md:h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <svg class="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
                   </svg>
                 </button>
               </div>
               <div class="md:p-1">
                 <button type="button" @click="showFilter" v-tooltip.top="'Zobraziť filter'" class="py-1.5 md:py-2.5 px-2 md:px-3.5 text-gray-900 dark:text-gray-300">
-                  <svg class="w-4 h-4 md:w-6 md:h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <svg class="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
                   </svg>
                 </button>
               </div>
               <div class="md:p-1">
                 <button type="button" @click="setOrderBy" v-tooltip.top="`Zoradiť ${filterData.orderBy === 'asc' ? 'vzostupne' : 'zostupne'}`" class="py-1.5 md:py-2.5 px-2 md:px-3.5 text-gray-900 dark:text-gray-300">
-                  <svg class="w-4 h-4 md:w-6 md:h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <svg class="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 20V10m0 10-3-3m3 3 3-3m5-13v10m0-10 3 3m-3-3-3 3"/>
                   </svg>
                 </button>
               </div>
               <div class="md:p-1">
                 <button type="button" @click="setSortList('list')" v-tooltip.top="'Zoznam'" :class="{ 'hidden': filterData.list === 'list' }" class="py-1.5 md:py-2.5 px-2 md:px-3.5 text-gray-900 dark:text-gray-300">
-                  <svg class="w-4 h-4 md:w-6 md:h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <svg class="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"/>
                   </svg>
                 </button>
                 <button type="button" @click="setSortList('grid')" v-tooltip.top="'Boxy'" :class="{ 'hidden': filterData.list === 'grid' }" class="py-1.5 md:py-2.5 px-2 md:px-3.5 text-gray-900 dark:text-gray-300">
-                  <svg class="w-4 h-4 md:w-6 md:h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <svg class="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.143 4H4.857A.857.857 0 0 0 4 4.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 10 9.143V4.857A.857.857 0 0 0 9.143 4Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 20 9.143V4.857A.857.857 0 0 0 19.143 4Zm-10 10H4.857a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286A.857.857 0 0 0 9.143 14Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286a.857.857 0 0 0-.857-.857Z"/>
                   </svg>
                 </button>
@@ -263,24 +292,27 @@ onMounted(async () => {
         </div>
       </Panel>
 
-      <div class="flex flex-wrap items-center gap-x-3">
-        <div class="bg-blue-600 text-white text-sm ps-4 pe-2 py-2 rounded-full flex items-center gap-x-2">
-          ASDasd
-          <button type="button" class="bg-black/20 hover:bg-white/20 text-gray-300 hover:text-white rounded-full p-0.5">
-            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <WorkersGrid v-if="filterData.list === 'grid'" :workers="filteredWorkers"/>
+      <WorkersGrid v-if="filterData.list === 'grid'" :workers="paginate(filteredWorkers)"/>
 
       <WorkersListContainer v-if="filterData.list === 'list'">
         <SkeletonWorkers v-if="account.data.accounts_loading"/>
-        <WorkersList v-else-if="filteredWorkers.length" :workers="filteredWorkers"/>
+        <WorkersList v-else-if="filteredWorkers.length" :workers="paginate(filteredWorkers)"/>
         <WorkersNoResults v-else :workers="filteredWorkers"/>
       </WorkersListContainer>
+
+      <PaginationContainer v-if="filteredWorkers.length > perPage">
+        <PaginationPages>
+          <PaginationArrow side="left" text="Späť" :disabled="currentPage <= 1" @click="currentPage--"/>
+          <PaginationButton
+            v-for="page in totalPages"
+            :page="page"
+            :key="page"
+            :disabled="page === currentPage"
+            @click="currentPage = page"
+          />
+          <PaginationArrow side="right" text="Ďalšie" :disabled="currentPage >= totalPages" @click="currentPage++"/>
+        </PaginationPages>
+      </PaginationContainer>
 
     </div>
   </Container>
