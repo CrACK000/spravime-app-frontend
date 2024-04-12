@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Panel from "@/components/template/Panel.vue"
+
 </script>
 
 <template>
@@ -16,8 +16,8 @@ import Panel from "@/components/template/Panel.vue"
         </div>
       </div>
     </div>
-    <panel divide="y" class="overflow-hidden">
+    <div class="flex flex-col gap-y-3">
       <slot/>
-    </panel>
+    </div>
   </div>
 </template>

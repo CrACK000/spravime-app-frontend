@@ -34,7 +34,7 @@ const workerSortByText = ref<string>('')
 
 const perPage = ref(30) // Počet príspevkov na stránku
 const currentPage = ref(1) // Aktuálna stránka
-const totalPages = ref(0) // Celkový počet strán
+const totalPages = ref(0) // Celkový (počet) strán
 
 const loadList = async () => {
   await account.all()
@@ -216,6 +216,9 @@ onActivated(async () => {
   }
 })
 onMounted(async () => {
+  if (!localStorage.getItem('workerList')) {
+    setSortList('list')
+  }
   if (!filteredWorkers.value.length) {
     await loadList()
   }
@@ -291,6 +294,8 @@ onMounted(async () => {
           </div>
         </div>
       </Panel>
+
+      {{ filterData.list }}
 
       <WorkersGrid v-if="filterData.list === 'grid'" :workers="paginate(filteredWorkers)"/>
 

@@ -14,6 +14,7 @@ interface ResponseAlready { data: { isAlready: boolean } }
 const route = useRoute()
 const toast = useToast()
 const auth = inject<Auth>('auth')
+const userData = ref(auth?.userData as User)
 const loggedIn = ref(auth?.loggedIn as boolean)
 
 const message = ref<string>('')
@@ -65,43 +66,44 @@ const sendMsg = () => {
 onBeforeMount(async () => {
   if (loggedIn.value) { await checkAlreadyWrittenMessages() }
 })
-
 </script>
 
 <template>
-  <transition name="fade">
+  <div v-if="loggedIn && request.data.request && (userData._id !== request.data.request.author._id)">
+    <transition name="fade">
 
-    <div v-if="!request.data.request_loading && !loadingMsg">
-      <form v-if="request.data.request?.status && loggedIn && (auth?.userData.value._id !== request.data.request.author._id)" @submit.prevent="sendMsg">
-        <panel divide="y" v-if="!checkMsg">
-          <div class="py-4 px-6 font-medium uppercase">
-            Odpovedať
-          </div>
-          <div class="p-6">
-            <TextareaLabel label="Správa" label-key="message" v-model="message"/>
-          </div>
-          <panel-form-actions>
-            <template #left>
-              <a href="#" class="form-success-button-sm">
-                <i class="fa-solid fa-phone me-1.5"></i> Zavolať
-              </a>
-            </template>
-            <template #right>
-              <button type="submit" class="form-button" :disabled="loadingPost || errors.length">
-                <template v-if="loadingPost"><i class="fa-solid fa-circle-notch fa-spin me-1"></i> Odosiela sa</template>
-                <template v-else><i class="fa-regular fa-paper-plane me-1"></i> Odoslať</template>
-              </button>
-            </template>
-          </panel-form-actions>
-        </panel>
-        <panel v-else>
-          <div class="p-6">Na požiadavku ste už reagovali. Skontrolujte si <router-link :to="{ name: 'messages' }" class="link">Správy</router-link></div>
-        </panel>
-      </form>
-    </div>
+      <div v-if="!request.data.request_loading && !loadingMsg">
+        <form v-if="request.data.request?.status" @submit.prevent="sendMsg">
+          <panel divide="y" v-if="!checkMsg">
+            <div class="py-4 px-6 font-medium uppercase">
+              Odpovedať
+            </div>
+            <div class="p-4 md:p-6">
+              <TextareaLabel label="Správa" label-key="message" v-model="message"/>
+            </div>
+            <panel-form-actions>
+              <template #left>
+                <a href="#" class="form-success-button-sm">
+                  <i class="fa-solid fa-phone me-1.5"></i> Zavolať
+                </a>
+              </template>
+              <template #right>
+                <button type="submit" class="form-button" :disabled="loadingPost || errors.length">
+                  <template v-if="loadingPost"><i class="fa-solid fa-circle-notch fa-spin me-1"></i> Odosiela sa</template>
+                  <template v-else><i class="fa-regular fa-paper-plane me-1"></i> Odoslať</template>
+                </button>
+              </template>
+            </panel-form-actions>
+          </panel>
+          <panel v-else>
+            <div class="p-4 md:p-6">Na požiadavku ste už reagovali. Skontrolujte si <router-link :to="{ name: 'messages' }" class="link">Správy</router-link></div>
+          </panel>
+        </form>
+      </div>
 
-    <!-- Loading panel Message -->
-    <skeleton-request-message v-else />
+      <!-- Loading panel Message -->
+      <skeleton-request-message v-else />
 
-  </transition>
+    </transition>
+  </div>
 </template>

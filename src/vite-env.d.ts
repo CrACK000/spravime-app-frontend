@@ -1,24 +1,5 @@
 /// <reference types="vite/client" />
 
-interface Request {
-    _id: string,
-    title: string,
-    address: string,
-    description: string,
-    author: User,
-    section: number,
-    category: number,
-    status: boolean,
-    disabled: boolean,
-    approved: boolean,
-    top: boolean,
-    time_range: null | TimeRange,
-    views: number,
-    closed_at: string,
-    created_at: string,
-    updated_at: string,
-}
-
 interface TimeRange {
     start_at: string,
     end_at: string,
@@ -158,4 +139,12 @@ interface Product {
     price: string,
     image: string,
     description: string,
+}
+
+interface Comment {
+    _id: string,
+    author: User,
+    comment: string,
+    created_at: string,
+    updated_at: string,
 }

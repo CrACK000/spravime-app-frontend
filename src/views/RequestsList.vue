@@ -2,15 +2,14 @@
 import {computed, onMounted, ref} from 'vue'
 import {useMeta} from 'vue-meta'
 import request from "@/plugins/requests"
-import {timeSince} from "@/plugins/functions"
-import Panel from "@/components/template/Panel.vue"
-import Status from "@/components/app/RequestStatus.vue"
 import skZipcodes from "@/plugins/zipcodes/sk.json"
 import categoriesData from "@/plugins/data/categories.json"
 import SkeletonRequests from "@/components/skeletons/SkeletonRequests.vue"
 import Container from "@/components/template/Container.vue"
 import PanelFilter from "@/components/template/PanelFilter.vue"
-import Avatar from "@/components/app/Avatar.vue"
+import RequestsHead from "@/components/views/requests/RequestsHead.vue";
+import RequestsNoFound from "@/components/views/requests/RequestsNoFound.vue"
+import RequestsList from "@/components/views/requests/RequestsList.vue"
 
 useMeta({ title: 'Dostupné požiadavky' })
 
@@ -65,9 +64,9 @@ onMounted(async () => {
 
 <template>
   <Container>
-    <div class="grid grid-cols-12 gap-y-6 lg:gap-y-8">
+    <div class="flex flex-col gap-y-6 lg:gap-y-8">
 
-      <div class="col-span-12 flex flex-col gap-12">
+      <div class="flex flex-col gap-12">
         <PanelFilter :submit="submitFilter" :keyup="submitFilter">
           <div class="grid grid-cols-12 gap-4">
             <div class="col-span-12 lg:col-span-5 relative">
@@ -113,73 +112,13 @@ onMounted(async () => {
         </PanelFilter>
       </div>
 
-      <div class="col-span-12">
-
-        <panel divide="y" class="overflow-hidden">
-
-          <div class="p-4 flex justify-between items-center">
-            <div class="font-medium uppercase">
-              Výsledky vyhľadávania
-            </div>
-            <div class="text-sm">
-              <small>Počet: </small>
-              <span class="font-medium" v-text="filteredRequests.length"></span>
-            </div>
-          </div>
-
-          <!-- Loading Panel Requests -->
+      <div>
+        <RequestsHead :count="filteredRequests.length"/>
+        <div class="flex flex-col gap-y-3">
           <skeleton-requests :rows=15 v-if="request.data.requests_loading" />
-
-          <router-link
-            v-else-if="filteredRequests.length"
-            v-for="request in filteredRequests"
-            :to="{ name: 'request', params: { requestId: request._id } }"
-          >
-            <div class="hover:bg-white dark:hover:bg-gray-900/5 p-5 transition group">
-              <div class="flex flex-wrap gap-3 items-center mb-2">
-                <div class="md:text-lg font-medium" :class="{ 'line-through': !request.status }">
-                  {{ request.title }} <Status :status="Boolean(request.status)" class="inline-block align-middle ms-1.5"/>
-                </div>
-              </div>
-              <div class="opacity-50 group-hover:opacity-75 flex flex-wrap items-center gap-x-6 gap-y-2 transition">
-                <div class="flex items-center gap-x-1 text-xs font-medium w-36">
-                  <Avatar :img="request.author.avatar" size="xxs" rounded="full"/>
-                  <div class="truncate">
-                    {{ request.author.profile.name ?? request.author.username }}
-                  </div>
-                </div>
-                <div class="flex items-center gap-x-1 text-xs font-medium">
-                  <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11H4m15.5 5a.5.5 0 0 0 .5-.5V8a1 1 0 0 0-1-1h-3.75a1 1 0 0 1-.829-.44l-1.436-2.12a1 1 0 0 0-.828-.44H8a1 1 0 0 0-1 1M4 9v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1h-3.75a1 1 0 0 1-.829-.44L9.985 8.44A1 1 0 0 0 9.157 8H5a1 1 0 0 0-1 1Z"/></svg>
-                  {{ sections[request.section].title }}
-                </div>
-                <div class="lg:ms-auto flex items-center gap-x-1 text-sm">
-                  <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.8 14h0a7 7 0 1 0-11.5 0h0l.1.3.3.3L12 21l5.1-6.2.6-.7.1-.2Z"/>
-                  </svg>
-                  {{ request.address }}
-                </div>
-              </div>
-            </div>
-          </router-link>
-
-          <div v-else class="py-8 px-4 flex gap-4 justify-center items-start bg-white/75 dark:bg-gray-800/50">
-            <svg class="w-6 h-6 mt-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
-            </svg>
-            <div class="text-xl font-light">
-              Žiadne výsledky.
-              <div class="text-sm opacity-75" v-if="!filteredRequests.length">
-                Skúste upraviť parametre filtrovania.
-              </div>
-              <div class="text-sm opacity-75" v-else>
-                Zatiaľ neboli vytvorené žiadne požiadavky.
-              </div>
-            </div>
-          </div>
-
-        </panel>
-
+          <RequestsList v-else-if="filteredRequests.length" :requests="filteredRequests"/>
+          <RequestsNoFound v-else :count="filteredRequests.length"/>
+        </div>
       </div>
 
     </div>

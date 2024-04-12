@@ -12,7 +12,7 @@ import SkeletonRequestTitleDescription from "@/components/skeletons/SkeletonRequ
       <div class="py-4 px-6 font-medium uppercase">
         <div v-text="request.data.request?.title"></div>
       </div>
-      <div class="p-6">
+      <div class="p-4 md:p-6">
         <div class="flex flex-col-reverse md:flex-row gap-4">
           <div class="md:w-8/12">
             <div class="p-3" v-html="nl2br(request.data.request?.description)"></div>

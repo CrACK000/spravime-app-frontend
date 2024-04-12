@@ -135,17 +135,17 @@ export const validEndAt = (date: string) => {
     return result
 }
 
-export const validDescription = (text: string) => {
+export const validDescription = (text: string, min = 150 as number, max = 1000 as number) => {
 
     let result
 
-    if (text.length < 150) {
+    if (text.length < min) {
 
-        result = { where: 'description', message: 'Pole musí obsahovať minimálne 150 znakov.' }
+        result = { where: 'description', message: `Pole musí obsahovať minimálne ${min} znakov.` }
 
-    } else if (text.length > 1000) {
+    } else if (text.length > max) {
 
-        result = { where: 'description', message: 'Pole môže obsahovať maximálne 1000 znakov.' }
+        result = { where: 'description', message: `Pole môže obsahovať maximálne ${max} znakov.` }
 
     }
 

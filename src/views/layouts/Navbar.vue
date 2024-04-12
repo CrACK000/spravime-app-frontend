@@ -39,7 +39,7 @@ const visible = ref(false)
           Firmy & Živnostníci
         </router-link>
 
-        <router-link :to="{ name: 'create-request' }" class="px-3 py-2 rounded-xl text-gray-800 hover:text-black dark:text-gray-300 dark:hover:text-white hover:bg-white/50 dark:hover:bg-blue-600/10 transition font-medium">
+        <router-link :to="{ name: 'offers' }" class="px-3 py-2 rounded-xl text-gray-800 hover:text-black dark:text-gray-300 dark:hover:text-white hover:bg-white/50 dark:hover:bg-blue-600/10 transition font-medium">
           Ponuky
         </router-link>
 

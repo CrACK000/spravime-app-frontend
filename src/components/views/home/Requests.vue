@@ -60,7 +60,7 @@ const requestInfo = [
           </div>
         </Container>
         <Container class="pt-20 pb-44 text-center">
-          <router-link to="/" class="form-button block md:inline-block text-center">
+          <router-link :to="{ name: 'requests' }" class="form-button block md:inline-block text-center">
             Zoznam požiadaviek
           </router-link>
         </Container>

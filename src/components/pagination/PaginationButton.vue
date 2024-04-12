@@ -8,5 +8,5 @@ defineProps({
 </script>
 
 <template>
-  <button type="button" class="py-3 px-5 text-gray-300 hover:text-white disabled:text-gray-400 font-medium">{{ page }}</button>
+  <button type="button" class="py-3 px-5 text-gray-500 hover:text-black disabled:text-gray-400 dark:text-gray-300 dark:hover:text-white dark:disabled:text-gray-400 font-medium">{{ page }}</button>
 </template>

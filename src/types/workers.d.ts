@@ -6,5 +6,5 @@ interface FilterWorkersData {
     sortBy?: string;
     verify?: boolean;
     orderBy?: 'asc' | 'desc';
-    list?: string | 'list' | 'grid';
+    list?: string | null | 'list' | 'grid';
 }

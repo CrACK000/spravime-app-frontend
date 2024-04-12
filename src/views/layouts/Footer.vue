@@ -12,11 +12,14 @@ import FooterMenuItemExt from "@/components/template/FooterMenuItemExt.vue"
       <div class="grid xl:grid-cols-6 gap-8 md:mb-10 md:mt-28 px-4">
 
         <div class="col-span-full xl:col-span-2 order-2 xl:order-1">
-          <div class="flex flex-col md:flex-row xl:flex-col justify-between items-center gap-y-8 p-6 h-full">
-            <div>
-              <img src="/logo.png" alt="Logo" class="w-24 md:w-32">
+          <div class="flex flex-col md:flex-row xl:flex-col justify-between gap-y-8 p-6 h-full">
+            <div class="mx-auto md:mx-0 md:me-auto">
+              <div class="sp-baloo text-2xl lg:text-3xl text-center">Spravime</div>
+              <div class="text-center text-xs opacity-50">www.spravi.me</div>
             </div>
-            <div class="xl:mt-auto text-sm dark:text-gray-400 text-center md:text-start">Copyright © {{ new Date().getFullYear() }} Spravime.<br> All rights reserved.</div>
+            <div class="xl:mt-auto text-xs sm:text-sm dark:text-gray-400 text-center md:text-start">
+              Copyright © {{ new Date().getFullYear() }} Spravime.<br> All rights reserved.
+            </div>
           </div>
         </div>
 

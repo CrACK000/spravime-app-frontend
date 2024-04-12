@@ -28,11 +28,11 @@ onMounted(() => {
 <template>
   <Container>
     <div class="flex flex-col lg:flex-row gap-6 lg:gap-10">
-      <div class="lg:w-8/12 flex flex-col gap-6 lg:gap-10">
+      <div class="lg:w-8/12 order-2 lg:order-1 flex flex-col gap-6 lg:gap-10">
         <title-description-panel />
         <comments-panel />
       </div>
-      <div class="lg:w-4/12 flex flex-col gap-6 lg:gap-10">
+      <div class="lg:w-4/12 order-1 lg:order-2 flex flex-col gap-6 lg:gap-10">
         <information-panel />
         <send-message-panel />
       </div>

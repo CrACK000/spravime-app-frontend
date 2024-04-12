@@ -17,7 +17,7 @@ import Container from "@/components/template/Container.vue"
       <div class="md:font-medium text-sm opacity-75">Spolu vytvárame spoľahlivú a efektívnu komunitu.</div>
 
       <div class="py-4">
-        <router-link :to="{ name: 'index' }" class="form-button-lg shadow-xl">Vytvoriť požiadavku</router-link>
+        <router-link :to="{ name: 'create-request' }" class="form-button-lg shadow-xl">Vytvoriť požiadavku</router-link>
       </div>
     </div>
   </Container>
