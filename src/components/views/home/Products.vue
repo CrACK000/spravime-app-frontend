@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref} from "vue"
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Autoplay, Scrollbar } from 'swiper/modules'
+import {Navigation} from 'swiper/modules'
 import Panel from "@/components/template/Panel.vue"
 import Container from "@/components/template/Container.vue"
 import Avatar from "@/components/app/Avatar.vue"
-import 'swiper/css'
-import 'swiper/css/scrollbar'
+import 'swiper/scss'
+import '@/assets/swiper.scss'
 
 const slidesPerView   = ref<number>(5)
-const modules         = [Scrollbar, Autoplay]
+const modules         = [Navigation]
 
 const images = [
   'https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg',
@@ -62,32 +62,30 @@ onUnmounted(() => {
       <div class="px-5 text-gray-600 dark:text-gray-400 mb-16 text-center">
         Naši overený členovia môžu k svojim ponukám pridať rôzne produkty a prezentovať ich prácu.
       </div>
-      <Container>
-        <div class="-mx-2 xs:-mx-4 md:mx-0">
-          <swiper :slidesPerView="slidesPerView" :modules="modules" :scrollbar="{ hide: true }" :autoplay="{ delay: 2500, disableOnInteraction: false }">
-            <swiper-slide v-for="(product, key) in 8" :key="key" class="py-5 px-4 xs:px-2 md:px-4">
-              <Panel class="group snap-center lg:snap-start lg:scale-100 lg:hover:scale-105 lg:transition">
-                <router-link :to="{ name: 'index' }">
-                  <div class="px-6 py-4">
-                    <div class="aspect-[4/3] mb-4">
-                      <img :src="images[key]" :alt="String(key)" class="rounded-3xl w-full lg:scale-100 lg:group-hover:scale-105 lg:transition"/>
-                    </div>
-                    <div class="mb-4 line-clamp-2">
-                      Tailwind CSS Indicators - Flowbite
-                    </div>
-                    <div class="flex items-end justify-between gap-x-2 text-xs opacity-75 lg:group-hover:opacity-100 lg:transition">
-                      <div class="truncate flex items-center gap-x-1.5">
-                        <Avatar size="xxs" rounded="full"/> CrACKy Company
-                      </div>
-                      <div>30€</div>
-                    </div>
+      <div class="max-w-7xl mx-auto">
+        <swiper :slidesPerView="slidesPerView" :modules="modules" :navigation="true">
+          <swiper-slide v-for="(product, key) in 8" :key="key" class="px-4">
+            <Panel class="group overflow-hidden">
+              <router-link :to="{ name: 'index' }">
+                <div class="aspect-[4/3]">
+                  <img :src="images[key]" :alt="String(key)" class="w-full h-full"/>
+                </div>
+                <div class="p-4">
+                  <div class="mb-4 line-clamp-2">
+                    Tailwind CSS Indicators - Flowbite
                   </div>
-                </router-link>
-              </Panel>
-            </swiper-slide>
-          </swiper>
-        </div>
-      </Container>
+                  <div class="flex items-end justify-between gap-x-2 text-xs opacity-75 lg:group-hover:opacity-100 lg:transition">
+                    <div class="truncate flex items-center gap-x-1.5">
+                      <Avatar size="xxs" rounded="full"/> CrACKy Company
+                    </div>
+                    <div>30€</div>
+                  </div>
+                </div>
+              </router-link>
+            </Panel>
+          </swiper-slide>
+        </swiper>
+      </div>
     </div>
   </div>
 </template>

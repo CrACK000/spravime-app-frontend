@@ -40,7 +40,7 @@ watch(() => route.params.userId, async (newId, oldId) => {
     </div>
     <div class="flex justify-between items-center py-3.5 px-5">
       <div class="w-full">Neodporúčajú</div>
-      <div class="text-xl w-20 font-bold text-center text-red-400">
+      <div class="text-xl w-20 font-bold text-center text-red-500">
         {{ reviews.filter(review => !Boolean(review.recommendation)).length }}
       </div>
     </div>

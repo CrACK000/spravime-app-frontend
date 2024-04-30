@@ -145,6 +145,7 @@ interface Comment {
     _id: string,
     author: User,
     comment: string,
+    replies: Comment[],
     created_at: string,
     updated_at: string,
 }

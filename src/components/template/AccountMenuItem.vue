@@ -15,7 +15,7 @@ defineProps({
 
 <template>
   <li>
-    <router-link :to="to" :class="[$route.name === to.name ? 'tab-active' : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300']" class="flex items-center gap-2 cursor-pointer w-full hover:bg-white/80 dark:hover:bg-gray-800/50 transition px-4 py-2.5 rounded-md font-medium">
+    <router-link :to="to" :class="[$route.name === to.name || (to.name === 'user-requests' ? ($route.name === 'create-request') : false) || (to.name === 'user-offers' ? ($route.name === 'create-offer') : false) ? 'tab-active' : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300']" class="flex items-center gap-2 cursor-pointer w-full hover:bg-white/80 dark:hover:bg-gray-800/50 transition px-4 py-2.5 rounded-md font-medium">
       <div class="menu-icon">
         <i :class="icon"></i>
       </div>

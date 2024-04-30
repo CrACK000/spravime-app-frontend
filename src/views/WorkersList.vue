@@ -295,8 +295,6 @@ onMounted(async () => {
         </div>
       </Panel>
 
-      {{ filterData.list }}
-
       <WorkersGrid v-if="filterData.list === 'grid'" :workers="paginate(filteredWorkers)"/>
 
       <WorkersListContainer v-if="filterData.list === 'list'">

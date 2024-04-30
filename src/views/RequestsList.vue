@@ -10,6 +10,10 @@ import PanelFilter from "@/components/template/PanelFilter.vue"
 import RequestsHead from "@/components/views/requests/RequestsHead.vue";
 import RequestsNoFound from "@/components/views/requests/RequestsNoFound.vue"
 import RequestsList from "@/components/views/requests/RequestsList.vue"
+import PaginationArrow from "@/components/pagination/PaginationArrow.vue";
+import PaginationPages from "@/components/pagination/PaginationPages.vue";
+import PaginationContainer from "@/components/pagination/PaginationContainer.vue";
+import PaginationButton from "@/components/pagination/PaginationButton.vue";
 
 useMeta({ title: 'Dostupné požiadavky' })
 
@@ -24,6 +28,10 @@ const filteredRequests = ref<Request[]>([])
 const slovakData = ref<Zipcodes[]>(skZipcodes)
 const sections = ref<Sections[]>(categoriesData.sections)
 const categories = ref<Categories[]>(categoriesData.categories)
+
+const perPage = ref(30) // Počet príspevkov na stránku
+const currentPage = ref(1) // Aktuálna stránka
+const totalPages = ref(0) // Celkový (počet) strán
 
 const submitFilter = () => {
   const { search, address, section, category } = form.value
@@ -53,6 +61,11 @@ const filteredCategories = computed(() => {
   if (form.value.section === 0) return [];
   return categories.value.filter(category => category.section_id === form.value.section);
 })
+
+const paginate = (items: any) => {
+  totalPages.value = Math.ceil(items.length / perPage.value);
+  return items.slice((currentPage.value - 1) * perPage.value, currentPage.value * perPage.value);
+}
 
 onMounted(async () => {
   if (!filteredRequests.value.length) {
@@ -116,10 +129,24 @@ onMounted(async () => {
         <RequestsHead :count="filteredRequests.length"/>
         <div class="flex flex-col gap-y-3">
           <skeleton-requests :rows=15 v-if="request.data.requests_loading" />
-          <RequestsList v-else-if="filteredRequests.length" :requests="filteredRequests"/>
+          <RequestsList v-else-if="filteredRequests.length" :requests="paginate(filteredRequests)"/>
           <RequestsNoFound v-else :count="filteredRequests.length"/>
         </div>
       </div>
+
+      <PaginationContainer v-if="filteredRequests.length > perPage">
+        <PaginationPages>
+          <PaginationArrow side="left" text="Späť" :disabled="currentPage <= 1" @click="currentPage--"/>
+          <PaginationButton
+            v-for="page in totalPages"
+            :page="page"
+            :key="page"
+            :disabled="page === currentPage"
+            @click="currentPage = page"
+          />
+          <PaginationArrow side="right" text="Ďalšie" :disabled="currentPage >= totalPages" @click="currentPage++"/>
+        </PaginationPages>
+      </PaginationContainer>
 
     </div>
   </Container>

@@ -15,11 +15,28 @@ const Sections = categories.sections
 <template>
   <transition name="fade">
 
-    <panel divide="y" v-if="!request.data.request_loading">
-      <div class="py-4 px-6 font-medium uppercase">
-        Informácie k požiadavke
+    <div v-if="!request.data.request_loading">
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <panel class="p-3 md:p-4">
+          <div class="opacity-75 text-sm mb-2">Status</div>
+          <div>
+            <div v-if="request.data.request?.status" class="text-blue-500 flex items-center gap-3 font-medium">
+              <div class="bg-blue-500 shadow-md shadow-blue-600/100 w-1.5 h-1.5 rounded-full inline-block"></div>
+              Otvorené
+            </div>
+            <div v-else class="text-red-500 flex items-center gap-3 font-medium">
+              <div class="bg-red-500 shadow-md shadow-red-600/100 w-1.5 h-1.5 rounded-full inline-block"></div>
+              Uzavreté
+            </div>
+          </div>
+        </panel>
+        <panel class="p-3 md:p-4">
+          <div class="opacity-75 text-sm mb-2">Miesto práce</div>
+          <div v-text="request.data.request?.address"></div>
+        </panel>
       </div>
-      <div class="p-4 md:p-6">
+
+      <panel divide="y">
         <ul class="divide-y divide-gray-200 dark:divide-gray-700/40">
 
           <InfoPanelItem title="Vytvoril">
@@ -58,8 +75,8 @@ const Sections = categories.sections
           </template>
 
         </ul>
-      </div>
-    </panel>
+      </panel>
+    </div>
 
     <!-- Loading panel Info -->
     <skeleton-request-information v-else />

@@ -9,8 +9,9 @@ const router = createRouter({
     { path: '/maintenance',         name: 'maintenance',  component: () => import('@/views/Maintenance.vue') },
     { path: '/search',              name: 'workers',      component: () => import('@/views/WorkersList.vue') },
     { path: '/requests',            name: 'requests',     component: () => import('@/views/RequestsList.vue') },
-    { path: '/offers',              name: 'offers',       component: () => import('@/views/OffersList.vue') },
     { path: '/request/:requestId',  name: 'request',      component: () => import('@/views/RequestDetails.vue') },
+    { path: '/offers',              name: 'offers',       component: () => import('@/views/OffersList.vue') },
+    { path: '/offers/:offerId',     name: 'offer',        component: () => import('@/views/OfferDetails.vue') },
     { path: '/profile/:userId',     name: 'profile',      component: () => import('@/views/UserProfile.vue') },
     {
       path: '/account',
